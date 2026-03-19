@@ -1,0 +1,8 @@
+{
+  "plugins": [
+    {
+      "name": "mumu-sop",
+      "path": "plugins/mumu-sop"
+    }
+  ]
+}
