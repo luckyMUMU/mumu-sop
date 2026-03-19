@@ -2,7 +2,7 @@
   "name": "mumu-sop-marketplace",
   "owner": {
     "name": "luckyMUMU",
-    "url": "https://github.com/luckyMUMU"
+    "email": ""
   },
   "metadata": {
     "description": "SOP (Standard Operating Procedure) Skills marketplace for software development workflow. Contains the mumu-sop plugin with 14 skills covering orchestration, specification, implementation, verification, and documentation.",
