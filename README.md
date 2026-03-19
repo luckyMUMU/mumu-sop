@@ -1,50 +1,53 @@
-# SOP Skills Plugin
+# SOP Skills Marketplace
 
-SOP (Standard Operating Procedure) Skills for software development workflow. Includes 14 skills covering orchestration, specification, implementation, verification, and documentation.
+SOP (Standard Operating Procedure) Skills marketplace for software development workflow. Contains the mumu-sop plugin with 14 skills covering orchestration, specification, implementation, verification, and documentation.
 
 ## Installation
 
-Copy this plugin to your Claude Code plugins directory:
+Add this marketplace to Claude Code:
 
-```
-cp -r . ~/.claude/plugins/local/sop-skills/
-```
-
-Or add to your project's `.claude/plugins/` directory.
-
-## Structure
-
-```
-sop-skills/
-├── .claude-plugin/
-│   └── plugin.json        # Plugin metadata
-├── skills/                 # 14 Skills
-│   ├── sop-workflow-orchestrator/
-│   ├── sop-document-sync/
-│   ├── sop-progress-supervisor/
-│   ├── sop-dual-cycle-decision/
-│   ├── sop-requirement-analyst/
-│   ├── sop-architecture-design/
-│   ├── sop-implementation-designer/
-│   ├── sop-code-explorer/
-│   ├── sop-code-implementation/
-│   ├── sop-test-implementation/
-│   ├── sop-architecture-reviewer/
-│   ├── sop-code-review/
-│   ├── sop-document-creator/
-│   └── spring-code-reviewer/
-├── _resources/             # Supporting resources
-│   ├── constitution/       # P0 engineering constitution
-│   ├── constraints/        # P0-P3 constraint definitions
-│   ├── workflow/           # 5-stage workflow definitions
-│   ├── templates/          # Document and report templates
-│   └── specifications/     # P1-P2 specification templates
-└── index.md               # Skill index
+```bash
+claude plugin add luckyMUMU/mumu-sop
 ```
 
-## Skills Overview
+Or manually add to your settings:
 
-### Orchestration Skills (3)
+```json
+{
+  "pluginMarketplaces": {
+    "mumu-sop-marketplace": {
+      "source": "github",
+      "repo": "luckyMUMU/mumu-sop"
+    }
+  }
+}
+```
+
+Then install the plugin:
+
+```bash
+claude plugin install mumu-sop
+```
+
+## Marketplace Structure
+
+```
+mumu-sop/
+├── .claude-marketplace/
+│   └── marketplace.json    # Marketplace metadata
+└── plugins/
+    └── mumu-sop/           # Single plugin
+        ├── .claude-plugin/
+        │   └── plugin.json
+        ├── skills/         # 14 Skills
+        └── _resources/     # Supporting resources
+```
+
+## Plugin: mumu-sop
+
+### Skills Overview
+
+#### Orchestration Skills (3)
 
 | Skill | Description |
 |-------|-------------|
@@ -52,7 +55,7 @@ sop-skills/
 | `sop-document-sync` | Synchronizes documentation with code changes |
 | `sop-progress-supervisor` | Monitors workflow progress |
 
-### Specification Skills (4)
+#### Specification Skills (4)
 
 | Skill | Description |
 |-------|-------------|
@@ -61,15 +64,15 @@ sop-skills/
 | `sop-architecture-design` | Designs system architecture |
 | `sop-implementation-designer` | Designs implementation details |
 
-### Implementation Skills (3)
+#### Implementation Skills (3)
 
 | Skill | Description |
 |-------|-------------|
 | `sop-code-explorer` | Explores and analyzes existing code |
 | `sop-code-implementation` | Implements code based on specifications |
-| `sop-test-implementation` | Implements tests based on BDD scenarios |
+| `sop-test-implementation` | Implements tests based on specifications |
 
-### Verification Skills (3)
+#### Verification Skills (3)
 
 | Skill | Description |
 |-------|-------------|
@@ -77,7 +80,7 @@ sop-skills/
 | `sop-code-review` | Reviews code implementation |
 | `spring-code-reviewer` | Spring/Java architecture-level code review |
 
-### Documentation Skills (1)
+#### Documentation Skills (1)
 
 | Skill | Description |
 |-------|-------------|
@@ -120,13 +123,14 @@ Example prompts:
 
 ## Resources
 
-- [Skill Index](./index.md)
-- [Workflow Definition](./_resources/workflow/index.md)
-- [Constraint Definitions](./_resources/constraints/index.md)
-- [Architecture Principles](./_resources/constitution/architecture-principles.md)
+- [Skill Index](./plugins/mumu-sop/index.md)
+- [Workflow Definition](./plugins/mumu-sop/_resources/workflow/index.md)
+- [Constraint Definitions](./plugins/mumu-sop/_resources/constraints/index.md)
+- [Architecture Principles](./plugins/mumu-sop/_resources/constitution/architecture-principles.md)
 
 ## Version
 
+- Marketplace version: 1.0.0
 - Plugin version: 1.0.0
 - Skill format version: v5.0.0
 
