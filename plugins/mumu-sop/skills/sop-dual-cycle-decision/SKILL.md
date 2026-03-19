@@ -591,7 +591,7 @@ invariants:
 
 ## 相关文档
 
-- [Skill 索引](../index.md)
-- [需求分析 Skill](../requirement-analyst/SKILL.md)
-- [工作流编排 Skill](../workflow-orchestrator/SKILL.md)
-- [进度监管 Skill](../progress-supervisor/SKILL.md)
+- [Skill 索引](../../index.md)
+- [需求分析 Skill](../sop-requirement-analyst/SKILL.md)
+- [工作流编排 Skill](../sop-workflow-orchestrator/SKILL.md)
+- [进度监管 Skill](../sop-progress-supervisor/SKILL.md)

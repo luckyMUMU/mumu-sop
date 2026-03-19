@@ -186,6 +186,6 @@ invariants:
 
 ## 相关文档
 
-- [Skill 索引](../index.md)
-- [工作流编排 Skill](../workflow-orchestrator/SKILL.md)
-- [文档同步 Skill](../document-sync/SKILL.md)
+- [Skill 索引](../../index.md)
+- [工作流编排 Skill](../sop-workflow-orchestrator/SKILL.md)
+- [文档同步 Skill](../sop-document-sync/SKILL.md)

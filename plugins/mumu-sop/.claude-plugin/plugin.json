@@ -5,5 +5,19 @@
   "author": {
     "name": "luckyMUMU",
     "url": "https://github.com/luckyMUMU"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luckyMUMU/mumu-sop"
+  },
+  "license": "MIT",
+  "keywords": [
+    "sop",
+    "workflow",
+    "code-review",
+    "development",
+    "architecture",
+    "tdd",
+    "bdd"
+  ]
 }

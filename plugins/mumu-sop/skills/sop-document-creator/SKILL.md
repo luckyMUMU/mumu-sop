@@ -534,7 +534,6 @@ updated: 2026-03-17
 
 ## 相关文档
 
-- [Skill 索引](../index.md)
+- [Skill 索引](../../index.md)
 - [文档同步 Skill](../sop-document-sync/SKILL.md)
-- [模板资源](../_resources/templates/index.md)
-- [文档规范](../_resources/specifications/document-spec.md)
+- [模板资源](../../_resources/templates/index.md)

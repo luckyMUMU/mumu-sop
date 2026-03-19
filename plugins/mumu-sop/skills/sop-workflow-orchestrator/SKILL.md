@@ -95,7 +95,7 @@ required_inputs:
   
   - name: "constitution_docs"
     type: files
-    path: "../_resources/constitution/"
+    path: "../../_resources/constitution/"
     description: "工程宪章文档"
 
 optional_inputs:
@@ -253,7 +253,7 @@ invariants:
 
 ## 相关文档
 
-- [Skill 索引](../index.md)
-- [文档同步 Skill](../document-sync/SKILL.md)
-- [进度监管 Skill](../progress-supervisor/SKILL.md)
-- [工作流详解](../_resources/workflow/index.md)
+- [Skill 索引](../../index.md)
+- [文档同步 Skill](../sop-document-sync/SKILL.md)
+- [进度监管 Skill](../sop-progress-supervisor/SKILL.md)
+- [工作流详解](../../_resources/workflow/index.md)

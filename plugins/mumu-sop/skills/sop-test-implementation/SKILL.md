@@ -180,7 +180,7 @@ describe('Order', () => {
 
 ## 相关文档
 
-- [Skill 索引](../index.md)
-- [需求分析 Skill](../requirement-analyst/SKILL.md)
-- [代码实现 Skill](../code-implementation/SKILL.md)
-- [代码审查 Skill](../code-review/SKILL.md)
+- [Skill 索引](../../index.md)
+- [需求分析 Skill](../sop-requirement-analyst/SKILL.md)
+- [代码实现 Skill](../sop-code-implementation/SKILL.md)
+- [代码审查 Skill](../sop-code-review/SKILL.md)

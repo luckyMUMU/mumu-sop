@@ -87,7 +87,7 @@ required_inputs:
   
   - name: "p0_constraints"
     type: file
-    path: "../_resources/constitution/architecture-principles.md"
+    path: "../../_resources/constitution/architecture-principles.md"
     description: "P0 级架构约束"
 
 optional_inputs:
@@ -194,7 +194,7 @@ invariants:
 
 ## 相关文档
 
-- [Skill 索引](../index.md)
-- [架构设计 Skill](../architecture-design/SKILL.md)
-- [代码审查 Skill](../code-review/SKILL.md)
-- [工程宪章](../_resources/constitution/architecture-principles.md)
+- [Skill 索引](../../index.md)
+- [架构设计 Skill](../sop-architecture-design/SKILL.md)
+- [代码审查 Skill](../sop-code-review/SKILL.md)
+- [工程宪章](../../_resources/constitution/architecture-principles.md)

@@ -191,6 +191,6 @@ invariants:
 
 ## 相关文档
 
-- [Skill 索引](../index.md)
-- [代码实现 Skill](../code-implementation/SKILL.md)
-- [代码审查 Skill](../code-review/SKILL.md)
+- [Skill 索引](../../index.md)
+- [代码实现 Skill](../sop-code-implementation/SKILL.md)
+- [代码审查 Skill](../sop-code-review/SKILL.md)

@@ -216,7 +216,7 @@ type OrderError =
 
 ## 相关文档
 
-- [Skill 索引](../index.md)
-- [架构设计 Skill](../architecture-design/SKILL.md)
-- [代码实现 Skill](../code-implementation/SKILL.md)
-- [代码审查 Skill](../code-review/SKILL.md)
+- [Skill 索引](../../index.md)
+- [架构设计 Skill](../sop-architecture-design/SKILL.md)
+- [代码实现 Skill](../sop-code-implementation/SKILL.md)
+- [代码审查 Skill](../sop-code-review/SKILL.md)

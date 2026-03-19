@@ -81,31 +81,6 @@ constraint_strength: [约束强度]
 
 ---
 
-## 文档模板
-
-**目录**: [documents/](documents/)
-
-| 模板 | 用途 | 使用场景 |
-|------|------|----------|
-| [proposal.md](documents/proposal.md) | 需求提案模板 | 轻规范路径 |
-| [confirmation.md](documents/confirmation.md) | 技术确认模板 | 轻规范路径 |
-| [archive.md](documents/archive.md) | 归档记录模板 | 阶段 4 |
-| [design.md](documents/design.md) | 实现设计模板 | 阶段 1 |
-
----
-
-## 契约模板
-
-**目录**: [contracts/](contracts/)
-
-| 模板 | 用途 | 使用场景 |
-|------|------|----------|
-| [stage-contract.yaml](contracts/stage-contract.yaml) | 阶段契约模板 | 所有阶段 |
-| [api-contract.yaml](contracts/api-contract.yaml) | API 契约模板 | P2 级规范 |
-| [data-model.yaml](contracts/data-model.yaml) | 数据模型模板 | P2 级规范 |
-
----
-
 ## 报告模板
 
 **目录**: [reports/](reports/)

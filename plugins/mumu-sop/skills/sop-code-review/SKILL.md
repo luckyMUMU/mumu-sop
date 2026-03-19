@@ -195,7 +195,7 @@ invariants:
 
 ## 相关文档
 
-- [Skill 索引](../index.md)
-- [实现设计 Skill](../implementation-designer/SKILL.md)
-- [代码实现 Skill](../code-implementation/SKILL.md)
-- [测试实现 Skill](../test-implementation/SKILL.md)
+- [Skill 索引](../../index.md)
+- [实现设计 Skill](../sop-implementation-designer/SKILL.md)
+- [代码实现 Skill](../sop-code-implementation/SKILL.md)
+- [测试实现 Skill](../sop-test-implementation/SKILL.md)

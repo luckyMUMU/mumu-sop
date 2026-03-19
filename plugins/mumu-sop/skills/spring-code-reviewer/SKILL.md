@@ -414,6 +414,6 @@ GitLab MR:
 
 ## 相关文档
 
-- [Skill 索引](../index.md)
+- [Skill 索引](../../index.md)
 - [架构审查 Skill](../sop-architecture-reviewer/SKILL.md)
 - [代码审查 Skill](../sop-code-review/SKILL.md)

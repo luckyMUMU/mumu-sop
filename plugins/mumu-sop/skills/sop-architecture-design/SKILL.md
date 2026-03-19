@@ -76,7 +76,7 @@ required_inputs:
   
   - name: "constitution_docs"
     type: files
-    path: "../_resources/constitution/"
+    path: "../../_resources/constitution/"
     description: "工程宪章文档，包含 P0 级约束"
 
 optional_inputs:
@@ -200,7 +200,7 @@ interface OrderRepository {
 
 ## 相关文档
 
-- [Skill 索引](../index.md)
-- [需求分析 Skill](../requirement-analyst/SKILL.md)
-- [实现设计 Skill](../implementation-designer/SKILL.md)
-- [架构审查 Skill](../architecture-reviewer/SKILL.md)
+- [Skill 索引](../../index.md)
+- [需求分析 Skill](../sop-requirement-analyst/SKILL.md)
+- [实现设计 Skill](../sop-implementation-designer/SKILL.md)
+- [架构审查 Skill](../sop-architecture-reviewer/SKILL.md)

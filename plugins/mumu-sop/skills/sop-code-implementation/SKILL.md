@@ -206,9 +206,9 @@ export class Order {
 
 ## 相关文档
 
-- [Skill 索引](../index.md)
-- [实现设计 Skill](../implementation-designer/SKILL.md)
-- [测试实现 Skill](../test-implementation/SKILL.md)
-- [代码审查 Skill](../code-review/SKILL.md)
-- [工作流详解](../_resources/workflow/index.md)
-- [规范分层说明](../_resources/specifications/index.md)
+- [Skill 索引](../../index.md)
+- [实现设计 Skill](../sop-implementation-designer/SKILL.md)
+- [测试实现 Skill](../sop-test-implementation/SKILL.md)
+- [代码审查 Skill](../sop-code-review/SKILL.md)
+- [工作流详解](../../_resources/workflow/index.md)
+- [规范分层说明](../../_resources/specifications/index.md)

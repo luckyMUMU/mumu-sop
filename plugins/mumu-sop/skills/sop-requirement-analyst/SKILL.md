@@ -231,8 +231,8 @@ invariants:
 
 ## 相关文档
 
-- [Skill 索引](../index.md)
-- [架构设计 Skill](../architecture-design/SKILL.md)
-- [实现设计 Skill](../implementation-designer/SKILL.md)
-- [工作流详解](../_resources/workflow/index.md)
-- [规范分层说明](../_resources/specifications/index.md)
+- [Skill 索引](../../index.md)
+- [架构设计 Skill](../sop-architecture-design/SKILL.md)
+- [实现设计 Skill](../sop-implementation-designer/SKILL.md)
+- [工作流详解](../../_resources/workflow/index.md)
+- [规范分层说明](../../_resources/specifications/index.md)
