@@ -1,7 +1,16 @@
 ---
 name: sop-test-implementation
-version: 1.0.0
-description: Use when writing failing tests before implementation (TDD red phase), verifying implementation against specifications, increasing test coverage, or writing regression test cases. Don't use when specifications undefined (use sop-requirement-analyst), implementing code not tests (use sop-code-implementation), reviewing test quality (use sop-code-review), or exploring existing code (use sop-code-explorer).
+version: 1.1.0
+description: |
+  Implements tests (unit, integration, E2E) following TDD/BDD practices.
+  触发词: write tests, 写测试, TDD, 测试用例, 单元测试, test coverage.
+license: MIT
+compatibility: "Language-agnostic, works with any programming language and framework"
+metadata:
+  author: luckyMUMU
+  category: implementation
+  tags: [test, tdd, bdd, unit-test, integration]
+  language_agnostic: true
 ---
 
 # sop-test-implementation

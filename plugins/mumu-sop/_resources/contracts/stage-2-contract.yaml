@@ -1,0 +1,195 @@
+---
+version: v5.0.0
+stage: 2
+description: 执行计划与实现契约
+---
+
+# Stage 2 契约
+
+## 契约标识
+
+```yaml
+contract_id: stage-2-contract
+version: v5.0.0
+stage: 执行计划与实现
+```
+
+## 输入契约
+
+```yaml
+required_inputs:
+  - name: "p0_design"
+    type: object
+    path: "contracts/stage-1-p0-design.json"
+    description: "Stage 1 P0设计"
+
+  - name: "p1_design"
+    type: object
+    path: "contracts/stage-1-p1-design.json"
+    description: "Stage 1 P1设计"
+
+  - name: "p2_design"
+    type: object
+    path: "contracts/stage-1-p2-design.json"
+    description: "Stage 1 P2设计"
+
+  - name: "p3_design"
+    type: object
+    path: "contracts/stage-1-p3-design.json"
+    description: "Stage 1 P3设计"
+
+  - name: "temp_node"
+    type: files
+    path: ".trae/specs/{change-id}/"
+    description: "临时子节点文件"
+
+optional_inputs:
+  - name: "existing_code"
+    type: files
+    description: "现有代码，用于修改场景"
+```
+
+## 输出契约
+
+```yaml
+required_outputs:
+  - name: "code_changes"
+    type: git_diff
+    path: "git commit"
+    format: "符合项目代码规范的代码变更"
+    guarantees:
+      - "代码符合P2/P3级规范"
+      - "代码通过lint检查"
+      - "代码通过类型检查"
+
+  - name: "test_results"
+    type: object
+    path: "contracts/stage-2-test-report.json"
+    format:
+      coverage: "覆盖率百分比"
+      passed: "通过的测试数"
+      failed: "失败的测试数"
+      core_module_coverage: "核心模块覆盖率"
+    guarantees:
+      - "所有测试通过"
+      - "核心模块覆盖率100%"
+
+  - name: "guardrail_results"
+    type: object
+    path: "contracts/stage-2-guardrail.json"
+    format:
+      p0_guardrail: "P0护栏检查结果"
+      p1_guardrail: "P1护栏检查结果"
+      p2_guardrail: "P2护栏检查结果"
+      p3_guardrail: "P3护栏检查结果"
+    guarantees:
+      - "所有护栏检查通过"
+      - "无约束违反"
+```
+
+## 行为契约
+
+```yaml
+preconditions:
+  - "Stage 1 已完成"
+  - "所有设计文档已审查"
+  - "临时子节点已创建"
+
+postconditions:
+  - "代码变更已提交"
+  - "测试全部通过"
+  - "护栏检查全部通过"
+
+invariants:
+  - "实现必须从叶子开始（临时子节点→P3→P2→P1→P0）"
+  - "禁止跳过任何层级"
+  - "核心模块覆盖率必须100%"
+  - "禁止强制解包（unwrap/expect）"
+  - "禁止硬编码密钥"
+```
+
+## 质量门控
+
+```yaml
+gate_conditions:
+  - id: "G2-001"
+    name: "代码规范检查"
+    check: "lint检查通过"
+    severity: "blocker"
+
+  - id: "G2-002"
+    name: "类型检查"
+    check: "类型检查通过"
+    severity: "blocker"
+
+  - id: "G2-003"
+    name: "单元测试通过"
+    check: "test_results.failed == 0"
+    severity: "blocker"
+
+  - id: "G2-004"
+    name: "核心模块覆盖率"
+    check: "test_results.core_module_coverage >= 100"
+    severity: "blocker"
+
+  - id: "G2-005"
+    name: "P0护栏检查"
+    check: "guardrail_results.p0_guardrail == passed"
+    severity: "blocker"
+
+  - id: "G2-006"
+    name: "P1护栏检查"
+    check: "guardrail_results.p1_guardrail == passed"
+    severity: "blocker"
+
+  - id: "G2-007"
+    name: "P2护栏检查"
+    check: "guardrail_results.p2_guardrail == passed"
+    severity: "blocker"
+
+  - id: "G2-008"
+    name: "P3护栏检查"
+    check: "guardrail_results.p3_guardrail == passed"
+    severity: "blocker"
+```
+
+## 实现顺序约束
+
+```yaml
+implementation_order:
+  - step: 1
+    name: "临时子节点实现"
+    condition: "存在临时子节点"
+    guardrail: "临时子节点护栏检查"
+    description: "首先实现临时子节点定义的任务"
+
+  - step: 2
+    name: "P3实现"
+    condition: "临时子节点完成或不存在"
+    guardrail: "P3护栏检查"
+    description: "实现规范层代码"
+
+  - step: 3
+    name: "P2实现"
+    condition: "P3实现完成"
+    guardrail: "P2护栏检查"
+    description: "模块规范层代码"
+
+  - step: 4
+    name: "P1实现"
+    condition: "P2实现完成"
+    guardrail: "P1护栏检查"
+    description: "系统规范层代码"
+
+  - step: 5
+    name: "P0实现"
+    condition: "P1实现完成"
+    guardrail: "P0护栏检查"
+    description: "工程宪章层约束验证"
+```
+
+## 相关文档
+
+- [工作流索引](../workflow/index.md)
+- [约束索引](../constraints/index.md)
+- [Stage 2 详解](../workflow/stage-2-implement.md)

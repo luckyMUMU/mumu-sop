@@ -1,7 +1,16 @@
 ---
 name: sop-code-implementation
-version: 1.0.0
-description: Use when design documents are reviewed and ready for implementation, implementing new feature modules, fixing code defects, or refactoring existing code. Don't use when design is incomplete (use sop-implementation-designer), writing tests (use sop-test-implementation), reviewing code (use sop-code-review), exploring existing code (use sop-code-explorer), or syncing docs (use sop-document-sync).
+version: 1.1.0
+description: |
+  Implements code according to design documents with P2/P3 compliance.
+  触发词: implement code, 实现代码, 写代码, 开发功能, build feature, 编码.
+license: MIT
+compatibility: "Language-agnostic, works with any programming language and framework"
+metadata:
+  author: luckyMUMU
+  category: implementation
+  tags: [code, implementation, development, coding]
+  language_agnostic: true
 ---
 
 # sop-code-implementation

@@ -1,7 +1,16 @@
 ---
 name: sop-requirement-analyst
-version: 1.0.0
-description: Use when user presents new feature requirements or business rules, converting vague business descriptions into clear spec definitions, creating new P1/P2 spec documents, or defining acceptance criteria. Don't use when specs exist and unchanged (use sop-code-explorer), modifying code not specs (use sop-code-implementation), requirements clear and architecture needed (use sop-architecture-design), or requirements clear and implementation design needed (use sop-implementation-designer).
+version: 1.1.0
+description: |
+  Analyzes requirements and generates structured specs with acceptance criteria.
+  触发词: analyze requirements, 分析需求, 写规范, 需求文档, spec, specification.
+license: MIT
+compatibility: "Language-agnostic, works with any programming language and framework"
+metadata:
+  author: luckyMUMU
+  category: specification
+  tags: [requirement, analysis, specification, bdd]
+  language_agnostic: true
 ---
 
 # sop-requirement-analyst

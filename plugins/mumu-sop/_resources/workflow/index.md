@@ -397,7 +397,7 @@ contract: contracts/stage-4-contract.yaml
 
 ## 契约模板索引
 
-> 契约定义使用持久化约束，详见 `sop/contracts/` 目录
+> 契约定义使用持久化约束，详见 `_resources/contracts/` 目录
 
 ```yaml
 contract_templates:

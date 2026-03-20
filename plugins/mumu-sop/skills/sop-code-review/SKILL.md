@@ -1,10 +1,21 @@
 ---
 name: sop-code-review
-version: 1.0.0
-description: Use when code changes are committed and need review, before branch merging, for periodic code quality checks, or when investigating issues. Don't use when code is not implemented (use sop-code-implementation), reviewing architecture (use sop-architecture-reviewer), exploring code structure (use sop-code-explorer), or tests haven't passed (use sop-test-implementation).
+version: 1.1.0
+description: |
+  Reviews code for P2/P3 compliance, test coverage, and design adherence.
+  触发词: review code, 代码审查, PR审查, 代码评审, audit, quality check.
+license: MIT
+compatibility: "Language-agnostic, works with any programming language and framework"
+metadata:
+  author: luckyMUMU
+  category: verification
+  tags: [code-review, quality, audit, verification]
+  language_agnostic: true
 ---
 
 # sop-code-review
+
+> **语言无关**: 此 Skill 适用于任何编程语言和框架。对于 Java/Spring 项目，也可以使用 `spring-code-reviewer` 获得更专业的审查。
 
 ## 描述
 

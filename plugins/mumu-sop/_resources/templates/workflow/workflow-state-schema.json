@@ -1,0 +1,180 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Workflow State",
+  "description": "工作流状态文件模板，用于记录工作流执行状态和进度",
+  "type": "object",
+  "required": ["workflow_id", "version", "current_stage", "stages", "created_at", "updated_at"],
+  "properties": {
+    "workflow_id": {
+      "type": "string",
+      "description": "工作流唯一标识",
+      "pattern": "^wf-\\d{8}-\\d{3}$",
+      "examples": ["wf-20260320-001"]
+    },
+    "version": {
+      "type": "string",
+      "description": "状态文件版本",
+      "const": "v5.0.0"
+    },
+    "status": {
+      "type": "string",
+      "description": "工作流整体状态",
+      "enum": ["pending", "in_progress", "paused", "completed", "failed", "cancelled"]
+    },
+    "current_stage": {
+      "type": "string",
+      "description": "当前阶段",
+      "enum": ["stage-0", "stage-1", "stage-2", "stage-3", "stage-4"]
+    },
+    "stages": {
+      "type": "object",
+      "description": "各阶段状态",
+      "properties": {
+        "stage-0": {
+          "$ref": "#/definitions/stage_detail"
+        },
+        "stage-1": {
+          "$ref": "#/definitions/stage_detail"
+        },
+        "stage-2": {
+          "$ref": "#/definitions/stage_detail"
+        },
+        "stage-3": {
+          "$ref": "#/definitions/stage_detail"
+        },
+        "stage-4": {
+          "$ref": "#/definitions/stage_detail"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "工作流元数据",
+      "properties": {
+        "request": {
+          "type": "string",
+          "description": "原始用户请求"
+        },
+        "complexity": {
+          "type": "string",
+          "description": "复杂度评估",
+          "enum": ["low", "medium", "high"]
+        },
+        "path": {
+          "type": "string",
+          "description": "执行路径",
+          "enum": ["shallow", "deep"]
+        },
+        "dual_cycle_required": {
+          "type": "boolean",
+          "description": "是否需要双循环决策"
+        }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "description": "产物引用",
+      "additionalProperties": {
+        "type": "string",
+        "description": "产物文件路径"
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "description": "决策记录列表",
+      "items": {
+        "type": "string",
+        "description": "决策记录ID"
+      }
+    },
+    "guardrail_results": {
+      "type": "object",
+      "description": "护栏检查结果",
+      "properties": {
+        "p0": { "$ref": "#/definitions/guardrail_status" },
+        "p1": { "$ref": "#/definitions/guardrail_status" },
+        "p2": { "$ref": "#/definitions/guardrail_status" },
+        "p3": { "$ref": "#/definitions/guardrail_status" }
+      }
+    },
+    "rollback_point": {
+      "type": "object",
+      "description": "回滚点信息",
+      "properties": {
+        "stage": { "type": "string" },
+        "snapshot_path": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "创建时间"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "更新时间"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "完成时间"
+    }
+  },
+  "definitions": {
+    "stage_detail": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["pending", "in_progress", "completed", "failed", "skipped"]
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "completed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "gate_passed": {
+          "type": "boolean",
+          "description": "是否通过质量门控"
+        },
+        "artifacts": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "本阶段产生的产物路径列表"
+        },
+        "summary": {
+          "type": "string",
+          "description": "阶段摘要（用于Compaction）"
+        }
+      }
+    },
+    "guardrail_status": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["passed", "failed", "pending"]
+        },
+        "checked_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "violations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "constraint_id": { "type": "string" },
+              "message": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

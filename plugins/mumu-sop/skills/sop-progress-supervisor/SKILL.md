@@ -1,7 +1,16 @@
 ---
 name: sop-progress-supervisor
-version: 1.0.0
-description: Use when user needs to know current workflow progress, detecting and handling blocking issues, generating periodic progress reports, or coordinating multiple parallel tasks. Don't use when starting workflow (use sop-workflow-orchestrator), executing specific tasks (use appropriate Skill), modifying code (use sop-code-implementation), or syncing docs (use sop-document-sync).
+version: 1.1.0
+description: |
+  Monitors workflow progress and reports blocking issues.
+  触发词: check progress, 查看进度, 工作流状态, 进度报告, blocking issues.
+license: MIT
+compatibility: "Language-agnostic, works with any programming language and framework"
+metadata:
+  author: luckyMUMU
+  category: orchestration
+  tags: [progress, monitoring, status, report]
+  language_agnostic: true
 ---
 
 # sop-progress-supervisor

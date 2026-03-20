@@ -1,7 +1,16 @@
 ---
 name: sop-architecture-reviewer
-version: 1.0.0
-description: Use when architecture documents are complete and need review, major code changes may affect architecture, periodic architecture health checks, or validating architecture refactoring. Don't use when architecture design is incomplete (use sop-architecture-design), reviewing code implementation (use sop-code-review), exploring existing code structure (use sop-code-explorer), or modifying architecture (use sop-architecture-design).
+version: 1.1.0
+description: |
+  Reviews architecture for P0 constraint compliance and DDD principles.
+  触发词: review architecture, 审查架构, 架构评审, 检查设计, validate, 设计审查.
+license: MIT
+compatibility: "Language-agnostic, works with any programming language and framework"
+metadata:
+  author: luckyMUMU
+  category: verification
+  tags: [architecture, review, validation, ddd]
+  language_agnostic: true
 ---
 
 # sop-architecture-reviewer

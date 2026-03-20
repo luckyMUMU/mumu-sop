@@ -1,7 +1,16 @@
 ---
 name: sop-code-explorer
-version: 1.0.0
-description: Use when verifying existing code against specifications, understanding code structure before review, analyzing codebase for refactoring plans, or assessing impact of new requirements on existing code. Don't use when modifying code (use sop-code-implementation), reviewing code quality (use sop-code-review), creating spec documents (use sop-requirement-analyst), or syncing docs (use sop-document-sync).
+version: 1.1.0
+description: |
+  Explores codebase to verify specification compliance (read-only analysis).
+  触发词: explore code, 探索代码, 分析代码库, 检查实现, verify implementation.
+license: MIT
+compatibility: "Language-agnostic, works with any programming language and framework"
+metadata:
+  author: luckyMUMU
+  category: analysis
+  tags: [code, exploration, analysis, verification]
+  language_agnostic: true
 ---
 
 # sop-code-explorer

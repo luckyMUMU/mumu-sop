@@ -380,6 +380,8 @@ P0-COMP-002:
 
 ## 验证工具矩阵
 
+> **说明**: 以下工具示例按语言分类，可根据项目技术栈选择对应工具。SOP 框架本身是语言无关的。
+
 ```mermaid
 graph LR
     subgraph 工具集成
@@ -395,23 +397,47 @@ graph LR
 ## 验证工具配置
 
 ```yaml
+# 通用原则：选择与项目技术栈匹配的工具
 tools:
   - type: 密钥检测
-    names: [git-secrets, truffleHog]
+    names: [git-secrets, truffleHog, detect-secrets]
     integration: pre-commit hook
+    language_agnostic: true
+
   - type: 漏洞扫描
-    names: [npm audit, Snyk]
+    names_by_language:
+      JavaScript: [npm audit, yarn audit, Snyk]
+      Python: [pip-audit, safety, Snyk]
+      Java: [OWASP Dependency-Check, Snyk]
+      Go: [govulncheck, Snyk]
+      Rust: [cargo audit, Snyk]
     integration: CI/CD
+
   - type: 覆盖率检查
-    names: [istanbul, coverage.py]
-    integration: npm test
+    names_by_language:
+      JavaScript: [istanbul, nyc, c8]
+      Python: [coverage.py, pytest-cov]
+      Java: [JaCoCo, Cobertura]
+      Go: [go test -cover]
+      Rust: [cargo-tarpaulin, cargo-llvm-cov]
+    integration: test runner
+
   - type: 架构约束
-    names: [ArchUnit, dependency-cruiser]
+    names_by_language:
+      JavaScript: [dependency-cruiser, madge]
+      TypeScript: [dependency-cruiser, Sherif]
+      Java: [ArchUnit, jqwik]
+      Python: [import-linter]
+      Go: [go-dependency-analysis]
     integration: CI/CD
+
   - type: 网络审计
     names: [网络代理审计]
     integration: 实时监控
+    language_agnostic: true
+
   - type: 密钥审计
     names: [密钥审计日志]
     integration: 实时监控
+    language_agnostic: true
 ```

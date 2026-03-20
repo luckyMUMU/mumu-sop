@@ -1,7 +1,16 @@
 ---
 name: sop-document-sync
-version: 1.0.0
-description: Use when code changes are committed and docs need syncing, API interfaces changed, implementation designs changed, or periodic doc-code consistency checks. Don't use when code isn't committed (complete implementation first), modifying code not docs (use sop-code-implementation), creating new docs (use sop-requirement-analyst), or exploring code structure (use sop-code-explorer).
+version: 1.1.0
+description: |
+  Syncs documentation with code changes to maintain consistency.
+  触发词: sync docs, 同步文档, 更新文档, sync documentation, 文档同步.
+license: MIT
+compatibility: "Language-agnostic, works with any programming language and framework"
+metadata:
+  author: luckyMUMU
+  category: documentation
+  tags: [sync, document, consistency, update]
+  language_agnostic: true
 ---
 
 # sop-document-sync

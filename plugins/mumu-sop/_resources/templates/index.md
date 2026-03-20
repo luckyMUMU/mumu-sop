@@ -1,11 +1,13 @@
 ---
 version: v5.0.0
-updated: 2026-03-15
+updated: 2026-03-20
+language_agnostic: true
 ---
 
 # 模板索引
 
 > **用途**: 提供各类文档和契约的标准模板
+> **语言无关性**: 所有模板适用于任何编程语言和框架
 
 ---
 
@@ -81,6 +83,48 @@ constraint_strength: [约束强度]
 
 ---
 
+## 决策记录模板
+
+**目录**: [decisions/](decisions/)
+
+| 模板 | 用途 | 使用场景 |
+|------|------|----------|
+| [decision-record.yaml](decisions/decision-record.yaml) | 决策记录模板 | 约束冲突、变更范围暧昧、需求歧义 |
+
+### 决策类型
+
+| 类型 | 描述 |
+|------|------|
+| constraint_conflict | 约束之间存在矛盾 |
+| scope_ambiguity | 无法确定变更属于哪个层级 |
+| requirement_ambiguity | 需求描述存在多种理解 |
+
+---
+
+## 工作流状态模板
+
+**目录**: [workflow/](workflow/)
+
+| 模板 | 用途 | 说明 |
+|------|------|------|
+| [workflow-state.json](workflow/workflow-state.json) | 工作流状态文件 | 记录工作流执行状态 |
+| [workflow-state-schema.json](workflow/workflow-state-schema.json) | 状态文件 Schema | JSON Schema 定义 |
+
+### 工作流状态结构
+
+```json
+{
+  "workflow_id": "wf-YYYYMMDD-NNN",
+  "status": "in_progress",
+  "current_stage": "stage-1",
+  "stages": { ... },
+  "metadata": { ... },
+  "artifacts": { ... }
+}
+```
+
+---
+
 ## 报告模板
 
 **目录**: [reports/](reports/)
@@ -109,6 +153,15 @@ constraint_strength: [约束强度]
 
 ---
 
-**文档所有者**: 文档团队  
-**最后审核**: 2026-03-15  
+**文档所有者**: 文档团队
+**最后审核**: 2026-03-20
 **下次审核**: 2026-07-15
+
+## 相关文档
+
+- [约束规范](../constraints/) - P0-P3 约束定义
+- [工作流程](../workflow/) - 5 阶段流程
+- [工程宪章](../constitution/) - P0 级规范
+- [契约定义](../contracts/) - 阶段契约文件
+- [规范模板](../specifications/) - P1/P2 规范模板
+- [示例文件](../examples/) - 临时子节点示例

@@ -1,7 +1,16 @@
 ---
 name: sop-architecture-design
-version: 1.0.0
-description: Use when designing architecture for new systems, refactoring existing system architecture, defining module boundaries and responsibilities, or defining cross-module interface specifications. Don't use when requirements are unconfirmed (use sop-requirement-analyst), architecture design needs review (use sop-architecture-reviewer), implementation details needed (use sop-implementation-designer), or modifying code (use sop-code-implementation).
+version: 1.1.0
+description: |
+  Designs system architecture with DDD principles, defining layers and domain models.
+  触发词: design architecture, 设计架构, 系统设计, DDD, 模块划分, 架构设计.
+license: MIT
+compatibility: "Language-agnostic, works with any programming language and framework"
+metadata:
+  author: luckyMUMU
+  category: specification
+  tags: [architecture, ddd, design, system-design]
+  language_agnostic: true
 ---
 
 # sop-architecture-design

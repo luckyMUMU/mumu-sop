@@ -1,0 +1,196 @@
+---
+version: v5.0.0
+stage: 4
+description: 归档与约束树更新契约
+---
+
+# Stage 4 契约
+
+## 契约标识
+
+```yaml
+contract_id: stage-4-contract
+version: v5.0.0
+stage: 归档与约束树更新
+```
+
+## 输入契约
+
+```yaml
+required_inputs:
+  - name: "review_report"
+    type: object
+    path: "contracts/stage-3-review.json"
+    description: "Stage 3 审查报告"
+
+  - name: "user_confirmation"
+    type: object
+    path: "contracts/stage-3-confirmation.json"
+    description: "Stage 3 用户确认"
+
+  - name: "code_changes"
+    type: git_diff
+    description: "最终代码变更"
+
+  - name: "temp_node"
+    type: files
+    path: ".trae/specs/{change-id}/"
+    description: "临时子节点文件"
+
+optional_inputs:
+  - name: "constraint_updates"
+    type: object
+    description: "需要更新的约束项"
+```
+
+## 输出契约
+
+```yaml
+required_outputs:
+  - name: "archive_record"
+    type: object
+    path: "contracts/stage-4-archive.json"
+    format:
+      archive_id: "归档ID"
+      archived_at: "归档时间"
+      source_change_id: "源变更ID"
+      destination: "归档位置"
+    guarantees:
+      - "归档记录完整"
+      - "可追溯"
+
+  - name: "changelog_update"
+    type: file
+    path: "CHANGELOG.md"
+    format: "标准CHANGELOG格式"
+    guarantees:
+      - "变更记录已更新"
+      - "符合约定格式"
+
+  - name: "constraint_tree_update"
+    type: object
+    path: "contracts/stage-4-constraint-update.json"
+    format:
+      updated_nodes: "更新的约束节点"
+      new_nodes: "新增的约束节点"
+      deprecated_nodes: "废弃的约束节点"
+    guarantees:
+      - "约束树状态正确"
+      - "继承关系完整"
+
+  - name: "reference_cleanup"
+    type: object
+    path: "contracts/stage-4-reference.json"
+    format:
+      removed_references: "解除的引用关系"
+      cleanup_status: "清理状态"
+    guarantees:
+      - "临时子节点引用已解除"
+```
+
+## 行为契约
+
+```yaml
+preconditions:
+  - "Stage 3 已完成"
+  - "用户已确认"
+  - "代码已合并"
+
+postconditions:
+  - "临时子节点已归档"
+  - "引用关系已解除"
+  - "CHANGELOG已更新"
+  - "约束树已更新（如有变更）"
+
+invariants:
+  - "归档记录必须完整"
+  - "引用关系必须解除"
+  - "约束树必须保持一致性"
+```
+
+## 质量门控
+
+```yaml
+gate_conditions:
+  - id: "G4-001"
+    name: "归档完成"
+    check: "archive_record.archived_at 非空"
+    severity: "blocker"
+
+  - id: "G4-002"
+    name: "引用解除"
+    check: "reference_cleanup.cleanup_status == completed"
+    severity: "blocker"
+
+  - id: "G4-003"
+    name: "CHANGELOG更新"
+    check: "changelog_update 已写入"
+    severity: "blocker"
+
+  - id: "G4-004"
+    name: "约束树一致"
+    check: "constraint_tree_update 无冲突"
+    severity: "blocker"
+```
+
+## 归档流程
+
+```yaml
+archive_process:
+  - step: 1
+    name: "临时子节点归档"
+    action: "将临时子节点内容合并到上级约束或独立归档"
+    output: "archive_record"
+
+  - step: 2
+    name: "解除引用关系"
+    action: "解除临时子节点与P3节点的引用关联"
+    output: "reference_cleanup"
+
+  - step: 3
+    name: "更新约束树"
+    action: "如有长效约束变更，更新约束树"
+    condition: "constraint_updates 存在"
+    output: "constraint_tree_update"
+
+  - step: 4
+    name: "更新CHANGELOG"
+    action: "按照约定格式更新CHANGELOG.md"
+    output: "changelog_update"
+
+  - step: 5
+    name: "清理临时文件"
+    action: "删除临时子节点目录"
+    condition: "归档成功"
+```
+
+## CHANGELOG 格式规范
+
+```yaml
+changelog_format:
+  template: |
+    ## [{version}] - {date}
+
+    ### Added
+    - {新增功能描述}
+
+    ### Changed
+    - {变更描述}
+
+    ### Fixed
+    - {修复描述}
+
+    ### Security
+    - {安全相关描述}
+
+  required_fields:
+    - version: "版本号"
+    - date: "发布日期（YYYY-MM-DD）"
+    - at_least_one_section: "至少包含一个变更分类"
+```
+
+## 相关文档
+
+- [工作流索引](../workflow/index.md)
+- [约束索引](../constraints/index.md)
+- [Stage 4 详解](../workflow/stage-4-archive.md)

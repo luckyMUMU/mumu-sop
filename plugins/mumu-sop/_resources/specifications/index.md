@@ -1,11 +1,13 @@
 ---
 version: v5.0.0
-updated: 2026-03-16
+updated: 2026-03-20
+language_agnostic: true
 ---
 
 # 规范索引
 
 > **规范层级**: P1-P2 级（系统/模块规范）
+> **语言无关性**: 本规范体系适用于任何编程语言和框架
 
 ---
 
@@ -39,7 +41,8 @@ updated: 2026-03-16
 - 变更需技术负责人审批
 
 **文档**:
-- 系统规范（本目录）
+- [系统规范模板](./system-spec.md) - P1 级系统规范模板
+- [API 契约模板](./api-contract.yaml) - OpenAPI 3.0 接口契约模板
 
 ### P2 级：模块规范
 
@@ -51,9 +54,8 @@ updated: 2026-03-16
 - 变更需模块负责人审批
 
 **文档**:
-- API 契约
-- 数据模型
-- 领域模型
+- [模块规范模板](./module-spec.md) - P2 级模块规范模板
+- [API 契约模板](./api-contract.yaml) - OpenAPI 3.0 接口契约模板
 
 ### P3 级：实现规范
 
@@ -175,16 +177,25 @@ _resources/
 ├── constitution/          # P0 级工程宪章
 │   └── architecture-principles.md
 ├── specifications/        # P1-P2 级规范
-│   └── index.md
+│   ├── index.md           # 本文件
+│   ├── system-spec.md     # P1 系统规范模板
+│   ├── module-spec.md     # P2 模块规范模板
+│   └── api-contract.yaml  # API 契约模板
 ├── constraints/           # P0-P3 约束
 │   ├── p0-constraints.md
 │   ├── p1-constraints.md
 │   ├── p2-constraints.md
 │   └── p3-constraints.md
-├── templates/             # P3 级模板
-│   ├── constraints/
-│   ├── reports/
-│   └── temporary/
+├── templates/             # 模板
+│   ├── constraints/       # 约束模板
+│   ├── decisions/         # 决策记录模板
+│   ├── reports/           # 报告模板
+│   ├── temporary/         # 临时子节点模板
+│   └── workflow/          # 工作流状态模板
+├── contracts/             # 阶段契约
+│   └── stage-*-contract.yaml
+├── examples/              # 示例文件
+│   └── temp-node-example/ # 临时子节点示例
 └── workflow/              # 工作流定义
     ├── index.md
     └── stage-*.md

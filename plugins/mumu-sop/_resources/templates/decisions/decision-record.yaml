@@ -1,0 +1,282 @@
+---
+version: v5.0.0
+template_type: decision-record
+language_agnostic: true
+---
+
+# 决策记录模板
+
+> **用途**: 记录约束冲突、变更范围暧昧、需求歧义等场景下的用户决策
+> **存储路径**: `contracts/decisions/{decision-id}.yaml`
+> **保留期限**: 永久保留
+
+---
+
+## 基本结构
+
+```yaml
+# 决策记录文件模板
+# 文件名: {decision-id}.yaml
+# 示例: DEC-20260320-001.yaml
+
+---
+decision_id: DEC-YYYYMMDD-NNN
+timestamp: "YYYY-MM-DDTHH:MM:SSZ"
+decision_type: constraint_conflict | scope_ambiguity | requirement_ambiguity | other
+
+# 决策上下文
+context:
+  workflow_id: "wf-YYYYMMDD-NNN"
+  stage: "stage-N"
+  trigger: "触发决策的具体情况描述"
+  related_artifacts:
+    - type: "spec | design | code"
+      path: "相关文件路径"
+
+# 可选方案
+options:
+  - option_id: "OPT-001"
+    title: "方案标题"
+    description: "方案详细描述"
+    pros:
+      - "优点1"
+      - "优点2"
+    cons:
+      - "缺点1"
+      - "缺点2"
+    impact:
+      constraints_affected: ["P1-XXX-001"]
+      modules_affected: ["module-a", "module-b"]
+    recommendation_score: 8  # 1-10分，10为最推荐
+
+  - option_id: "OPT-002"
+    title: "方案标题"
+    description: "方案详细描述"
+    pros:
+      - "优点1"
+    cons:
+      - "缺点1"
+    impact:
+      constraints_affected: ["P2-YYY-001"]
+      modules_affected: ["module-c"]
+    recommendation_score: 6
+
+# 推荐方案
+recommendation:
+  option_id: "OPT-001"
+  reason: "推荐理由"
+  risk_mitigation: "风险缓解措施"
+
+# 用户决策
+decision:
+  selected_option: "OPT-001"
+  reason: "用户选择的理由（可能与推荐不同）"
+  decided_by: "用户标识"
+  decided_at: "YYYY-MM-DDTHH:MM:SSZ"
+
+# 决策影响
+impact_assessment:
+  constraints_modified: []
+  constraints_added: []
+  constraints_removed: []
+  design_changes_required: true/false
+  implementation_changes_required: true/false
+
+# 后续行动
+follow_up_actions:
+  - action: "需要执行的行动"
+    assignee: "责任人"
+    due_date: "YYYY-MM-DD"
+    status: "pending | completed"
+```
+
+---
+
+## 决策类型说明
+
+### constraint_conflict（约束冲突）
+
+当检测到约束之间存在矛盾时使用。
+
+```yaml
+decision_type: constraint_conflict
+
+context:
+  trigger: "P1-PERF-001 要求缓存提升性能，但 P0-SEC-003 禁止敏感数据缓存"
+  conflict_description: |
+    约束 P1-PERF-001 要求对用户数据进行缓存以提升性能，
+    但约束 P0-SEC-003 禁止在内存中缓存敏感数据。
+    两者存在冲突。
+
+options:
+  - option_id: "OPT-001"
+    title: "加密缓存"
+    description: "对敏感数据进行加密后缓存"
+    pros:
+      - "满足性能要求"
+      - "数据安全"
+    cons:
+      - "增加加密解密开销"
+      - "需要管理密钥"
+    impact:
+      constraints_affected: ["P1-PERF-001"]
+      modules_affected: ["cache-module", "crypto-module"]
+    recommendation_score: 8
+
+  - option_id: "OPT-002"
+    title: "放弃缓存敏感数据"
+    description: "敏感数据不缓存，仅缓存非敏感数据"
+    pros:
+      - "直接满足安全约束"
+      - "实现简单"
+    cons:
+      - "性能提升有限"
+    impact:
+      constraints_affected: ["P1-PERF-001"]
+      modules_affected: ["cache-module"]
+    recommendation_score: 6
+```
+
+### scope_ambiguity（变更范围暧昧）
+
+当无法确定变更属于哪个层级时使用。
+
+```yaml
+decision_type: scope_ambiguity
+
+context:
+  trigger: "新增字段涉及多个模块，无法确定变更范围"
+  change_description: |
+    新增用户头像字段，涉及：
+    - 用户模块：存储头像URL
+    - 认证模块：头像显示在登录信息
+    - 通知模块：头像显示在通知中
+    不确定是 P2 变更还是 P1 变更。
+
+options:
+  - option_id: "OPT-001"
+    title: "按 P2 变更处理"
+    description: "仅作为用户模块的扩展字段"
+    pros:
+      - "审批流程简单"
+      - "影响范围明确"
+    cons:
+      - "可能需要后续扩展"
+    impact:
+      constraints_affected: ["P2-MOD-001"]
+      modules_affected: ["user-module"]
+    recommendation_score: 7
+
+  - option_id: "OPT-002"
+    title: "按 P1 变更处理"
+    description: "作为跨模块的用户资料扩展"
+    pros:
+      - "一次性解决所有模块"
+      - "架构更清晰"
+    cons:
+      - "审批流程复杂"
+      - "需要技术负责人审批"
+    impact:
+      constraints_affected: ["P1-SYS-001"]
+      modules_affected: ["user-module", "auth-module", "notification-module"]
+    recommendation_score: 8
+```
+
+### requirement_ambiguity（需求歧义）
+
+当需求描述存在多种理解时使用。
+
+```yaml
+decision_type: requirement_ambiguity
+
+context:
+  trigger: "用户需求描述不清晰"
+  requirement_text: "系统需要支持快速搜索"
+  ambiguity_description: |
+    "快速搜索"的具体含义不明确：
+    - 是指搜索响应时间？
+    - 是指搜索操作便捷性？
+    - 还是指索引更新速度？
+
+options:
+  - option_id: "OPT-001"
+    title: "按性能需求理解"
+    description: "搜索响应时间 < 100ms"
+    pros:
+      - "可量化"
+      - "技术实现明确"
+    cons:
+      - "可能不符合用户真实意图"
+    impact:
+      constraints_affected: ["P1-PERF-001"]
+      modules_affected: ["search-module"]
+    recommendation_score: 6
+
+  - option_id: "OPT-002"
+    title: "按用户体验理解"
+    description: "提供自动补全和即时搜索功能"
+    pros:
+      - "用户感知明显"
+      - "体验优化"
+    cons:
+      - "实现复杂"
+      - "性能压力大"
+    impact:
+      constraints_affected: ["P1-UX-001"]
+      modules_affected: ["search-module", "ui-module"]
+    recommendation_score: 7
+
+  - option_id: "OPT-003"
+    title: "向用户澄清"
+    description: "暂停实现，向用户确认具体需求"
+    pros:
+      - "避免错误实现"
+      - "对齐预期"
+    cons:
+      - "延迟开发"
+    impact:
+      constraints_affected: []
+      modules_affected: []
+    recommendation_score: 9
+```
+
+---
+
+## 文件命名规则
+
+```
+contracts/decisions/
+├── DEC-20260320-001.yaml    # 2026年3月20日第1个决策
+├── DEC-20260320-002.yaml    # 2026年3月20日第2个决策
+└── index.yaml               # 决策索引
+```
+
+---
+
+## 索引文件
+
+```yaml
+# contracts/decisions/index.yaml
+version: v5.0.0
+last_updated: "2026-03-20T00:00:00Z"
+
+decisions:
+  - decision_id: DEC-20260320-001
+    type: constraint_conflict
+    title: "缓存策略与安全约束冲突"
+    status: resolved
+    decided_at: "2026-03-20T10:00:00Z"
+
+  - decision_id: DEC-20260320-002
+    type: scope_ambiguity
+    title: "用户头像字段变更范围"
+    status: resolved
+    decided_at: "2026-03-20T14:00:00Z"
+```
+
+---
+
+## 相关文档
+
+- [P0 约束管理](../constraints/p0-constraints.md) - 约束冲突检测
+- [工作流契约](../contracts/stage-0-contract.yaml) - Stage 0 决策流程

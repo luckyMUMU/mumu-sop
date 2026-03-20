@@ -1,0 +1,106 @@
+{
+  "workflow_id": "wf-20260320-001",
+  "version": "v5.0.0",
+  "status": "in_progress",
+  "current_stage": "stage-1",
+
+  "stages": {
+    "stage-0": {
+      "status": "completed",
+      "started_at": "2026-03-20T09:00:00Z",
+      "completed_at": "2026-03-20T09:30:00Z",
+      "gate_passed": true,
+      "artifacts": [
+        "contracts/stage-0-intent.json",
+        "contracts/stage-0-constraints.json",
+        "contracts/stage-0-decision.json"
+      ],
+      "summary": "用户请求实现用户管理功能，复杂度评估为medium，执行路径为deep，无需双循环决策。"
+    },
+    "stage-1": {
+      "status": "in_progress",
+      "started_at": "2026-03-20T09:30:00Z",
+      "completed_at": null,
+      "gate_passed": null,
+      "artifacts": [
+        "contracts/stage-1-p0-design.json",
+        "contracts/stage-1-p1-design.json"
+      ],
+      "summary": null
+    },
+    "stage-2": {
+      "status": "pending",
+      "started_at": null,
+      "completed_at": null,
+      "gate_passed": null,
+      "artifacts": [],
+      "summary": null
+    },
+    "stage-3": {
+      "status": "pending",
+      "started_at": null,
+      "completed_at": null,
+      "gate_passed": null,
+      "artifacts": [],
+      "summary": null
+    },
+    "stage-4": {
+      "status": "pending",
+      "started_at": null,
+      "completed_at": null,
+      "gate_passed": null,
+      "artifacts": [],
+      "summary": null
+    }
+  },
+
+  "metadata": {
+    "request": "实现用户管理模块，支持用户的增删改查功能",
+    "complexity": "medium",
+    "path": "deep",
+    "dual_cycle_required": false
+  },
+
+  "artifacts": {
+    "intent_analysis": "contracts/stage-0-intent.json",
+    "constraint_identification": "contracts/stage-0-constraints.json",
+    "weight_decision": "contracts/stage-0-decision.json",
+    "p0_design": "contracts/stage-1-p0-design.json",
+    "p1_design": "contracts/stage-1-p1-design.json"
+  },
+
+  "decisions": [],
+
+  "guardrail_results": {
+    "p0": {
+      "status": "passed",
+      "checked_at": "2026-03-20T09:35:00Z",
+      "violations": []
+    },
+    "p1": {
+      "status": "passed",
+      "checked_at": "2026-03-20T10:00:00Z",
+      "violations": []
+    },
+    "p2": {
+      "status": "pending",
+      "checked_at": null,
+      "violations": []
+    },
+    "p3": {
+      "status": "pending",
+      "checked_at": null,
+      "violations": []
+    }
+  },
+
+  "rollback_point": {
+    "stage": "stage-1",
+    "snapshot_path": "contracts/rollback-stage-0.json",
+    "created_at": "2026-03-20T09:30:00Z"
+  },
+
+  "created_at": "2026-03-20T09:00:00Z",
+  "updated_at": "2026-03-20T10:00:00Z",
+  "completed_at": null
+}

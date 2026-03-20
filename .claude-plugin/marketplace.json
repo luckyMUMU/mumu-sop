@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "SOP (Standard Operating Procedure) Skills marketplace for software development workflow. Contains the mumu-sop plugin with 14 skills covering orchestration, specification, implementation, verification, and documentation.",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {

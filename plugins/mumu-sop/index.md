@@ -1,17 +1,21 @@
 ---
-version: v5.0.0
+version: v1.1.0
+plugin_version: 1.1.0
+language_agnostic: true
 ---
 
 # Skill 索引
 
 > **核心理念**: 规范驱动 Skill，Skill 是规范的执行工具
+>
+> **语言无关性**: 除 `spring-code-reviewer` 外，所有 Skill 均为语言无关，适用于任何编程语言和框架。
 
 ## Skill 架构
 
 ```mermaid
 mindmap
   root((14个 Skill))
-    编排类（3个）
+    编排类（3个）【语言无关】
       sop-workflow-orchestrator
         默认入口
         管理工作流状态
@@ -19,7 +23,7 @@ mindmap
         文档同步
       sop-progress-supervisor
         进度监管
-    规范类（4个）
+    规范类（4个）【语言无关】
       sop-dual-cycle-decision
         复杂需求前置分析
       sop-requirement-analyst
@@ -28,7 +32,7 @@ mindmap
         架构设计
       sop-implementation-designer
         实现设计
-    实现类（3个）
+    实现类（3个）【语言无关】
       sop-code-explorer
         代码探索
       sop-code-implementation
@@ -36,13 +40,13 @@ mindmap
       sop-test-implementation
         测试实现
     验证类（3个）
-      sop-architecture-reviewer
+      sop-architecture-reviewer【语言无关】
         架构审查
-      sop-code-review
+      sop-code-review【语言无关】
         代码审查
-      spring-code-reviewer
+      spring-code-reviewer【Java/Spring专用】
         Spring/Java架构级审查
-    文档类（1个）
+    文档类（1个）【语言无关】
       sop-document-creator
         文档创建
 ```
@@ -83,7 +87,9 @@ mindmap
 |-------|--------|------|------|------|
 | [sop-architecture-reviewer](./sop-architecture-reviewer/SKILL.md) | `$arch-review` | 审查架构设计 | 架构文档、代码变更 | 架构审查报告 |
 | [sop-code-review](./sop-code-review/SKILL.md) | `$review`, `$audit` | 审查代码实现 | 代码变更、测试报告 | 代码审查报告 |
-| [spring-code-reviewer](./spring-code-reviewer/SKILL.md) | `$spring-review`, `$java-review` | Spring/Java架构级代码审查 | GitLab MR、代码变更 | Spring代码审查报告 |
+| [spring-code-reviewer](./spring-code-reviewer/SKILL.md) ⚠️ | `$spring-review`, `$java-review` | **[Java/Spring专用]** Spring/Java架构级代码审查 | 代码变更 | Spring代码审查报告 |
+
+> ⚠️ **语言特定说明**: `spring-code-reviewer` 仅适用于 Java/Spring 项目。对于其他语言，请使用 `sop-code-review`。
 
 ## 文档类 Skill
 **职责**: 创建符合最佳实践的技术文档

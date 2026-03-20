@@ -1,7 +1,16 @@
 ---
 name: sop-implementation-designer
-version: 1.0.0
-description: Use when architecture documents are reviewed and detailed design needed, before coding to clarify implementation details, defining class interfaces and method signatures, or designing technical implementation solutions. Don't use when architecture design incomplete (use sop-architecture-design), architecture not reviewed (use sop-architecture-reviewer), design complete and code needed (use sop-code-implementation), or reviewing code not design (use sop-code-review).
+version: 1.1.0
+description: |
+  Designs detailed implementation (classes, methods, interfaces) from architecture.
+  触发词: design implementation, 实现设计, 详细设计, 设计类结构, interface, method.
+license: MIT
+compatibility: "Language-agnostic, works with any programming language and framework"
+metadata:
+  author: luckyMUMU
+  category: specification
+  tags: [implementation, design, detailed-design, interface]
+  language_agnostic: true
 ---
 
 # sop-implementation-designer

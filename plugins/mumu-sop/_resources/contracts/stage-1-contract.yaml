@@ -1,0 +1,190 @@
+---
+version: v5.0.0
+stage: 1
+description: 层级设计契约
+---
+
+# Stage 1 契约
+
+## 契约标识
+
+```yaml
+contract_id: stage-1-contract
+version: v5.0.0
+stage: 层级设计
+```
+
+## 输入契约
+
+```yaml
+required_inputs:
+  - name: "weight_decision"
+    type: object
+    path: "contracts/stage-0-decision.json"
+    description: "Stage 0 权重决策结果"
+
+  - name: "constraint_identification"
+    type: object
+    path: "contracts/stage-0-constraints.json"
+    description: "Stage 0 约束识别结果"
+
+  - name: "constitution_docs"
+    type: files
+    path: "_resources/constitution/"
+    description: "工程宪章文档"
+
+optional_inputs:
+  - name: "dual_cycle_artifacts"
+    type: object
+    description: "双循环决策产物（复杂需求）"
+```
+
+## 输出契约
+
+```yaml
+required_outputs:
+  - name: "p0_design"
+    type: object
+    path: "contracts/stage-1-p0-design.json"
+    format:
+      charter_updates: "工程宪章更新项"
+      new_constraints: "新增P0约束"
+      guardrail_check: "护栏检查结果"
+    guarantees:
+      - "P0设计符合工程宪章"
+      - "护栏检查通过"
+
+  - name: "p1_design"
+    type: object
+    path: "contracts/stage-1-p1-design.json"
+    format:
+      system_spec: "系统规范定义"
+      interfaces: "接口定义"
+      guardrail_check: "护栏检查结果"
+    guarantees:
+      - "P1设计继承P0约束"
+      - "接口定义清晰"
+
+  - name: "p2_design"
+    type: object
+    path: "contracts/stage-1-p2-design.json"
+    format:
+      module_spec: "模块规范定义"
+      api_contract: "API契约"
+      guardrail_check: "护栏检查结果"
+    guarantees:
+      - "P2设计继承P1约束"
+      - "API契约完整"
+
+  - name: "p3_design"
+    type: object
+    path: "contracts/stage-1-p3-design.json"
+    format:
+      impl_spec: "实现规范定义"
+      coding_standards: "编码标准"
+      guardrail_check: "护栏检查结果"
+    guarantees:
+      - "P3设计继承P2约束"
+      - "编码标准明确"
+
+  - name: "temp_node"
+    type: files
+    path: ".trae/specs/{change-id}/"
+    format:
+      - spec.md: "任务规范"
+      - tasks.md: "任务列表"
+      - checklist.md: "检查清单"
+    guarantees:
+      - "临时子节点创建完成"
+      - "引用关系建立正确"
+```
+
+## 行为契约
+
+```yaml
+preconditions:
+  - "Stage 0 已完成"
+  - "权重决策已确认"
+  - "工程宪章可访问"
+
+postconditions:
+  - "各层级设计文档已保存"
+  - "临时子节点已创建"
+  - "护栏检查全部通过"
+
+invariants:
+  - "设计必须从根开始（P0→P1→P2→P3）"
+  - "每层级设计必须通过护栏检查"
+  - "子约束不得违反父约束"
+```
+
+## 质量门控
+
+```yaml
+gate_conditions:
+  - id: "G1-001"
+    name: "P0设计完成"
+    check: "p0_design.guardrail_check == passed"
+    severity: "blocker"
+
+  - id: "G1-002"
+    name: "P1设计完成"
+    check: "p1_design.guardrail_check == passed"
+    severity: "blocker"
+
+  - id: "G1-003"
+    name: "P2设计完成"
+    check: "p2_design.guardrail_check == passed"
+    severity: "blocker"
+
+  - id: "G1-004"
+    name: "P3设计完成"
+    check: "p3_design.guardrail_check == passed"
+    severity: "blocker"
+
+  - id: "G1-005"
+    name: "临时子节点创建"
+    check: "temp_node/spec.md 存在"
+    severity: "blocker"
+
+  - id: "G1-006"
+    name: "用户确认"
+    check: "all designs user_approved == true"
+    severity: "blocker"
+```
+
+## 用户审查点
+
+```yaml
+review_checkpoints:
+  - stage: "P0设计"
+    trigger: "P0设计完成"
+    action: "等待用户审查确认"
+    rollback: "返回修改P0设计"
+
+  - stage: "P1设计"
+    trigger: "P1设计完成"
+    action: "等待用户审查确认"
+    rollback: "返回修改P1设计"
+
+  - stage: "P2设计"
+    trigger: "P2设计完成"
+    action: "等待用户审查确认"
+    rollback: "返回修改P2设计"
+
+  - stage: "P3设计"
+    trigger: "P3设计完成"
+    action: "等待用户审查确认"
+    rollback: "返回修改P3设计"
+
+  - stage: "临时子节点"
+    trigger: "临时子节点创建"
+    action: "等待用户审查确认"
+    rollback: "返回修改临时子节点"
+```
+
+## 相关文档
+
+- [工作流索引](../workflow/index.md)
+- [约束索引](../constraints/index.md)
+- [Stage 1 详解](../workflow/stage-1-design.md)

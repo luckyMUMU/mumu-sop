@@ -1,7 +1,16 @@
 ---
 name: sop-workflow-orchestrator
-version: 1.0.0
-description: Use when starting a new workflow from user requirements, transitioning between stages, querying workflow state, or handling workflow exceptions. Don't use for requirement analysis (use sop-dual-cycle-decision for complex or sop-requirement-analyst for simple), progress monitoring (use sop-progress-supervisor), executing specific tasks, or document sync (use sop-document-sync).
+version: 1.1.0
+description: |
+  Orchestrates the 5-stage SOP workflow (intent→design→implement→review→archive).
+  触发词: workflow, orchestrate, start workflow, 开始工作流, 执行流程, SOP.
+license: MIT
+compatibility: "Language-agnostic, works with any programming language and framework"
+metadata:
+  author: luckyMUMU
+  category: orchestration
+  tags: [workflow, orchestration, sop, process-management]
+  language_agnostic: true
 ---
 
 # sop-workflow-orchestrator

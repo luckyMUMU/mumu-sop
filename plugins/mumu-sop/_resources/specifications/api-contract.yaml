@@ -1,0 +1,371 @@
+openapi: 3.0.3
+info:
+  title: "[API 名称]"
+  description: |
+    [API 描述]
+
+    ## 规范层级
+    - **层级**: P1 级（系统规范）
+    - **约束强度**: 跨模块约束，需技术负责人审批
+    - **继承**: 继承 P0 工程宪章约束
+
+  version: "1.0.0"
+  contact:
+    name: "[团队名称]"
+    email: "[邮箱]"
+
+servers:
+  - url: https://api.example.com/v1
+    description: 生产环境
+  - url: https://api-staging.example.com/v1
+    description: 测试环境
+
+tags:
+  - name: "[资源名称]"
+    description: "[资源描述]"
+
+paths:
+  /resources:
+    get:
+      tags:
+        - "[资源名称]"
+      summary: "获取资源列表"
+      description: |
+        [详细描述]
+
+        **性能要求**: P95 < 200ms
+        **认证要求**: 需要 Bearer Token
+      operationId: listResources
+      parameters:
+        - name: page
+          in: query
+          description: 页码
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: pageSize
+          in: query
+          description: 每页数量
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: filter
+          in: query
+          description: 过滤条件
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceListResponse'
+              example:
+                code: 0
+                message: "success"
+                data:
+                  items: []
+                  total: 100
+                  page: 1
+                  pageSize: 20
+        '400':
+          description: 请求参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: 未授权
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: 服务器内部错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - bearerAuth: []
+
+    post:
+      tags:
+        - "[资源名称]"
+      summary: "创建资源"
+      description: |
+        [详细描述]
+
+        **性能要求**: P95 < 500ms
+      operationId: createResource
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateResourceRequest'
+            example:
+              name: "示例名称"
+              type: "TYPE_A"
+      responses:
+        '201':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceResponse'
+        '400':
+          description: 请求参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: 资源已存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - bearerAuth: []
+
+  /resources/{id}:
+    get:
+      tags:
+        - "[资源名称]"
+      summary: "获取资源详情"
+      operationId: getResource
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 资源ID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceResponse'
+        '404':
+          description: 资源不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - bearerAuth: []
+
+    put:
+      tags:
+        - "[资源名称]"
+      summary: "更新资源"
+      operationId: updateResource
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateResourceRequest'
+      responses:
+        '200':
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceResponse'
+        '404':
+          description: 资源不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - bearerAuth: []
+
+    delete:
+      tags:
+        - "[资源名称]"
+      summary: "删除资源"
+      operationId: deleteResource
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: 删除成功
+        '404':
+          description: 资源不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+        - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        JWT 认证令牌
+
+        获取方式：通过 /auth/token 接口获取
+
+  schemas:
+    Resource:
+      type: object
+      required:
+        - id
+        - name
+        - createdAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: 资源唯一标识
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: 资源名称
+        type:
+          type: string
+          enum: [TYPE_A, TYPE_B, TYPE_C]
+          description: 资源类型
+        status:
+          type: string
+          enum: [ACTIVE, INACTIVE, PENDING]
+          default: PENDING
+          description: 资源状态
+        metadata:
+          type: object
+          additionalProperties: true
+          description: 扩展元数据
+        createdAt:
+          type: string
+          format: date-time
+          description: 创建时间
+        updatedAt:
+          type: string
+          format: date-time
+          description: 更新时间
+
+    CreateResourceRequest:
+      type: object
+      required:
+        - name
+        - type
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        type:
+          type: string
+          enum: [TYPE_A, TYPE_B, TYPE_C]
+        metadata:
+          type: object
+          additionalProperties: true
+
+    UpdateResourceRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        status:
+          type: string
+          enum: [ACTIVE, INACTIVE]
+        metadata:
+          type: object
+          additionalProperties: true
+
+    ResourceResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 0
+        message:
+          type: string
+          example: "success"
+        data:
+          $ref: '#/components/schemas/Resource'
+
+    ResourceListResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 0
+        message:
+          type: string
+          example: "success"
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/Resource'
+            total:
+              type: integer
+              description: 总数量
+            page:
+              type: integer
+              description: 当前页码
+            pageSize:
+              type: integer
+              description: 每页数量
+
+    ErrorResponse:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          description: 错误码
+          example: 400001
+        message:
+          type: string
+          description: 错误信息
+          example: "Invalid parameter"
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              message:
+                type: string
+
+security:
+  - bearerAuth: []

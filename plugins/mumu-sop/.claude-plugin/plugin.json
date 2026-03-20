@@ -1,12 +1,13 @@
 {
   "name": "mumu-sop",
   "description": "SOP (Standard Operating Procedure) Skills for software development workflow. Includes 14 skills covering orchestration, specification, implementation, verification, and documentation. Use when managing development workflows, conducting code reviews, implementing features with design-by-contract principles, or creating technical documentation.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "luckyMUMU"
   },
   "repository": "https://github.com/luckyMUMU/mumu-sop",
   "license": "MIT",
+  "language_agnostic": true,
   "keywords": [
     "sop",
     "workflow",
@@ -15,5 +16,57 @@
     "architecture",
     "tdd",
     "bdd"
-  ]
+  ],
+  "skills": {
+    "language_agnostic": [
+      "sop-workflow-orchestrator",
+      "sop-architecture-design",
+      "sop-architecture-reviewer",
+      "sop-code-implementation",
+      "sop-requirement-analyst",
+      "sop-document-creator",
+      "sop-code-review",
+      "sop-code-explorer",
+      "sop-document-sync",
+      "sop-dual-cycle-decision",
+      "sop-implementation-designer",
+      "sop-progress-supervisor",
+      "sop-test-implementation"
+    ],
+    "language_specific": {
+      "spring-code-reviewer": {
+        "languages": ["Java", "Spring Boot"],
+        "frameworks": ["Spring Framework", "Spring Boot", "Spring Cloud"],
+        "description": "Specialized code reviewer for Java/Spring ecosystems with deep knowledge of Spring patterns, JPA, and enterprise Java best practices."
+      }
+    }
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": {
+          "type": "always"
+        },
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "检查是否存在 contracts/workflow-state.json 文件。如果存在，读取工作流状态并向用户简要展示：当前阶段、已完成阶段、待处理事项。如果不存在，无需任何操作。"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": {
+          "type": "always"
+        },
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "如果当前有活跃的 SOP 工作流（已执行过任何 sop-* Skill），则保存工作流状态到 contracts/workflow-state.json，记录：当前阶段、已完成阶段、待处理事项、关键决策摘要。如果无活跃工作流，无需任何操作。"
+          }
+        ]
+      }
+    ]
+  }
 }

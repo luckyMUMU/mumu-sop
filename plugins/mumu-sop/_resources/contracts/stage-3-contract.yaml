@@ -1,0 +1,185 @@
+---
+version: v5.0.0
+stage: 3
+description: 变更审查与确认契约
+---
+
+# Stage 3 契约
+
+## 契约标识
+
+```yaml
+contract_id: stage-3-contract
+version: v5.0.0
+stage: 变更审查与确认
+```
+
+## 输入契约
+
+```yaml
+required_inputs:
+  - name: "code_changes"
+    type: git_diff
+    description: "Stage 2 代码变更"
+
+  - name: "test_results"
+    type: object
+    path: "contracts/stage-2-test-report.json"
+    description: "Stage 2 测试结果"
+
+  - name: "guardrail_results"
+    type: object
+    path: "contracts/stage-2-guardrail.json"
+    description: "Stage 2 护栏检查结果"
+
+  - name: "design_docs"
+    type: files
+    description: "设计文档（P0-P3）"
+
+optional_inputs:
+  - name: "previous_review"
+    type: object
+    path: "contracts/code-review.json"
+    description: "历史审查报告"
+```
+
+## 输出契约
+
+```yaml
+required_outputs:
+  - name: "review_report"
+    type: object
+    path: "contracts/stage-3-review.json"
+    format:
+      review_status: "passed|failed|conditional"
+      review_summary: "审查摘要"
+      issues: "问题列表"
+      security_scan: "安全扫描结果"
+    guarantees:
+      - "审查报告完整"
+      - "安全问题已报告"
+
+  - name: "user_confirmation"
+    type: object
+    path: "contracts/stage-3-confirmation.json"
+    format:
+      confirmed: boolean
+      confirmed_at: "确认时间"
+      comments: "用户意见"
+    guarantees:
+      - "用户确认记录已保存"
+```
+
+## 行为契约
+
+```yaml
+preconditions:
+  - "Stage 2 已完成"
+  - "代码变更已提交"
+  - "测试已通过"
+
+postconditions:
+  - "审查报告已生成"
+  - "用户已确认"
+  - "问题已记录"
+
+invariants:
+  - "审查必须客观准确"
+  - "安全问题必须报告"
+  - "核心模块覆盖率必须100%"
+```
+
+## 质量门控
+
+```yaml
+gate_conditions:
+  - id: "G3-001"
+    name: "护栏检查完成"
+    check: "所有P0-P3护栏检查通过"
+    severity: "blocker"
+
+  - id: "G3-002"
+    name: "代码审查完成"
+    check: "review_report.review_status != failed"
+    severity: "blocker"
+
+  - id: "G3-003"
+    name: "安全扫描通过"
+    check: "review_report.security_scan.vulnerabilities 为空"
+    severity: "blocker"
+
+  - id: "G3-004"
+    name: "用户确认"
+    check: "user_confirmation.confirmed == true"
+    severity: "blocker"
+```
+
+## 审查维度
+
+```yaml
+review_dimensions:
+  - dimension: "代码规范"
+    checks:
+      - "命名规范"
+      - "代码格式"
+      - "注释完整性"
+      - "代码复杂度"
+
+  - dimension: "设计遵循"
+    checks:
+      - "类结构符合设计"
+      - "方法签名符合设计"
+      - "数据结构符合设计"
+
+  - dimension: "测试覆盖"
+    checks:
+      - "单元测试覆盖率"
+      - "核心模块覆盖率"
+      - "测试质量"
+
+  - dimension: "安全检查"
+    checks:
+      - "无硬编码密钥"
+      - "无已知漏洞依赖"
+      - "输入验证完整"
+      - "敏感信息脱敏"
+```
+
+## 变更范围判定
+
+```yaml
+change_scope_rules:
+  - scope: "P3变更"
+    criteria: "仅影响实现规范"
+    examples:
+      - "代码重构"
+      - "命名调整"
+    approval: "自动化工具"
+
+  - scope: "P2变更"
+    criteria: "影响模块规范"
+    examples:
+      - "模块接口变更"
+      - "新增功能"
+    approval: "模块负责人"
+
+  - scope: "P1变更"
+    criteria: "影响系统规范"
+    examples:
+      - "架构调整"
+      - "性能优化"
+    approval: "技术负责人"
+
+  - scope: "P0变更"
+    criteria: "影响工程宪章"
+    examples:
+      - "安全策略变更"
+      - "质量红线调整"
+    approval: "技术委员会"
+```
+
+## 相关文档
+
+- [工作流索引](../workflow/index.md)
+- [约束索引](../constraints/index.md)
+- [Stage 3 详解](../workflow/stage-3-deliver.md)

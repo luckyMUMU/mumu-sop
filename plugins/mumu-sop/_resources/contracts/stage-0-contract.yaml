@@ -1,0 +1,144 @@
+---
+version: v5.0.0
+stage: 0
+description: 意图分析与约束识别契约
+---
+
+# Stage 0 契约
+
+## 契约标识
+
+```yaml
+contract_id: stage-0-contract
+version: v5.0.0
+stage: 意图分析与约束识别
+```
+
+## 输入契约
+
+```yaml
+required_inputs:
+  - name: "user_request"
+    type: string
+    description: "用户任务请求描述"
+
+  - name: "context"
+    type: object
+    description: "当前上下文信息"
+    properties:
+      - project_root: "项目根目录路径"
+      - existing_specs: "现有规范文档列表"
+
+optional_inputs:
+  - name: "previous_decisions"
+    type: array
+    description: "历史决策记录，用于上下文恢复"
+```
+
+## 输出契约
+
+```yaml
+required_outputs:
+  - name: "intent_analysis"
+    type: object
+    path: "contracts/stage-0-intent.json"
+    format:
+      user_intent: "用户意图描述"
+      business_goal: "业务目标"
+      success_criteria: "成功标准"
+    guarantees:
+      - "意图分析清晰明确"
+      - "业务目标可量化"
+
+  - name: "constraint_identification"
+    type: object
+    path: "contracts/stage-0-constraints.json"
+    format:
+      p0_constraints: "P0级约束列表"
+      p1_constraints: "P1级约束列表"
+      p2_constraints: "P2级约束列表"
+      p3_constraints: "P3级约束列表"
+    guarantees:
+      - "相关约束已识别"
+      - "约束继承关系正确"
+
+  - name: "weight_decision"
+    type: object
+    path: "contracts/stage-0-decision.json"
+    format:
+      complexity: "low|medium|high"
+      path: "shallow|deep"
+      suggested_stages: "建议执行的阶段列表"
+      dual_cycle_required: boolean
+    guarantees:
+      - "决策有明确依据"
+      - "路径选择合理"
+```
+
+## 行为契约
+
+```yaml
+preconditions:
+  - "用户请求已接收"
+  - "工程宪章文档可访问"
+
+postconditions:
+  - "意图分析记录已保存"
+  - "约束识别结果已保存"
+  - "权重决策已保存"
+
+invariants:
+  - "意图分析必须客观"
+  - "约束识别必须完整"
+  - "决策必须有依据"
+```
+
+## 质量门控
+
+```yaml
+gate_conditions:
+  - id: "G0-001"
+    name: "意图清晰"
+    check: "intent_analysis.user_intent 非空且具体"
+    severity: "blocker"
+
+  - id: "G0-002"
+    name: "约束识别完成"
+    check: "constraint_identification.p0_constraints 非空"
+    severity: "blocker"
+
+  - id: "G0-003"
+    name: "决策路径明确"
+    check: "weight_decision.path 已确定"
+    severity: "blocker"
+```
+
+## 双循环决策契约（复杂需求）
+
+```yaml
+dual_cycle_contract:
+  trigger_condition:
+    - "complexity == high"
+    - "需求涉及多个模块"
+    - "需求存在歧义"
+
+  outer_cycle:
+    output: "contracts/stage-0-dual-cycle-outer.json"
+    fields:
+      - intent_questions: "意图澄清问题列表"
+      - decision_paths: "决策路径选项"
+      - execution_plan: "执行计划草案"
+
+  inner_cycle:
+    output: "contracts/stage-0-dual-cycle-inner.json"
+    fields:
+      - path_review: "路径审查意见"
+      - plan_dry_run: "计划预演结果"
+      - final_recommendation: "最终建议"
+```
+
+## 相关文档
+
+- [工作流索引](../workflow/index.md)
+- [约束索引](../constraints/index.md)
+- [Stage 0 详解](../workflow/stage-0-weight.md)
