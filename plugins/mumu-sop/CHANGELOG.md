@@ -9,10 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Hooks Support**: Added SessionStart and SessionEnd hooks for workflow state persistence
-  - SessionStart: Automatically restores workflow state from `contracts/workflow-state.json`
-  - SessionEnd: Automatically saves workflow state at session end
-
 - **References Directory**: Added `references/` directories to all 14 skills with examples and templates
   - 17 reference files created (examples.md, templates.md, check-patterns.md)
 

@@ -40,33 +40,5 @@
         "description": "Specialized code reviewer for Java/Spring ecosystems with deep knowledge of Spring patterns, JPA, and enterprise Java best practices."
       }
     }
-  },
-  "hooks": {
-    "SessionStart": [
-      {
-        "matcher": {
-          "type": "always"
-        },
-        "hooks": [
-          {
-            "type": "prompt",
-            "prompt": "检查是否存在 contracts/workflow-state.json 文件。如果存在，读取工作流状态并向用户简要展示：当前阶段、已完成阶段、待处理事项。如果不存在，无需任何操作。"
-          }
-        ]
-      }
-    ],
-    "SessionEnd": [
-      {
-        "matcher": {
-          "type": "always"
-        },
-        "hooks": [
-          {
-            "type": "prompt",
-            "prompt": "如果当前有活跃的 SOP 工作流（已执行过任何 sop-* Skill），则保存工作流状态到 contracts/workflow-state.json，记录：当前阶段、已完成阶段、待处理事项、关键决策摘要。如果无活跃工作流，无需任何操作。"
-          }
-        ]
-      }
-    ]
   }
 }
