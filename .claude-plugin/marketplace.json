@@ -1,17 +1,17 @@
 {
   "name": "mumu-sop-marketplace",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "owner": {
     "name": "luckyMUMU"
   },
   "metadata": {
-    "description": "SOP (Standard Operating Procedure) Skills marketplace for software development workflow. Contains the mumu-sop plugin with 14 skills covering orchestration, specification, implementation, verification, and documentation."
+    "description": "SOP (Standard Operating Procedure) Skills marketplace for software development workflow. Contains the mumu-sop plugin with 18 skills covering orchestration, specification, implementation, verification, maintenance, and documentation."
   },
   "plugins": [
     {
       "name": "mumu-sop",
       "source": "./plugins/mumu-sop",
-      "description": "SOP Skills for software development workflow with 14 skills covering orchestration, specification, implementation, verification, and documentation."
+      "description": "SOP Skills for software development workflow with 18 skills covering orchestration, specification, implementation, verification, maintenance, and documentation."
     }
   ]
 }

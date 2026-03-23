@@ -1,7 +1,7 @@
 {
   "name": "mumu-sop",
-  "version": "1.2.0",
-  "description": "SOP (Standard Operating Procedure) Skills for software development workflow. Includes 14 skills covering orchestration, specification, implementation, verification, and documentation. Use when managing development workflows, conducting code reviews, implementing features with design-by-contract principles, or creating technical documentation.",
+  "version": "1.3.0",
+  "description": "SOP (Standard Operating Procedure) Skills for software development workflow. Includes 18 skills covering orchestration, specification, implementation, verification, maintenance, and documentation. Use when managing development workflows, conducting code reviews, implementing features with design-by-contract principles, bug analysis, refactoring, or creating technical documentation.",
   "author": {
     "name": "luckyMUMU"
   },
@@ -14,7 +14,10 @@
     "development",
     "architecture",
     "tdd",
-    "bdd"
+    "bdd",
+    "bug-analysis",
+    "refactor",
+    "tech-debt"
   ],
   "metadata": {
     "language_agnostic": true,
@@ -32,7 +35,11 @@
         "sop-dual-cycle-decision",
         "sop-implementation-designer",
         "sop-progress-supervisor",
-        "sop-test-implementation"
+        "sop-test-implementation",
+        "sop-bug-analysis",
+        "sop-code-refactor",
+        "sop-tech-debt-manager",
+        "sop-dependency-manager"
       ],
       "language_specific": {
         "spring-code-reviewer": {

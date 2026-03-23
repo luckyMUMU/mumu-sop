@@ -5,6 +5,38 @@ All notable changes to the mumu-sop plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-03-23
+
+### Added
+
+- **Maintenance Phase Skills**: 4 new skills for software maintenance scenarios
+  - `sop-bug-analysis`: Bug analysis with root cause analysis and reproduction tests
+  - `sop-code-refactor`: Structured refactoring with TDD protection
+  - `sop-tech-debt-manager`: Technical debt identification, prioritization, and planning
+  - `sop-dependency-manager`: Dependency upgrade with impact analysis
+
+- **Constraint Tree Mapping**: All new skills map to P0-P3 constraint hierarchy
+  - P0: Security vulnerabilities, data risks
+  - P1: System stability issues
+  - P2: Module functionality defects
+  - P3: UI/style issues
+
+- **Quick Paths**: Added quick entry points for common scenarios
+  - Bug fix: sop-bug-analysis → fix → verify
+  - Refactor: sop-code-refactor → test → refactor → verify
+  - Tech debt: sop-tech-debt-manager → identify → plan → repay
+  - Dependency: sop-dependency-manager → check → analyze → upgrade → verify
+
+- **Test Coverage**: Complete test suite for new skills
+  - 8 trigger test files (triggers.md)
+  - 8 functional test files (functional.md)
+
+### Changed
+
+- **Skill Index**: Updated to 18 skills with new maintenance category
+- **Description**: Updated plugin description to reflect 18 skills and maintenance support
+- **Keywords**: Added bug-analysis, refactor, tech-debt keywords
+
 ## [1.2.0] - 2026-03-23
 
 ### Changed

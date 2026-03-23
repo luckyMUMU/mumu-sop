@@ -1,6 +1,6 @@
 ---
-version: v1.1.0
-plugin_version: 1.1.0
+version: v1.3.0
+plugin_version: 1.3.0
 language_agnostic: true
 ---
 
@@ -14,7 +14,7 @@ language_agnostic: true
 
 ```mermaid
 mindmap
-  root((14个 Skill))
+  root((18个 Skill))
     编排类（3个）【语言无关】
       sop-workflow-orchestrator
         默认入口
@@ -46,6 +46,15 @@ mindmap
         代码审查
       spring-code-reviewer【Java/Spring专用】
         Spring/Java架构级审查
+    维护类（4个）【语言无关】
+      sop-bug-analysis
+        Bug分析
+      sop-code-refactor
+        代码重构
+      sop-tech-debt-manager
+        技术债务管理
+      sop-dependency-manager
+        依赖管理
     文档类（1个）【语言无关】
       sop-document-creator
         文档创建
@@ -91,12 +100,45 @@ mindmap
 
 > ⚠️ **语言特定说明**: `spring-code-reviewer` 仅适用于 Java/Spring 项目。对于其他语言，请使用 `sop-code-review`。
 
+## 维护类 Skill
+**职责**: 处理软件开发维护阶段的各类场景
+
+| Skill | 触发词 | 描述 | 输入 | 输出 |
+|-------|--------|------|------|------|
+| [sop-bug-analysis](./sop-bug-analysis/SKILL.md) | `$bug`, `$analyze` | Bug分析与根因定位 | Bug描述、复现步骤 | 复现测试、分析报告 |
+| [sop-code-refactor](./sop-code-refactor/SKILL.md) | `$refactor`, `$clean` | 安全重构代码 | 重构目标、代码位置 | 重构后代码、变更报告 |
+| [sop-tech-debt-manager](./sop-tech-debt-manager/SKILL.md) | `$tech-debt`, `$debt` | 技术债务管理 | 代码库、关注领域 | 债务报告、偿还计划 |
+| [sop-dependency-manager](./sop-dependency-manager/SKILL.md) | `$dependency`, `$upgrade` | 依赖升级管理 | 依赖名称、目标版本 | 升级报告 |
+
 ## 文档类 Skill
 **职责**: 创建符合最佳实践的技术文档
 
 | Skill | 触发词 | 描述 | 输入 | 输出 |
 |-------|--------|------|------|------|
 | [sop-document-creator](./sop-document-creator/SKILL.md) | `$doc`, `$create-doc` | 创建技术文档 | 文档类型、内容来源 | 规范文档 |
+
+## 约束树映射
+
+Skill 执行过程中需遵循约束树层级：
+
+| 约束层级 | 优先级 | 说明 | 相关Skill |
+|----------|--------|------|-----------|
+| **P0 工程宪章** | 最高 | 安全、数据完整性、系统可用性 | 所有Skill（不变量） |
+| **P1 系统规范** | 高 | 系统架构、接口契约、性能要求 | sop-architecture-design, sop-bug-analysis |
+| **P2 模块规范** | 中 | 模块职责、API设计、测试覆盖 | sop-code-implementation, sop-code-refactor |
+| **P3 实现规范** | 低 | 代码风格、命名约定、注释规范 | sop-code-review, sop-tech-debt-manager |
+
+## 快捷路径
+
+针对常见场景的 Skill 快速入口：
+
+| 场景 | 入口Skill | 典型流程 |
+|------|-----------|----------|
+| **新功能开发** | sop-workflow-orchestrator | 需求→设计→实现→测试→审查 |
+| **Bug修复** | sop-bug-analysis | 分析→复现测试→修复→验证 |
+| **代码重构** | sop-code-refactor | 识别坏味道→补充测试→重构→验证 |
+| **技术债务** | sop-tech-debt-manager | 识别→评估→计划→偿还 |
+| **依赖升级** | sop-dependency-manager | 检查→分析→升级→验证 |
 
 ## 资源引用
 
