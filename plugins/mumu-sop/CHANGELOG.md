@@ -5,6 +5,24 @@ All notable changes to the mumu-sop plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-03-23
+
+### Changed
+
+- **TDD Compliance**: Restructured `sop-code-implementation` to enforce Red-Green-Refactor cycle
+  - Step order changed: now requires writing failing tests before implementation
+  - Added explicit TDD cycle verification with mermaid diagram
+  - Added "跳过红阶段直接实现" as a new pitfall (坑1)
+  - Updated skill version from 1.1.0 to 1.2.0
+
+- **Test Updates**: Updated functional tests for `sop-code-implementation`
+  - Added 4 new TDD-specific test cases (Red/Green/Refactor phases + full cycle)
+  - Removed outdated non-TDD test cases
+
+- **Plugin Manifest**: Fixed plugin.json to comply with Claude Code specification
+  - Moved non-standard fields (`language_agnostic`, `skills`) to `metadata`
+  - Added CLAUDE.md for repository context
+
 ## [1.1.0] - 2026-03-20
 
 ### Added

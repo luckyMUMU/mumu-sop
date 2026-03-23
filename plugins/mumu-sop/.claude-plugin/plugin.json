@@ -1,6 +1,6 @@
 {
   "name": "mumu-sop",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "SOP (Standard Operating Procedure) Skills for software development workflow. Includes 14 skills covering orchestration, specification, implementation, verification, and documentation. Use when managing development workflows, conducting code reviews, implementing features with design-by-contract principles, or creating technical documentation.",
   "author": {
     "name": "luckyMUMU"
