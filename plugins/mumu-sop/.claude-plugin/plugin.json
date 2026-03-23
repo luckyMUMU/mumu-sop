@@ -1,13 +1,12 @@
 {
   "name": "mumu-sop",
-  "description": "SOP (Standard Operating Procedure) Skills for software development workflow. Includes 14 skills covering orchestration, specification, implementation, verification, and documentation. Use when managing development workflows, conducting code reviews, implementing features with design-by-contract principles, or creating technical documentation.",
   "version": "1.1.0",
+  "description": "SOP (Standard Operating Procedure) Skills for software development workflow. Includes 14 skills covering orchestration, specification, implementation, verification, and documentation. Use when managing development workflows, conducting code reviews, implementing features with design-by-contract principles, or creating technical documentation.",
   "author": {
     "name": "luckyMUMU"
   },
   "repository": "https://github.com/luckyMUMU/mumu-sop",
   "license": "MIT",
-  "language_agnostic": true,
   "keywords": [
     "sop",
     "workflow",
@@ -17,27 +16,30 @@
     "tdd",
     "bdd"
   ],
-  "skills": {
-    "language_agnostic": [
-      "sop-workflow-orchestrator",
-      "sop-architecture-design",
-      "sop-architecture-reviewer",
-      "sop-code-implementation",
-      "sop-requirement-analyst",
-      "sop-document-creator",
-      "sop-code-review",
-      "sop-code-explorer",
-      "sop-document-sync",
-      "sop-dual-cycle-decision",
-      "sop-implementation-designer",
-      "sop-progress-supervisor",
-      "sop-test-implementation"
-    ],
-    "language_specific": {
-      "spring-code-reviewer": {
-        "languages": ["Java", "Spring Boot"],
-        "frameworks": ["Spring Framework", "Spring Boot", "Spring Cloud"],
-        "description": "Specialized code reviewer for Java/Spring ecosystems with deep knowledge of Spring patterns, JPA, and enterprise Java best practices."
+  "metadata": {
+    "language_agnostic": true,
+    "skillCategories": {
+      "language_agnostic": [
+        "sop-workflow-orchestrator",
+        "sop-architecture-design",
+        "sop-architecture-reviewer",
+        "sop-code-implementation",
+        "sop-requirement-analyst",
+        "sop-document-creator",
+        "sop-code-review",
+        "sop-code-explorer",
+        "sop-document-sync",
+        "sop-dual-cycle-decision",
+        "sop-implementation-designer",
+        "sop-progress-supervisor",
+        "sop-test-implementation"
+      ],
+      "language_specific": {
+        "spring-code-reviewer": {
+          "languages": ["Java", "Spring Boot"],
+          "frameworks": ["Spring Framework", "Spring Boot", "Spring Cloud"],
+          "description": "Specialized code reviewer for Java/Spring ecosystems with deep knowledge of Spring patterns, JPA, and enterprise Java best practices."
+        }
       }
     }
   }
