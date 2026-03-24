@@ -205,20 +205,27 @@ P3-TEMP-001:
   name: 临时子节点独立存储
   desc: |
     临时子节点独立存储，不物理存储在约束树中：
-    - 存储位置：.trae/specs/{change-id}/
-    - 包含文件：spec.md, tasks.md, checklist.md
-    - 元数据：引用的 P3 节点 ID
+    - 主存储位置：.sop/specs/{change-id}/
+    - 兼容路径：.trae/specs/{change-id}/（与 Trae IDE 兼容）
+    - 包含文件：.meta.yaml, proposal.md, design.md, specs/, tasks.md, checklist.md
+    - 元数据：引用的 P3 节点 ID、复杂度评估
   verify: 文件结构检查
   handle: 提示，建议按规范存储
   exception: 无例外
   storage:
-    path: ".trae/specs/{change-id}/"
+    primary: ".sop/specs/{change-id}/"
+    compatible: ".trae/specs/{change-id}/"
     files:
-      - spec.md: 任务规范文档，定义临时约束
-      - tasks.md: 任务列表，定义执行步骤
-      - checklist.md: 检查清单，定义验证标准
+      - .meta.yaml: 元数据（状态、约束引用、时间戳）
+      - proposal.md: 变更提案（Why & What）
+      - design.md: 技术设计
+      - specs/: 详细规范目录
+      - tasks.md: 任务列表（含依赖关系和并行组）
+      - checklist.md: 检查清单
     metadata:
       - referenced_p3_node: 引用的 P3 节点 ID
+      - complexity: 复杂度评估
+      - estimated_depth: 预估树深度
       - created_at: 创建时间
       - status: 任务状态
 
@@ -248,22 +255,28 @@ P3-TEMP-003:
 ### 临时子节点存储结构
 
 ```
-.trae/specs/{change-id}/
-├── spec.md        # 任务规范文档
-│   ├── Why        # 问题/机会描述
-│   ├── What       # 变更内容
-│   ├── Impact     # 影响范围
-│   └── Requirements # 需求定义
-├── tasks.md       # 任务列表
-│   ├── Tasks      # 任务清单
-│   └── Dependencies # 依赖关系
-├── checklist.md   # 检查清单
-│   └── Checkpoints # 检查点
-└── .meta.yaml     # 元数据
-    ├── referenced_p3_node: "P3-IMPL-XXX"
-    ├── created_at: "2026-03-15T10:00:00Z"
-    ├── status: "in_progress"
-    └── archived_at: null
+.sop/specs/{change-id}/           # 主存储路径
+├── .meta.yaml                    # 元数据
+│   ├── change_id: 变更ID
+│   ├── complexity: 复杂度评估
+│   ├── estimated_depth: 预估树深度
+│   ├── constraint_references: 约束引用
+│   ├── status: 任务状态
+│   └── paths: {primary, compatible}
+├── proposal.md                   # 变更提案
+│   ├── Why: 问题/机会描述
+│   ├── What: 变更内容
+│   └── Impact: 影响范围
+├── specs/                        # 详细规范
+│   ├── requirements.md: 需求规范
+│   └── scenarios.md: BDD场景
+├── design.md                     # 技术设计
+├── tasks.md                      # 任务列表（含依赖和并行组）
+├── checklist.md                  # 检查清单
+└── .trae/specs/{change-id}/      # 兼容路径（符号链接）
+
+.trae/specs/{change-id}/          # 兼容路径（与 Trae IDE 兼容）
+└── [符号链接到 .sop/specs/]
 ```
 
 ## P3 层级护栏

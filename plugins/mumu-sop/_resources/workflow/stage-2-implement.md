@@ -18,11 +18,13 @@ preconditions:
       validation: 阶段1必须通过
     - name: temp_node
       type: directory
-      path: .trae/specs/{change-id}/
+      path: .sop/specs/{change-id}/
+      compatible_path: .trae/specs/{change-id}/
       validation: 临时子节点必须存在
     - name: execution_plan
       type: file
-      path: .trae/specs/{change-id}/execution-plan.md
+      path: .sop/specs/{change-id}/execution-plan.md
+      compatible_path: .trae/specs/{change-id}/execution-plan.md
       validation: 执行计划必须存在
   constraints:
     - 阶段1必须通过质量门控

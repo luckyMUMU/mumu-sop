@@ -1,6 +1,6 @@
 {
   "name": "mumu-sop",
-  "version": "1.3.0",
+  "version": "1.5.0",
   "description": "SOP (Standard Operating Procedure) Skills for software development workflow. Includes 18 skills covering orchestration, specification, implementation, verification, maintenance, and documentation. Use when managing development workflows, conducting code reviews, implementing features with design-by-contract principles, bug analysis, refactoring, or creating technical documentation.",
   "author": {
     "name": "luckyMUMU"
@@ -48,6 +48,65 @@
           "description": "Specialized code reviewer for Java/Spring ecosystems with deep knowledge of Spring patterns, JPA, and enterprise Java best practices."
         }
       }
+    },
+    "agents": {
+      "sop-agent": {
+        "path": "agents/sop-agent/AGENT.md",
+        "description": "SOP 工作流入口 Agent，负责引导用户按照 5 阶段工作流执行软件开发任务。自动分析任务复杂度，动态调整 spec 树深度。",
+        "triggers": ["sop", "workflow", "开始工作流", "propose", "提案"]
+      }
+    },
+    "hooks": {
+      "pre-apply": {
+        "path": "hooks/pre-apply-hook.sh",
+        "description": "Stage 2 实现前验证临时节点完整性",
+        "triggers": ["stage-2-start", "pre-implement"],
+        "actions": [
+          {
+            "name": "verify-temp-node",
+            "description": "验证临时子节点结构完整性"
+          },
+          {
+            "name": "guardrail-check",
+            "description": "执行各层级护栏预检查"
+          },
+          {
+            "name": "complexity-confirmation",
+            "description": "确认动态深度分析结果"
+          },
+          {
+            "name": "dependency-subtree-check",
+            "description": "检查第三方依赖子树状态"
+          }
+        ]
+      },
+      "post-archive": {
+        "path": "hooks/post-archive-hook.sh",
+        "description": "Stage 4 归档后自动更新约束树",
+        "triggers": ["stage-4-complete", "post-archive"],
+        "actions": [
+          {
+            "name": "spec-tree-update",
+            "description": "从 P3 向上更新约束树"
+          },
+          {
+            "name": "reference-cleanup",
+            "description": "解除临时子节点引用关系"
+          },
+          {
+            "name": "changelog-update",
+            "description": "更新 CHANGELOG"
+          },
+          {
+            "name": "constraint-validation",
+            "description": "验证约束树完整性"
+          }
+        ]
+      }
+    },
+    "specStorage": {
+      "primary": ".sop/specs/",
+      "compatible": [".trae/specs/"]
     }
   }
 }

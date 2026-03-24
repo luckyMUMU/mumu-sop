@@ -1,0 +1,281 @@
+# Pre-Apply Hook
+
+此 Hook 在 Stage 2 实现开始前自动验证临时节点完整性。
+
+## 触发条件
+
+```yaml
+trigger:
+  event: Stage_2_Starting
+  condition: 用户已确认执行
+```
+
+## 执行动作
+
+### 1. 临时节点验证 (verify-temp-node)
+
+验证临时子节点结构完整性：
+
+```yaml
+action:
+  name: verify-temp-node
+  handler: sop-temp-node-verifier
+  steps:
+    - step: 1
+      name: 检查存储路径
+      action: 验证 .sop/specs/{change-id}/ 或 .trae/specs/{change-id}/ 存在
+      on_failure: 阻止执行
+
+    - step: 2
+      name: 检查必需文件
+      action: 验证以下文件存在
+      required_files:
+        - .meta.yaml
+        - proposal.md
+        - design.md
+        - tasks.md
+        - checklist.md
+      on_failure: 阻止执行
+
+    - step: 3
+      name: 检查元数据完整性
+      action: 验证 .meta.yaml 包含必需字段
+      required_fields:
+        - change_id
+        - status
+        - referenced_p3_node
+        - complexity
+        - estimated_depth
+        - created_at
+      on_failure: 阻止执行
+
+    - step: 4
+      name: 验证任务列表
+      action: 验证 tasks.md 中的任务定义
+      checks:
+        - 每个任务有唯一 ID
+        - 依赖关系有效（无循环）
+        - 并行组定义正确
+      on_failure: 阻止执行
+
+    - step: 5
+      name: 验证检查清单
+      action: 验证 checklist.md 包含验收标准
+      on_failure: 警告用户
+
+    - step: 6
+      name: 验证 P3 引用
+      action: 确认 .meta.yaml 中的 referenced_p3_node 有效
+      on_failure: 阻止执行
+```
+
+### 2. 护栏检查 (guardrail-check)
+
+执行各层级护栏预检查：
+
+```yaml
+action:
+  name: guardrail-check
+  handler: sop-guardrail-checker
+  steps:
+    - step: 1
+      name: P0 护栏预检
+      action: 检查设计是否违反 P0 红线
+      severity: blocker
+      checks:
+        - 无硬编码密钥
+        - 无禁止的依赖
+        - 无架构违规
+
+    - step: 2
+      name: P1 护栏预检
+      action: 检查设计是否违反 P1 约束
+      severity: warning
+      checks:
+        - API 设计符合规范
+        - 性能要求明确
+        - 接口定义完整
+
+    - step: 3
+      name: P2 护栏预检
+      action: 检查设计是否违反 P2 约束
+      severity: warning
+      checks:
+        - 模块边界清晰
+        - 命名符合约定
+        - 测试计划完整
+
+    - step: 4
+      name: P3 护栏预检
+      action: 检查设计是否违反 P3 约束
+      severity: info
+      checks:
+        - 编码规范明确
+        - 注释要求清晰
+        - Git 提交规范
+```
+
+### 3. 复杂度确认 (complexity-confirmation)
+
+确认动态深度分析结果：
+
+```yaml
+action:
+  name: complexity-confirmation
+  handler: sop-complexity-analyzer
+  steps:
+    - step: 1
+      name: 读取复杂度评估
+      action: 从 .meta.yaml 读取 complexity 和 estimated_depth
+
+    - step: 2
+      name: 重新评估
+      action: 基于当前代码库状态重新评估复杂度
+
+    - step: 3
+      name: 对比分析
+      action: 对比原始评估与当前评估
+      on_change: 通知用户确认深度调整
+
+    - step: 4
+      name: 记录最终深度
+      action: 更新 .meta.yaml 中的最终执行深度
+```
+
+### 4. 依赖子树检查 (dependency-subtree-check)
+
+检查第三方依赖子树状态：
+
+```yaml
+action:
+  name: dependency-subtree-check
+  handler: sop-dependency-checker
+  steps:
+    - step: 1
+      name: 识别依赖
+      action: 从 design.md 识别使用的第三方依赖
+
+    - step: 2
+      name: 检查依赖子树
+      action: 验证依赖子树存在且有效
+      path: constraints/dependencies/DEP-{name}/
+
+    - step: 3
+      name: 检查只读状态
+      action: 确认依赖子树未被修改
+      check: .meta.yaml readonly == true
+
+    - step: 4
+      name: 验证能力匹配
+      action: 确认依赖提供的能力满足需求
+```
+
+## 输出
+
+```yaml
+outputs:
+  - path: contracts/stage-2-pre-check.json
+    content:
+      temp_node_valid: true
+      guardrail_results:
+        P0: passed
+        P1: passed
+        P2: passed
+        P3: passed
+      complexity_confirmed: true
+      depth: 4
+      dependencies_valid: true
+      ready_to_proceed: true
+
+  - path: contracts/stage-2-blockers.json
+    condition: 存在阻断性问题
+    content:
+      blockers: []
+      warnings: []
+```
+
+## 阻断条件
+
+```yaml
+block_conditions:
+  - condition: temp_node_valid == false
+    action: 阻止 Stage 2 启动
+    message: 临时节点验证失败
+
+  - condition: P0_guardrail == failed
+    action: 阻止 Stage 2 启动
+    message: P0 护栏检查失败
+
+  - condition: dependency_readonly_violation
+    action: 阻止 Stage 2 启动
+    message: 依赖子树只读违规
+
+  - condition: circular_dependencies_in_tasks
+    action: 阻止 Stage 2 启动
+    message: 任务存在循环依赖
+```
+
+## Hook 脚本
+
+```bash
+#!/bin/bash
+# .claude-plugin/hooks/pre-apply-hook.sh
+
+# 读取执行确认
+CONFIRMATION="contracts/stage-1-confirmation.json"
+CHANGE_ID=$(grep -o '"change_id": *"[^"]*"' "$CONFIRMATION" | cut -d'"' -f4)
+
+if [ -z "$CHANGE_ID" ]; then
+    echo "Error: Cannot find change ID in confirmation"
+    exit 1
+fi
+
+echo "Starting pre-apply hook for change: $CHANGE_ID"
+
+# 确定存储路径
+if [ -d ".sop/specs/$CHANGE_ID" ]; then
+    SPEC_PATH=".sop/specs/$CHANGE_ID"
+elif [ -d ".trae/specs/$CHANGE_ID" ]; then
+    SPEC_PATH=".trae/specs/$CHANGE_ID"
+else
+    echo "Error: Temporary node not found"
+    exit 1
+fi
+
+echo "Found temporary node at: $SPEC_PATH"
+
+# 执行临时节点验证
+echo "Step 1: Verifying temporary node..."
+# 由 Agent 执行 verify-temp-node 流程
+
+# 执行护栏检查
+echo "Step 2: Checking guardrails..."
+# 由 Agent 执行 guardrail-check 流程
+
+# 确认复杂度
+echo "Step 3: Confirming complexity..."
+# 由 Agent 执行 complexity-confirmation 流程
+
+# 检查依赖子树
+echo "Step 4: Checking dependency subtrees..."
+# 由 Agent 执行 dependency-subtree-check 流程
+
+# 检查是否有阻断性问题
+if [ -f "contracts/stage-2-blockers.json" ]; then
+    BLOCKERS=$(grep -o '"blockers": *\[[^]]*\]' "contracts/stage-2-blockers.json")
+    if [ "$BLOCKERS" != '"blockers": []' ]; then
+        echo "Error: Blockers found, cannot proceed with Stage 2"
+        cat contracts/stage-2-blockers.json
+        exit 1
+    fi
+fi
+
+echo "Pre-apply hook completed successfully, ready for Stage 2"
+```
+
+## 相关文档
+
+- [临时节点结构](../templates/temporary/.meta.yaml)
+- [动态深度分析](../templates/workflow/depth-analysis.md)
+- [Stage 2 详解](../workflow/stage-2-implement.md)
+- [Stage 2 契约](../contracts/stage-2-contract.yaml)

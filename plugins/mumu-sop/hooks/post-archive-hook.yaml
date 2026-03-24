@@ -1,0 +1,219 @@
+# Post-Archive Hook
+
+此 Hook 在 Stage 4 归档完成后自动触发约束树更新。
+
+## 触发条件
+
+```yaml
+trigger:
+  event: Stage_4_Completed
+  condition: archive_record.archived_at 非空
+```
+
+## 执行动作
+
+### 1. 约束树更新 (spec-tree-update)
+
+从 P3 开始逐层向上更新约束树：
+
+```yaml
+action:
+  name: spec-tree-update
+  handler: sop-spec-tree-updater
+  steps:
+    - step: 1
+      name: P3 约束验证
+      action: 验证临时子节点实现是否符合 P3 约束
+      output: P3 验证结果
+
+    - step: 2
+      name: P3 规范更新
+      action: 如有变更，更新 P3 规范文档
+      condition: 验证通过且存在变更
+
+    - step: 3
+      name: P2 约束验证
+      action: 验证变更是否符合 P2 约束
+      depends_on: step 2
+
+    - step: 4
+      name: P2 规范更新
+      action: 如有变更，更新 P2 规范文档
+      condition: 验证通过且存在变更
+
+    - step: 5
+      name: P1 约束验证
+      action: 验证变更是否符合 P1 约束
+      depends_on: step 4
+
+    - step: 6
+      name: P1 规范更新
+      action: 如有变更，更新 P1 规范文档
+      condition: 验证通过且存在变更
+
+    - step: 7
+      name: P0 约束验证
+      action: 验证变更是否符合 P0 宪章
+      depends_on: step 6
+      requires_approval: true  # P0 变更需要用户确认
+
+    - step: 8
+      name: P0 宪章更新
+      action: 如有变更，更新 P0 宪章文档
+      condition: 验证通过且用户已确认
+```
+
+### 2. 引用关系解除 (reference-cleanup)
+
+解除临时子节点与 P3 节点的引用关联：
+
+```yaml
+action:
+  name: reference-cleanup
+  handler: sop-reference-cleaner
+  steps:
+    - step: 1
+      name: 读取元数据
+      action: 读取 .sop/specs/{change-id}/.meta.yaml
+
+    - step: 2
+      name: 解除引用
+      action: 从 P3 节点的子节点列表中移除临时节点引用
+
+    - step: 3
+      name: 记录解除
+      action: 写入 contracts/stage-4-reference.json
+
+    - step: 4
+      name: 清理临时文件
+      action: 移动临时节点到归档目录
+      condition: 所有更新成功
+```
+
+### 3. CHANGELOG 更新 (changelog-update)
+
+```yaml
+action:
+  name: changelog-update
+  handler: sop-changelog-writer
+  steps:
+    - step: 1
+      name: 收集变更信息
+      action: 从临时节点和约束树更新中收集变更
+
+    - step: 2
+      name: 格式化 CHANGELOG
+      action: 按照标准格式生成 CHANGELOG 条目
+
+    - step: 3
+      name: 更新文件
+      action: 追加到 CHANGELOG.md
+```
+
+### 4. 约束验证 (constraint-validation)
+
+```yaml
+action:
+  name: constraint-validation
+  handler: sop-constraint-validator
+  steps:
+    - step: 1
+      name: 完整性检查
+      action: 验证约束树结构完整性
+
+    - step: 2
+      name: 继承关系检查
+      action: 验证子约束正确继承父约束
+
+    - step: 3
+      name: 冲突检查
+      action: 检测约束间是否存在冲突
+
+    - step: 4
+      name: 写入报告
+      action: 生成 contracts/stage-4-constraint-validation.json
+```
+
+## 输出
+
+```yaml
+outputs:
+  - path: contracts/stage-4-constraint-update.json
+    content:
+      updated_nodes: []
+      new_nodes: []
+      deprecated_nodes: []
+
+  - path: contracts/stage-4-reference.json
+    content:
+      removed_references: []
+      cleanup_status: completed
+
+  - path: CHANGELOG.md
+    action: append
+
+  - path: contracts/stage-4-constraint-validation.json
+    content:
+      tree_integrity: true
+      inheritance_valid: true
+      conflicts: []
+```
+
+## 错误处理
+
+```yaml
+error_handling:
+  - error: P0 验证失败
+    action: 暂停更新，通知用户审批
+
+  - error: 约束冲突
+    action: 记录冲突，暂停更新，提供解决方案
+
+  - error: 引用解除失败
+    action: 回滚已执行的更新，记录错误
+
+  - error: CHANGELOG 更新失败
+    action: 记录错误，不影响其他操作
+```
+
+## Hook 脚本
+
+```bash
+#!/bin/bash
+# .claude-plugin/hooks/post-archive-hook.sh
+
+# 读取归档记录
+ARCHIVE_RECORD="contracts/stage-4-archive.json"
+CHANGE_ID=$(grep -o '"source_change_id": *"[^"]*"' "$ARCHIVE_RECORD" | cut -d'"' -f4)
+
+if [ -z "$CHANGE_ID" ]; then
+    echo "Error: Cannot find change ID in archive record"
+    exit 1
+fi
+
+echo "Starting post-archive hook for change: $CHANGE_ID"
+
+# 执行约束树更新
+echo "Step 1: Updating constraint tree from P3 to P0..."
+# 由 Agent 执行 spec-tree-update 流程
+
+# 解除引用关系
+echo "Step 2: Cleaning up temporary node references..."
+# 由 Agent 执行 reference-cleanup 流程
+
+# 更新 CHANGELOG
+echo "Step 3: Updating CHANGELOG..."
+# 由 Agent 执行 changelog-update 流程
+
+# 验证约束树
+echo "Step 4: Validating constraint tree..."
+# 由 Agent 执行 constraint-validation 流程
+
+echo "Post-archive hook completed successfully"
+```
+
+## 相关文档
+
+- [约束树更新流程](../templates/workflow/spec-tree-update-flow.md)
+- [Stage 4 详解](../workflow/stage-4-archive.md)
+- [Stage 4 契约](../contracts/stage-4-contract.yaml)

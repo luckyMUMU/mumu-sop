@@ -5,6 +5,71 @@ All notable changes to the mumu-sop plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-03-24
+
+### Added
+
+- **Automation Hooks**: Automatic workflow triggers at key stages
+  - `pre-apply-hook`: Validates temporary node integrity before Stage 2
+  - `post-archive-hook`: Updates constraint tree after Stage 4
+  - Hook actions: verify-temp-node, guardrail-check, spec-tree-update, reference-cleanup
+
+- **Hook Documentation**: Complete hook index and YAML configuration files
+  - `hooks/index.md`: Comprehensive hook documentation
+  - `hooks/pre-apply-hook.yaml`: Pre-apply hook configuration
+  - `hooks/post-archive-hook.yaml`: Post-archive hook configuration
+
+### Changed
+
+- **Plugin Version**: Updated to 1.5.0
+- **Templates Index**: Updated to v6.1.0 with hook templates section
+- **Skill Index**: Added Agent and Hooks sections
+
+## [1.4.0] - 2026-03-24
+
+### Added
+
+- **Entry Agent**: `sop-agent` as unified workflow entry point
+  - Automatic complexity analysis
+  - Dynamic depth adjustment (2-4 levels)
+  - Workflow guidance and monitoring
+
+- **OpenSpec-inspired Templates**: Enhanced temporary node structure
+  - `proposal.md`: Change proposal with complexity assessment
+  - `design.md`: Technical design with dependency subtree references
+  - `specs/requirements.md`: Requirements specification
+  - `specs/scenarios.md`: BDD scenarios with Gherkin syntax
+  - `.meta.yaml`: Metadata with complexity factors
+
+- **Task Dependencies**: Parallel execution support in tasks.md
+  - `dependencies` field for task ordering
+  - `parallel_group` field for concurrent execution
+  - Mermaid diagrams for task dependency visualization
+
+- **Dynamic Depth Analysis**: Adaptive spec tree depth
+  - Low complexity: depth 2 (P0 → P1 → temp)
+  - Medium complexity: depth 3 (P0 → P1 → P2 → temp)
+  - High complexity: depth 4 (P0 → P1 → P2 → P3 → temp)
+
+- **Dependency Subtrees**: Third-party dependency management
+  - `dependency-subtree.md` template
+  - Readonly protection (`readonly: true`)
+  - Capability and constraint documentation
+
+- **Spec Tree Update Flow**: Post-archive constraint tree updates
+  - P3 → P2 → P1 → P0 upward validation
+  - Reference cleanup mechanism
+
+- **Dual-Path Storage**: Compatibility with Trae IDE
+  - Primary path: `.sop/specs/{change-id}/`
+  - Compatible path: `.trae/specs/{change-id}/`
+
+### Changed
+
+- **Constraint Tree References**: Updated all workflow and contract files for dual-path support
+- **Architecture Principles**: Added OpenSpec reference and dynamic depth sections
+- **Example Files**: Updated with task dependencies and complexity assessment
+
 ## [1.3.0] - 2026-03-23
 
 ### Added

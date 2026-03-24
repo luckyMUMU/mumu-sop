@@ -40,8 +40,9 @@ required_inputs:
 
   - name: "temp_node"
     type: files
-    path: ".trae/specs/{change-id}/"
-    description: "临时子节点文件"
+    path: ".sop/specs/{change-id}/"
+    compatible_path: ".trae/specs/{change-id}/"
+    description: "临时子节点文件（参考 OpenSpec 设计）"
 
 optional_inputs:
   - name: "existing_code"

@@ -122,17 +122,21 @@ steps:
     user_confirm: 必须用户审查确认
 
   - id: 5
-    name: 临时子节点创建
+    name: 临时子节点创建（参考 OpenSpec 设计）
     actions:
-      - 创建独立存储目录：.trae/specs/{change-id}/
-      - 创建 spec.md：任务规范文档
-      - 创建 tasks.md：任务列表
+      - 创建独立存储目录：.sop/specs/{change-id}/
+      - 创建兼容链接：.trae/specs/{change-id}/
+      - 创建 .meta.yaml：元数据（状态、约束引用、复杂度）
+      - 创建 proposal.md：变更提案（Why & What）
+      - 创建 design.md：技术设计
+      - 创建 specs/：详细规范目录
+      - 创建 tasks.md：任务列表（含依赖关系和并行组）
       - 创建 checklist.md：检查清单
-      - 创建 .meta.yaml：元数据（引用 P3 节点）
       - 进行临时子节点护栏检查
     output:
       - 临时子节点文件
       - 临时子节点护栏检查结果
+      - 复杂度评估报告
     user_confirm: 必须用户审查确认
 
   - id: 6

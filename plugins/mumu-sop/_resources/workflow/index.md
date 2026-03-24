@@ -112,7 +112,7 @@ graph TB
     end
     
     subgraph 临时子节点["临时子节点（独立存储）"]
-        TEMP["临时子节点<br/>.trae/specs/{change-id}/<br/>spec.md + tasks.md + checklist.md"]
+        TEMP["临时子节点<br/>.sop/specs/{change-id}/<br/>（主路径）<br/>.trae/specs/{change-id}/<br/>（兼容路径）<br/>proposal.md + design.md + specs/ + tasks.md + checklist.md"]
     end
     
     P3 -.->|"引用关联"| TEMP

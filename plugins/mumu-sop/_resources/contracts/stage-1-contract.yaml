@@ -89,14 +89,19 @@ required_outputs:
 
   - name: "temp_node"
     type: files
-    path: ".trae/specs/{change-id}/"
+    path: ".sop/specs/{change-id}/"
+    compatible_path: ".trae/specs/{change-id}/"
     format:
-      - spec.md: "任务规范"
-      - tasks.md: "任务列表"
+      - .meta.yaml: "元数据（状态、约束引用、复杂度）"
+      - proposal.md: "变更提案"
+      - design.md: "技术设计"
+      - specs/: "详细规范目录"
+      - tasks.md: "任务列表（含依赖关系）"
       - checklist.md: "检查清单"
     guarantees:
       - "临时子节点创建完成"
       - "引用关系建立正确"
+      - "复杂度评估完成"
 ```
 
 ## 行为契约

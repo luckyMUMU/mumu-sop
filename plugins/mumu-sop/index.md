@@ -1,6 +1,6 @@
 ---
-version: v1.3.0
-plugin_version: 1.3.0
+version: v1.5.0
+plugin_version: 1.5.0
 language_agnostic: true
 ---
 
@@ -59,6 +59,28 @@ mindmap
       sop-document-creator
         文档创建
 ```
+
+## 入口 Agent
+
+**sop-agent** 是 SOP 工作流的统一入口 Agent，自动分析任务复杂度并引导用户按工作流执行。
+
+| Agent | 触发词 | 描述 | 功能 |
+|-------|--------|------|------|
+| [sop-agent](./agents/sop-agent/AGENT.md) | `sop`, `workflow`, `propose` | 工作流入口 | 复杂度分析、动态深度调整、引导工作流 |
+
+### Agent 工作流程
+
+```
+用户请求 → 复杂度分析 → 确定树深度 → 构建精简树 → 按树深度执行设计 → 从叶子开始实现
+```
+
+### 动态深度规则
+
+| 复杂度 | 深度 | 层级 |
+|--------|------|------|
+| 低 | 2 | P0 → P1 → 临时节点 |
+| 中 | 3 | P0 → P1 → P2 → 临时节点 |
+| 高 | 4 | P0 → P1 → P2 → P3 → 临时节点 |
 
 ## 编排类 Skill
 
@@ -128,6 +150,34 @@ Skill 执行过程中需遵循约束树层级：
 | **P2 模块规范** | 中 | 模块职责、API设计、测试覆盖 | sop-code-implementation, sop-code-refactor |
 | **P3 实现规范** | 低 | 代码风格、命名约定、注释规范 | sop-code-review, sop-tech-debt-manager |
 
+## 自动化 Hooks
+
+SOP 提供自动化 Hook，在工作流关键节点自动触发验证和更新：
+
+### Pre-Apply Hook
+
+**触发时机**: Stage 2 实现开始前
+
+| 动作 | 描述 | 严重性 |
+|------|------|--------|
+| verify-temp-node | 验证临时子节点结构完整性 | blocker |
+| guardrail-check | 执行各层级护栏预检查 | blocker/warning |
+| complexity-confirmation | 确认动态深度分析结果 | info |
+| dependency-subtree-check | 检查第三方依赖子树状态 | blocker |
+
+### Post-Archive Hook
+
+**触发时机**: Stage 4 归档完成后
+
+| 动作 | 描述 | 顺序 |
+|------|------|------|
+| spec-tree-update | 从 P3 向上更新约束树 | 1 |
+| reference-cleanup | 解除临时子节点引用关系 | 2 |
+| changelog-update | 更新 CHANGELOG | 3 |
+| constraint-validation | 验证约束树完整性 | 4 |
+
+详细文档: [hooks/index.md](./hooks/index.md)
+
 ## 快捷路径
 
 针对常见场景的 Skill 快速入口：
@@ -147,3 +197,5 @@ Skill 执行过程中需遵循约束树层级：
 - [_resources/workflow/](./_resources/workflow/) - 工作流资源
 - [_resources/templates/](./_resources/templates/) - 模板资源
 - [_resources/specifications/](./_resources/specifications/) - 规范资源
+- [agents/sop-agent/](./agents/sop-agent/) - 入口 Agent
+- [hooks/](./hooks/) - 自动化 Hooks
