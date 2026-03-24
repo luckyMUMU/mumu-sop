@@ -1,7 +1,7 @@
 {
   "name": "mumu-sop",
-  "version": "1.5.0",
-  "description": "SOP (Standard Operating Procedure) Skills for software development workflow. Includes 18 skills covering orchestration, specification, implementation, verification, maintenance, and documentation. Use when managing development workflows, conducting code reviews, implementing features with design-by-contract principles, bug analysis, refactoring, or creating technical documentation.",
+  "version": "2.0.0",
+  "description": "SOP (Standard Operating Procedure) Skills for software development workflow. Includes 18 skills covering orchestration, specification, implementation, verification, maintenance, and documentation. Use when managing development workflows, conducting code reviews, implementing features with design-by-contract principles, bug analysis, refactoring, or creating documentation.",
   "author": {
     "name": "luckyMUMU"
   },
@@ -17,36 +17,44 @@
     "bdd",
     "bug-analysis",
     "refactor",
-    "tech-debt"
+    "tech-debt",
+    "progressive-disclosure"
   ],
   "metadata": {
     "language_agnostic": true,
     "skillCategories": {
       "language_agnostic": [
-        "sop-workflow-orchestrator",
-        "sop-architecture-design",
-        "sop-architecture-reviewer",
-        "sop-code-implementation",
-        "sop-requirement-analyst",
-        "sop-document-creator",
-        "sop-code-review",
-        "sop-code-explorer",
-        "sop-document-sync",
-        "sop-dual-cycle-decision",
-        "sop-implementation-designer",
+        "sop-orchestrator",
+        "sop-sync",
         "sop-progress-supervisor",
-        "sop-test-implementation",
-        "sop-bug-analysis",
-        "sop-code-refactor",
+        "sop-decision-analyst",
+        "sop-requirement-analyst",
+        "sop-architecture-designer",
+        "sop-implementation-designer",
+        "sop-code-explorer",
+        "sop-code-implementer",
+        "sop-test-implementer",
+        "sop-architecture-reviewer",
+        "sop-code-reviewer",
+        "sop-bug-analyst",
+        "sop-code-refactorer",
         "sop-tech-debt-manager",
-        "sop-dependency-manager"
+        "sop-dependency-manager",
+        "sop-document-writer"
       ],
       "language_specific": {
-        "spring-code-reviewer": {
+        "sop-spring-reviewer": {
           "languages": ["Java", "Spring Boot"],
           "frameworks": ["Spring Framework", "Spring Boot", "Spring Cloud"],
           "description": "Specialized code reviewer for Java/Spring ecosystems with deep knowledge of Spring patterns, JPA, and enterprise Java best practices."
         }
+      }
+    },
+    "commands": {
+      "init-spec-tree": {
+        "path": "commands/init-spec-tree.md",
+        "description": "初始化或更新项目的约束树（Spec Tree）结构，创建 P0-P3 级别的约束目录和文件",
+        "triggers": ["init-spec", "init-tree", "初始化约束树", "创建spec树"]
       }
     },
     "agents": {

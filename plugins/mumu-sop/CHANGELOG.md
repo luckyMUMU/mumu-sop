@@ -5,6 +5,121 @@ All notable changes to the mumu-sop plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2026-03-24
+
+### Breaking Changes
+
+**Skill Renaming**: All skills renamed to follow consistent naming conventions by category
+
+| Category | Old Name | New Name |
+|----------|----------|----------|
+| 编排 | sop-workflow-orchestrator | sop-orchestrator |
+| 编排 | sop-document-sync | sop-sync |
+| 规范 | sop-dual-cycle-decision | sop-decision-analyst |
+| 规范 | sop-architecture-design | sop-architecture-designer |
+| 实现 | sop-code-implementation | sop-code-implementer |
+| 实现 | sop-test-implementation | sop-test-implementer |
+| 验证 | sop-code-review | sop-code-reviewer |
+| 验证 | spring-code-reviewer | sop-spring-reviewer |
+| 维护 | sop-bug-analysis | sop-bug-analyst |
+| 维护 | sop-code-refactor | sop-code-refactorer |
+
+**Skill Merge**: `sop-document-creator` + `sop-human-doc-writer` → `sop-document-writer`
+
+- Now supports dual mode: technical mode (for developers) and human mode (progressive disclosure)
+- Total skills reduced from 19 to 18
+
+### Naming Convention
+
+| Category | Suffix | Example |
+|----------|--------|---------|
+| 编排类 | -er/-or | sop-orchestrator, sop-sync, sop-progress-supervisor |
+| 规范类 | -analyst/-designer | sop-decision-analyst, sop-architecture-designer |
+| 实现类 | -er | sop-code-implementer, sop-test-implementer |
+| 验证类 | -reviewer | sop-code-reviewer, sop-spring-reviewer |
+| 维护类 | -analyst/-er/-manager | sop-bug-analyst, sop-code-refactorer |
+| 文档类 | -writer | sop-document-writer |
+
+### Changed
+
+- **Plugin Version**: Updated to 2.0.0
+- **Total Skills**: 18 (was 19, merged 2 document skills)
+- All skill directories and test directories renamed
+- All SKILL.md name fields updated
+- plugin.json skillCategories updated with new names
+- index.md updated with new skill names and mindmap
+
+## [1.7.1] - 2026-03-24
+
+### Changed
+
+- **sop-document-sync**: Added constraint tree mapping section (P0-P3 document sync requirements)
+- **sop-document-creator**: Added constraint tree mapping section (document type vs constraint level)
+- Both skills now explicitly reference workflow stages and constraint hierarchy
+
+## [1.7.0] - 2026-03-24
+
+### Added
+
+- **sop-human-doc-writer Skill**: New skill for creating human-readable documents with progressive disclosure
+  - Supports 4 progressive disclosure modes: execution, reference, decision, learning
+  - Follows industry standards (ISO 26514, IEEE 830, WCAG 2.1)
+  - Creates user guides, requirements documents, compliance documents, training materials
+  - 4-layer information architecture: headline → summary → body → deep dive
+
+- **Progressive Disclosure References**:
+  - `references/examples.md`: Examples for all 4 disclosure modes
+  - `references/standards.md`: Industry standards reference (ISO, IEEE, WCAG)
+
+- **Test Coverage for sop-human-doc-writer**:
+  - `tests/sop-human-doc-writer/triggers.md`: Trigger tests
+  - `tests/sop-human-doc-writer/functional.md`: Functional tests including disclosure structure validation
+
+### Changed
+
+- **Plugin Version**: Updated to 1.7.0
+- **Total Skills**: Now 19 skills (was 18)
+- **Document Category**: Now contains 2 skills (sop-document-creator for technical docs, sop-human-doc-writer for human docs)
+- **Skill Index**: Updated mindmap and documentation section
+
+## [1.6.0] - 2026-03-24
+
+### Added
+
+- **init-spec-tree Command**: Initialize or update project constraint tree
+  - Creates `.sop/` directory structure with P0-P3 constraint folders
+  - Generates constraint templates and index files
+  - Creates compatible symlink at `.trae/specs/`
+  - Options: `--force`, `--depth`, `--project`
+
+- **Commands Directory**: New `commands/` directory for CLI commands
+  - `init-spec-tree.md`: Full command documentation
+  - `commands/index.md`: Commands index
+
+- **Initialization Templates**: Templates for constraint tree setup
+  - `constitution/charter.md`: Engineering charter template with security/quality/architecture red lines
+  - `constraints/tree.yaml`: Constraint tree configuration template
+  - `constraints/index.md`: Constraint index template with P0-P3 categories
+
+- **References for Maintenance Skills**: Added examples documentation
+  - `sop-code-refactor/references/examples.md`: Refactoring patterns and examples
+  - `sop-dependency-manager/references/examples.md`: Dependency upgrade scenarios
+  - `sop-tech-debt-manager/references/examples.md`: Technical debt assessment templates
+
+### Changed
+
+- **Plugin Version**: Updated to 1.6.0
+- **Agent System Prompt**: Added init-spec-tree command and initialization check
+- **Agent Documentation**: Added init-spec-tree command to AGENT.md
+- **Skill Index**: Added commands section
+- **Templates Index**: Updated to v6.2.0 with initialization templates section
+- **Tests Index**: Added 4 maintenance skills to test index
+
+### Fixed
+
+- Added missing references directories for maintenance skills
+- Updated tests/index.md to include all 18 skills
+
 ## [1.5.0] - 2026-03-24
 
 ### Added

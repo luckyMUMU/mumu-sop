@@ -28,22 +28,53 @@
 
 ## 测试用例索引
 
+### 编排类
+
 | Skill | 触发测试 | 功能测试 |
 |-------|----------|----------|
-| sop-workflow-orchestrator | [triggers.md](./sop-workflow-orchestrator/triggers.md) | [functional.md](./sop-workflow-orchestrator/functional.md) |
-| sop-requirement-analyst | [triggers.md](./sop-requirement-analyst/triggers.md) | [functional.md](./sop-requirement-analyst/functional.md) |
-| sop-architecture-design | [triggers.md](./sop-architecture-design/triggers.md) | [functional.md](./sop-architecture-design/functional.md) |
-| sop-implementation-designer | [triggers.md](./sop-implementation-designer/triggers.md) | [functional.md](./sop-implementation-designer/functional.md) |
-| sop-code-explorer | [triggers.md](./sop-code-explorer/triggers.md) | [functional.md](./sop-code-explorer/functional.md) |
-| sop-code-implementation | [triggers.md](./sop-code-implementation/triggers.md) | [functional.md](./sop-code-implementation/functional.md) |
-| sop-test-implementation | [triggers.md](./sop-test-implementation/triggers.md) | [functional.md](./sop-test-implementation/functional.md) |
-| sop-architecture-reviewer | [triggers.md](./sop-architecture-reviewer/triggers.md) | [functional.md](./sop-architecture-reviewer/functional.md) |
-| sop-code-review | [triggers.md](./sop-code-review/triggers.md) | [functional.md](./sop-code-review/functional.md) |
-| spring-code-reviewer | [triggers.md](./spring-code-reviewer/triggers.md) | [functional.md](./spring-code-reviewer/functional.md) |
-| sop-document-creator | [triggers.md](./sop-document-creator/triggers.md) | [functional.md](./sop-document-creator/functional.md) |
-| sop-document-sync | [triggers.md](./sop-document-sync/triggers.md) | [functional.md](./sop-document-sync/functional.md) |
-| sop-dual-cycle-decision | [triggers.md](./sop-dual-cycle-decision/triggers.md) | [functional.md](./sop-dual-cycle-decision/functional.md) |
+| sop-orchestrator | [triggers.md](./sop-orchestrator/triggers.md) | [functional.md](./sop-orchestrator/functional.md) |
+| sop-sync | [triggers.md](./sop-sync/triggers.md) | [functional.md](./sop-sync/functional.md) |
 | sop-progress-supervisor | [triggers.md](./sop-progress-supervisor/triggers.md) | [functional.md](./sop-progress-supervisor/functional.md) |
+
+### 规范类
+
+| Skill | 触发测试 | 功能测试 |
+|-------|----------|----------|
+| sop-decision-analyst | [triggers.md](./sop-decision-analyst/triggers.md) | [functional.md](./sop-decision-analyst/functional.md) |
+| sop-requirement-analyst | [triggers.md](./sop-requirement-analyst/triggers.md) | [functional.md](./sop-requirement-analyst/functional.md) |
+| sop-architecture-designer | [triggers.md](./sop-architecture-designer/triggers.md) | [functional.md](./sop-architecture-designer/functional.md) |
+| sop-implementation-designer | [triggers.md](./sop-implementation-designer/triggers.md) | [functional.md](./sop-implementation-designer/functional.md) |
+
+### 实现类
+
+| Skill | 触发测试 | 功能测试 |
+|-------|----------|----------|
+| sop-code-explorer | [triggers.md](./sop-code-explorer/triggers.md) | [functional.md](./sop-code-explorer/functional.md) |
+| sop-code-implementer | [triggers.md](./sop-code-implementer/triggers.md) | [functional.md](./sop-code-implementer/functional.md) |
+| sop-test-implementer | [triggers.md](./sop-test-implementer/triggers.md) | [functional.md](./sop-test-implementer/functional.md) |
+
+### 验证类
+
+| Skill | 触发测试 | 功能测试 |
+|-------|----------|----------|
+| sop-architecture-reviewer | [triggers.md](./sop-architecture-reviewer/triggers.md) | [functional.md](./sop-architecture-reviewer/functional.md) |
+| sop-code-reviewer | [triggers.md](./sop-code-reviewer/triggers.md) | [functional.md](./sop-code-reviewer/functional.md) |
+| sop-spring-reviewer | [triggers.md](./sop-spring-reviewer/triggers.md) | [functional.md](./sop-spring-reviewer/functional.md) |
+
+### 维护类
+
+| Skill | 触发测试 | 功能测试 |
+|-------|----------|----------|
+| sop-bug-analyst | [triggers.md](./sop-bug-analyst/triggers.md) | [functional.md](./sop-bug-analyst/functional.md) |
+| sop-code-refactorer | [triggers.md](./sop-code-refactorer/triggers.md) | [functional.md](./sop-code-refactorer/functional.md) |
+| sop-tech-debt-manager | [triggers.md](./sop-tech-debt-manager/triggers.md) | [functional.md](./sop-tech-debt-manager/functional.md) |
+| sop-dependency-manager | [triggers.md](./sop-dependency-manager/triggers.md) | [functional.md](./sop-dependency-manager/functional.md) |
+
+### 文档类
+
+| Skill | 触发测试 | 功能测试 |
+|-------|----------|----------|
+| sop-document-writer | [triggers.md](./sop-document-writer/triggers.md) | [functional.md](./sop-document-writer/functional.md) |
 
 ---
 
@@ -57,5 +88,5 @@
 
 ---
 
-**文档版本**: v1.0.0
-**最后更新**: 2026-03-20
+**文档版本**: v2.0.0
+**最后更新**: 2026-03-24

@@ -88,6 +88,17 @@ Stage 4: 归档与约束树更新
 
 ## 可用命令
 
+### /init-spec-tree [选项]
+
+初始化或更新项目的约束树（Spec Tree）结构。
+
+**选项**:
+- `--force` - 强制覆盖现有文件
+- `--depth=N` - 初始化深度 (1-4)
+- `--project=名称` - 项目名称
+
+**用途**: 首次使用 SOP 工作流前，创建约束树基础结构。详见 [commands/init-spec-tree.md](../../commands/init-spec-tree.md)。
+
 ### /sop:propose [描述]
 
 创建新的变更提案。

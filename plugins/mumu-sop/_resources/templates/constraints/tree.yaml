@@ -1,0 +1,153 @@
+---
+version: v1.0.0
+description: 约束树配置模板，定义 P0-P3 层级结构和存储位置
+---
+
+# 约束树配置
+
+此文件定义项目的约束树结构和存储配置。
+
+---
+
+## 基本信息
+
+| 项目 | 值 |
+|------|-----|
+| 项目名称 | ${project_name} |
+| 创建时间 | ${timestamp} |
+| 版本 | v1.0.0 |
+| 状态 | initialized |
+
+---
+
+## 树结构定义
+
+### P0: 工程宪章
+
+```yaml
+name: 工程宪章
+description: 安全、质量、架构红线
+severity: blocker
+file: constitution/charter.md
+children:
+  - P1
+```
+
+### P1: 系统规范
+
+```yaml
+name: 系统规范
+description: 性能、可用性、接口约束
+severity: warning
+parent: P0
+directory: constraints/p1/
+children:
+  - P2
+```
+
+### P2: 模块规范
+
+```yaml
+name: 模块规范
+description: 代码质量、文档、测试约束
+severity: warning
+parent: P1
+directory: constraints/p2/
+children:
+  - P3
+```
+
+### P3: 实现规范
+
+```yaml
+name: 实现规范
+description: 编码规范、注释、Git 规范
+severity: info
+parent: P2
+directory: constraints/p3/
+children: []
+```
+
+---
+
+## 存储配置
+
+```yaml
+storage:
+  primary: .sop/
+  compatible:
+    - .trae/
+
+  directories:
+    specs: specs/
+    constraints: constraints/
+    constitution: constitution/
+    contracts: contracts/
+    dependencies: constraints/dependencies/
+```
+
+---
+
+## 严重性级别
+
+| 级别 | 说明 | 违规处理 |
+|------|------|----------|
+| blocker | 不可违背 | 立即阻止，必须修复 |
+| warning | 警告 | 记录问题，需要审批 |
+| info | 提示 | 自动修复或记录日志 |
+
+---
+
+## 依赖子树
+
+```yaml
+dependencies:
+  enabled: true
+  directory: constraints/dependencies/
+  readonly: true
+  naming_pattern: DEP-{dependency-name}
+```
+
+---
+
+## 动态深度规则
+
+```yaml
+depth_rules:
+  low_complexity:
+    depth: 2
+    skip_levels: [P2, P3]
+
+  medium_complexity:
+    depth: 3
+    skip_levels: [P3]
+
+  high_complexity:
+    depth: 4
+    skip_levels: []
+```
+
+---
+
+## 验证配置
+
+```yaml
+validation:
+  pre_commit: true
+  pre_merge: true
+  pre_release: true
+
+  tools:
+    - static_analysis
+    - dependency_check
+    - coverage_check
+    - architecture_test
+```
+
+---
+
+## 变更历史
+
+| 版本 | 日期 | 变更内容 | 变更人 |
+|------|------|----------|--------|
+| v1.0.0 | ${timestamp} | 初始化约束树 | init-spec-tree |

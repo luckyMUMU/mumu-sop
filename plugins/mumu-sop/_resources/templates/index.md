@@ -1,5 +1,5 @@
 ---
-version: v6.1.0
+version: v6.2.0
 updated: 2026-03-24
 language_agnostic: true
 ---
@@ -14,6 +14,18 @@ language_agnostic: true
 ## 概述
 
 本目录存放所有模板文件，包括约束模板、临时约束模板、文档模板、契约模板、报告模板、工作流模板、依赖子树模板和 Hook 模板。
+
+---
+
+## 约束树初始化模板
+
+**用途**: `/init-spec-tree` 命令使用的模板文件
+
+| 模板 | 用途 | 说明 |
+|------|------|------|
+| [constitution/charter.md](constitution/charter.md) | 工程宪章模板 | P0 级约束文档模板 |
+| [constraints/tree.yaml](constraints/tree.yaml) | 约束树配置模板 | 定义层级结构和存储配置 |
+| [constraints/index.md](constraints/index.md) | 约束索引模板 | 列出所有 P0-P3 约束 |
 
 ---
 
