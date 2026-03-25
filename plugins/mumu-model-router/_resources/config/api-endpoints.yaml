@@ -1,0 +1,167 @@
+# API Endpoints Configuration
+
+This document describes how to configure custom API endpoints for different LLM providers.
+
+## Supported Providers
+
+### Anthropic (Claude)
+
+```yaml
+anthropic:
+  base_url: https://api.anthropic.com
+  api_key_env: ANTHROPIC_API_KEY
+  default_headers:
+    anthropic-version: "2023-06-01"
+  models:
+    - claude-opus-4-6
+    - claude-sonnet-4-6
+    - claude-haiku-4-5-20251001
+```
+
+**Environment Variables:**
+```bash
+ANTHROPIC_API_KEY=sk-ant-xxxxx
+ANTHROPIC_BASE_URL=https://api.anthropic.com  # Optional
+```
+
+### OpenAI
+
+```yaml
+openai:
+  base_url: https://api.openai.com/v1
+  api_key_env: OPENAI_API_KEY
+  organization: org-xxxxx  # Optional
+  models:
+    - gpt-4o
+    - gpt-4o-mini
+    - o1
+    - o3-mini
+```
+
+**Environment Variables:**
+```bash
+OPENAI_API_KEY=sk-xxxxx
+OPENAI_BASE_URL=https://api.openai.com/v1  # Optional
+OPENAI_ORG_ID=org-xxxxx  # Optional
+```
+
+### Azure OpenAI
+
+```yaml
+azure_openai:
+  base_url: ${AZURE_OPENAI_ENDPOINT}
+  api_key_env: AZURE_OPENAI_API_KEY
+  api_version: "2024-02-15-preview"
+  deployments:
+    - name: gpt-4-deployment
+      model: gpt-4
+    - name: gpt-35-deployment
+      model: gpt-3.5-turbo
+```
+
+**Environment Variables:**
+```bash
+AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com
+AZURE_OPENAI_API_KEY=your-key
+```
+
+### Custom OpenAI-Compatible Endpoints
+
+```yaml
+custom_llm:
+  base_url: ${CUSTOM_LLM_BASE_URL}
+  api_key_env: CUSTOM_LLM_API_KEY
+  models:
+    - custom-model-1
+    - custom-model-2
+```
+
+**Examples of Compatible Services:**
+
+| Service | Base URL |
+|---------|----------|
+| Together AI | `https://api.together.xyz/v1` |
+| Groq | `https://api.groq.com/openai/v1` |
+| Replicate | `https://api.replicate.com/v1` |
+| Local LLM (Ollama) | `http://localhost:11434/v1` |
+| vLLM | `http://localhost:8000/v1` |
+
+## Configuration Examples
+
+### Example 1: Multi-Provider Setup
+
+```yaml
+api_endpoints:
+  anthropic:
+    base_url: https://api.anthropic.com
+    api_key_env: ANTHROPIC_API_KEY
+
+  openai:
+    base_url: https://api.openai.com/v1
+    api_key_env: OPENAI_API_KEY
+
+  groq:
+    base_url: https://api.groq.com/openai/v1
+    api_key_env: GROQ_API_KEY
+    models:
+      - llama-3.1-70b-versatile
+      - mixtral-8x7b-32768
+```
+
+### Example 2: Local Development with Ollama
+
+```yaml
+api_endpoints:
+  local_ollama:
+    base_url: http://localhost:11434/v1
+    api_key_env: ""  # No API key needed
+    models:
+      - llama3.1
+      - codellama
+      - mistral
+```
+
+### Example 3: Enterprise Proxy
+
+```yaml
+api_endpoints:
+  enterprise_proxy:
+    base_url: https://llm-proxy.company.internal/v1
+    api_key_env: LLM_PROXY_TOKEN
+    default_headers:
+      X-Company-ID: company-123
+      X-Department: engineering
+    models:
+      - enterprise-gpt-4
+      - enterprise-claude
+```
+
+## Rate Limiting Configuration
+
+```yaml
+api_endpoints:
+  anthropic:
+    rate_limits:
+      requests_per_minute: 60
+      tokens_per_minute: 100000
+      retry_on_rate_limit: true
+      retry_delay_ms: 1000
+      max_retries: 3
+```
+
+## Health Check Configuration
+
+```yaml
+api_endpoints:
+  anthropic:
+    health_check:
+      enabled: true
+      interval_ms: 60000
+      timeout_ms: 5000
+      endpoint: /v1/messages
+```
+
+---
+
+**文档版本**: v1.0.0
+**最后更新**: 2026-03-24

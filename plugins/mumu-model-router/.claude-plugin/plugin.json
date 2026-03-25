@@ -1,0 +1,47 @@
+{
+  "name": "mumu-model-router",
+  "version": "1.0.0",
+  "description": "Model routing plugin that allows different agents and subagents to use different models and API endpoints. Provides configuration for model selection, custom API base URLs, and agent-specific model overrides.",
+  "author": {
+    "name": "luckyMUMU"
+  },
+  "repository": "https://github.com/luckyMUMU/mumu-sop",
+  "license": "MIT",
+  "keywords": [
+    "model-router",
+    "multi-model",
+    "api-endpoint",
+    "agent-config",
+    "model-selection"
+  ],
+  "metadata": {
+    "features": {
+      "model_routing": "Route different agents to different AI models",
+      "api_endpoint": "Configure custom API base URLs per agent",
+      "fallback_config": "Define fallback models for reliability",
+      "cost_optimization": "Route simple tasks to cheaper models"
+    },
+    "supported_models": {
+      "anthropic": [
+        "claude-opus-4-6",
+        "claude-sonnet-4-6",
+        "claude-haiku-4-5-20251001"
+      ],
+      "openai": [
+        "gpt-4o",
+        "gpt-4o-mini",
+        "o1",
+        "o3-mini"
+      ],
+      "openai_compatible": [
+        "any OpenAI-compatible endpoint"
+      ]
+    },
+    "model_aliases": {
+      "fast": "claude-haiku-4-5-20251001",
+      "balanced": "claude-sonnet-4-6",
+      "powerful": "claude-opus-4-6",
+      "cheap": "gpt-4o-mini"
+    }
+  }
+}

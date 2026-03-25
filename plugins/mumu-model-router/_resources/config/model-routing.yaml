@@ -1,0 +1,208 @@
+# Model Routing Configuration
+
+This file defines the model routing configuration for the mumu-model-router plugin.
+
+## Configuration File Location
+
+Create this file at your project root: `.mumu-model-router.yaml`
+
+## Complete Configuration Template
+
+```yaml
+# =============================================================================
+# Mumu Model Router Configuration
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Model Routing
+# -----------------------------------------------------------------------------
+model_routing:
+  # Default model for tasks without specific routing
+  default_model: claude-sonnet-4-6
+
+  # Agent-to-model mapping
+  agent_models:
+    # Fast response agents
+    fast-responder: claude-haiku-4-5-20251001
+    quick-helper: claude-haiku-4-5-20251001
+
+    # Standard development agents
+    code-implementer-router: claude-sonnet-4-6
+    test-writer: claude-sonnet-4-6
+    code-reviewer: claude-sonnet-4-6
+
+    # Complex reasoning agents
+    architect-decider: claude-opus-4-6
+    security-analyst: claude-opus-4-6
+    performance-analyst: claude-opus-4-6
+
+    # Cost-optimized agents
+    batch-processor: gpt-4o-mini
+    formatter: gpt-4o-mini
+
+  # Model aliases for easy reference
+  aliases:
+    fast: claude-haiku-4-5-20251001
+    balanced: claude-sonnet-4-6
+    powerful: claude-opus-4-6
+    cheap: gpt-4o-mini
+
+  # Task complexity routing
+  complexity_routing:
+    low:
+      model: claude-haiku-4-5-20251001
+      max_tokens: 4096
+    medium:
+      model: claude-sonnet-4-6
+      max_tokens: 8192
+    high:
+      model: claude-opus-4-6
+      max_tokens: 16384
+
+# -----------------------------------------------------------------------------
+# API Endpoints
+# -----------------------------------------------------------------------------
+api_endpoints:
+  # Anthropic API
+  anthropic:
+    base_url: https://api.anthropic.com
+    api_key_env: ANTHROPIC_API_KEY
+    default_headers:
+      anthropic-version: "2023-06-01"
+    rate_limits:
+      requests_per_minute: 60
+      tokens_per_minute: 100000
+
+  # OpenAI API
+  openai:
+    base_url: https://api.openai.com/v1
+    api_key_env: OPENAI_API_KEY
+    rate_limits:
+      requests_per_minute: 500
+      tokens_per_minute: 200000
+
+  # Custom LLM Endpoint (OpenAI-compatible)
+  custom_llm:
+    base_url: ${CUSTOM_LLM_BASE_URL}
+    api_key_env: CUSTOM_LLM_API_KEY
+    models:
+      - custom-model-1
+      - custom-model-2
+    rate_limits:
+      requests_per_minute: 100
+      tokens_per_minute: 50000
+
+  # Azure OpenAI
+  azure_openai:
+    base_url: ${AZURE_OPENAI_ENDPOINT}
+    api_key_env: AZURE_OPENAI_API_KEY
+    api_version: "2024-02-15-preview"
+    deployments:
+      - name: gpt-4-deployment
+        model: gpt-4
+      - name: gpt-35-deployment
+        model: gpt-3.5-turbo
+
+# -----------------------------------------------------------------------------
+# Fallback Configuration
+# -----------------------------------------------------------------------------
+fallback:
+  enabled: true
+
+  # Fallback order for each provider
+  anthropic:
+    - claude-sonnet-4-6
+    - claude-haiku-4-5-20251001
+
+  openai:
+    - gpt-4o
+    - gpt-4o-mini
+
+  # Cross-provider fallback
+  cross_provider:
+    - claude-sonnet-4-6
+    - gpt-4o
+    - gpt-4o-mini
+
+  # Fallback behavior
+  on_error:
+    retry_count: 3
+    retry_delay_ms: 1000
+    exponential_backoff: true
+
+# -----------------------------------------------------------------------------
+# Cost Tracking
+# -----------------------------------------------------------------------------
+cost_tracking:
+  enabled: true
+  log_file: .mumu-model-router/costs.jsonl
+
+  # Cost limits (USD)
+  limits:
+    per_request: 1.00
+    per_session: 10.00
+    per_day: 50.00
+
+  # Alerts
+  alerts:
+    - threshold: 5.00
+      action: warn
+    - threshold: 25.00
+      action: notify
+    - threshold: 50.00
+      action: block
+
+# -----------------------------------------------------------------------------
+# Performance Tuning
+# -----------------------------------------------------------------------------
+performance:
+  # Connection pooling
+  connection_pool:
+    max_connections: 10
+    idle_timeout_ms: 30000
+
+  # Request timeout
+  timeout:
+    connect_ms: 5000
+    read_ms: 60000
+    write_ms: 10000
+
+  # Caching
+  cache:
+    enabled: true
+    ttl_ms: 300000  # 5 minutes
+    max_entries: 1000
+
+# -----------------------------------------------------------------------------
+# Logging
+# -----------------------------------------------------------------------------
+logging:
+  level: info  # debug, info, warn, error
+  format: json
+  output:
+    - console
+    - file: .mumu-model-router/logs/router.log
+```
+
+## Environment Variables
+
+```bash
+# Anthropic
+ANTHROPIC_API_KEY=sk-ant-xxxxx
+
+# OpenAI
+OPENAI_API_KEY=sk-xxxxx
+
+# Custom LLM
+CUSTOM_LLM_BASE_URL=https://your-llm.com/v1
+CUSTOM_LLM_API_KEY=your-key
+
+# Azure OpenAI
+AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com
+AZURE_OPENAI_API_KEY=your-key
+```
+
+---
+
+**文档版本**: v1.0.0
+**最后更新**: 2026-03-24
