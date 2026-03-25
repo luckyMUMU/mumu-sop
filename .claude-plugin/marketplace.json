@@ -1,17 +1,22 @@
 {
   "name": "mumu-sop-marketplace",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "owner": {
     "name": "luckyMUMU"
   },
   "metadata": {
-    "description": "SOP (Standard Operating Procedure) Skills marketplace for software development workflow. Contains the mumu-sop plugin with 18 skills covering orchestration, specification, implementation, verification, maintenance, and documentation."
+    "description": "SOP (Standard Operating Procedure) Skills marketplace for software development workflow. Contains plugins for workflow management, model routing, and development productivity."
   },
   "plugins": [
     {
       "name": "mumu-sop",
       "source": "./plugins/mumu-sop",
       "description": "SOP Skills for software development workflow with 18 skills covering orchestration, specification, implementation, verification, maintenance, and documentation."
+    },
+    {
+      "name": "mumu-model-router",
+      "source": "./plugins/mumu-model-router",
+      "description": "Model routing plugin that allows different agents and subagents to use different models and API endpoints. Includes 4 pre-configured agents for fast response, code implementation, architecture decisions, and batch processing."
     }
   ]
 }
