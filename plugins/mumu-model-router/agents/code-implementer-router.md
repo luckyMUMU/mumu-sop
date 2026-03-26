@@ -16,7 +16,7 @@ description: |
   assistant: "I'll use the code-implementer-router agent to fix this bug."
   </example>
 
-model: claude-sonnet-4-6
+model: kimi-k2.5
 color: blue
 tools: ["Read", "Write", "Edit", "Bash", "Grep", "Glob"]
 ---

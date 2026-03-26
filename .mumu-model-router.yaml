@@ -1,0 +1,125 @@
+# =============================================================================
+# Mumu Model Router Configuration
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Model Routing
+# -----------------------------------------------------------------------------
+model_routing:
+  # Default model for tasks without specific routing
+  default_model: kimi-k2.5
+
+  # Agent-to-model mapping
+  agent_models:
+    # Fast response agents
+    fast-responder: minimax-m2.5
+
+    # Standard development agents
+    code-implementer-router: kimi-k2.5
+
+    # Complex reasoning agents
+    architect-decider: glm-5
+
+    # Cost-optimized agents
+    batch-processor: minimax-m2.5
+
+  # Model aliases for easy reference
+  aliases:
+    fast: minimax-m2.5
+    balanced: kimi-k2.5
+    powerful: glm-5
+    cheap: minimax-m2.5
+
+  # Task complexity routing
+  complexity_routing:
+    low:
+      model: minimax-m2.5
+      max_tokens: 4096
+    medium:
+      model: kimi-k2.5
+      max_tokens: 8192
+    high:
+      model: glm-5
+      max_tokens: 16384
+
+# -----------------------------------------------------------------------------
+# API Endpoints
+# -----------------------------------------------------------------------------
+api_endpoints:
+  # Anthropic API
+  # anthropic:
+  #   base_url: https://api.anthropic.com
+  #   api_key_env: ANTHROPIC_API_KEY
+  #   default_headers:
+  #     anthropic-version: "2023-06-01"
+
+  # # OpenAI API
+  # openai:
+  #   base_url: https://api.openai.com/v1
+  #   api_key_env: OPENAI_API_KEY
+
+  # Custom OpenAI-compatible endpoint (uncomment to use)
+  custom_llm:
+    base_url: https://coding.dashscope.aliyuncs.com/apps/anthropic
+    api_key_env: sk-sp-d28fd05dadde4a09ac0113478a32e7e8
+    models:
+      - glm-5
+      - kimi-k2.5
+      - minimax-m2.5
+
+  # Local Ollama (uncomment to use)
+  # ollama:
+  #   base_url: http://localhost:11434/v1
+  #   api_key_env: ""
+  #   models:
+  #     - llama3.1
+  #     - codellama
+
+# -----------------------------------------------------------------------------
+# Fallback Configuration
+# -----------------------------------------------------------------------------
+fallback:
+  enabled: true
+
+  # Cross-provider fallback order
+  cross_provider:
+    - glm-5
+    - kimi-k2.5
+    - minimax-m2.5
+
+  # Fallback behavior
+  on_error:
+    retry_count: 3
+    retry_delay_ms: 1000
+    exponential_backoff: true
+
+# -----------------------------------------------------------------------------
+# Cost Tracking
+# -----------------------------------------------------------------------------
+cost_tracking:
+  enabled: true
+  log_file: .mumu-model-router/costs.jsonl
+
+  # Cost limits (USD)
+  limits:
+    per_request: 1.00
+    per_session: 10.00
+    per_day: 50.00
+
+  # Alerts
+  alerts:
+    - threshold: 5.00
+      action: warn
+    - threshold: 25.00
+      action: notify
+    - threshold: 50.00
+      action: block
+
+# -----------------------------------------------------------------------------
+# Logging
+# -----------------------------------------------------------------------------
+logging:
+  level: info
+  format: json
+  output:
+    - console

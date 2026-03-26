@@ -1,6 +1,6 @@
 {
   "name": "mumu-model-router",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Model routing plugin that allows different agents and subagents to use different models and API endpoints. Provides configuration for model selection, custom API base URLs, and agent-specific model overrides.",
   "author": {
     "name": "luckyMUMU"
@@ -15,11 +15,19 @@
     "model-selection"
   ],
   "metadata": {
+    "commands": {
+      "sync-models": {
+        "path": "commands/sync-models.md",
+        "description": "同步模型配置并更新所有 Agent 的模型设置",
+        "triggers": ["sync-models", "同步模型", "更新模型配置"]
+      }
+    },
     "features": {
       "model_routing": "Route different agents to different AI models",
       "api_endpoint": "Configure custom API base URLs per agent",
       "fallback_config": "Define fallback models for reliability",
-      "cost_optimization": "Route simple tasks to cheaper models"
+      "cost_optimization": "Route simple tasks to cheaper models",
+      "dynamic_config": "Sync agent models from .mumu-model-router.yaml"
     },
     "supported_models": {
       "anthropic": [

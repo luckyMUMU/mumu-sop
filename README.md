@@ -1,6 +1,6 @@
 # SOP Skills Marketplace
 
-SOP (Standard Operating Procedure) Skills marketplace for software development workflow. Contains the mumu-sop plugin with 14 skills covering orchestration, specification, implementation, verification, and documentation.
+SOP (Standard Operating Procedure) Skills marketplace for software development workflow. Contains two plugins: **mumu-sop** with 18 skills covering orchestration, specification, implementation, verification, maintenance, and documentation, and **mumu-model-router** for multi-model agent configuration.
 
 ## Installation
 
@@ -23,45 +23,55 @@ Or manually add to your settings:
 }
 ```
 
-Then install the plugin:
+Then install the plugins:
 
 ```bash
+# Install SOP workflow plugin
 claude plugin install mumu-sop
+
+# Install model routing plugin
+claude plugin install mumu-model-router
 ```
 
 ## Marketplace Structure
 
 ```
 mumu-sop/
-├── .claude-marketplace/
+├── .claude-plugin/
 │   └── marketplace.json    # Marketplace metadata
 └── plugins/
-    └── mumu-sop/           # Single plugin
+    ├── mumu-sop/           # SOP workflow plugin
+    │   ├── .claude-plugin/
+    │   │   └── plugin.json
+    │   ├── skills/         # 18 Skills
+    │   ├── agents/         # Entry agent
+    │   └── _resources/     # Supporting resources
+    └── mumu-model-router/  # Model routing plugin
         ├── .claude-plugin/
         │   └── plugin.json
-        ├── skills/         # 14 Skills
-        └── _resources/     # Supporting resources
+        ├── agents/         # 4 Pre-configured agents
+        └── _resources/     # Configuration templates
 ```
 
 ## Plugin: mumu-sop
 
-### Skills Overview
+### Skills Overview (18 Skills)
 
 #### Orchestration Skills (3)
 
 | Skill | Description |
 |-------|-------------|
-| `sop-workflow-orchestrator` | Default entry point, manages workflow state |
-| `sop-document-sync` | Synchronizes documentation with code changes |
+| `sop-orchestrator` | Default entry point, manages workflow state |
+| `sop-sync` | Synchronizes documentation with code changes |
 | `sop-progress-supervisor` | Monitors workflow progress |
 
 #### Specification Skills (4)
 
 | Skill | Description |
 |-------|-------------|
-| `sop-dual-cycle-decision` | Complex requirement pre-analysis with dual-loop decision |
+| `sop-decision-analyst` | Complex requirement pre-analysis with decision paths |
 | `sop-requirement-analyst` | Analyzes requirements and generates specifications |
-| `sop-architecture-design` | Designs system architecture |
+| `sop-architecture-designer` | Designs system architecture |
 | `sop-implementation-designer` | Designs implementation details |
 
 #### Implementation Skills (3)
@@ -69,22 +79,51 @@ mumu-sop/
 | Skill | Description |
 |-------|-------------|
 | `sop-code-explorer` | Explores and analyzes existing code |
-| `sop-code-implementation` | Implements code based on specifications |
-| `sop-test-implementation` | Implements tests based on specifications |
+| `sop-code-implementer` | Implements code based on specifications |
+| `sop-test-implementer` | Implements tests based on specifications |
 
 #### Verification Skills (3)
 
 | Skill | Description |
 |-------|-------------|
 | `sop-architecture-reviewer` | Reviews architecture design |
-| `sop-code-review` | Reviews code implementation |
-| `spring-code-reviewer` | Spring/Java architecture-level code review |
+| `sop-code-reviewer` | Reviews code implementation |
+| `sop-spring-reviewer` | Spring/Java architecture-level code review (Java/Spring only) |
+
+#### Maintenance Skills (4)
+
+| Skill | Description |
+|-------|-------------|
+| `sop-bug-analyst` | Bug analysis and root cause identification |
+| `sop-code-refactorer` | Safe code refactoring |
+| `sop-tech-debt-manager` | Technical debt management |
+| `sop-dependency-manager` | Dependency upgrade management |
 
 #### Documentation Skills (1)
 
 | Skill | Description |
 |-------|-------------|
-| `sop-document-creator` | Creates technical documentation |
+| `sop-document-writer` | Creates technical documentation and user guides |
+
+## Plugin: mumu-model-router
+
+Model routing plugin that allows different agents to use different AI models and API endpoints.
+
+### Pre-configured Agents (4)
+
+| Agent | Model | Use Case |
+|-------|-------|----------|
+| `fast-responder` | claude-haiku-4-5 | Simple queries, format conversion |
+| `code-implementer-router` | claude-sonnet-4-6 | Code implementation, regular tasks |
+| `architect-decider` | claude-opus-4-6 | Architecture decisions, complex analysis |
+| `batch-processor` | gpt-4o-mini | Batch processing, simple repetitive tasks |
+
+### Features
+
+- **Model Routing**: Different agents use different models
+- **API Endpoint Configuration**: Custom API base URLs
+- **Cost Optimization**: Simple tasks use cheaper models
+- **Fallback Support**: Define backup models for reliability
 
 ## Core Concepts
 
@@ -123,16 +162,17 @@ Example prompts:
 
 ## Resources
 
-- [Skill Index](./plugins/mumu-sop/index.md)
+- [mumu-sop Skill Index](./plugins/mumu-sop/index.md)
+- [mumu-model-router Documentation](./plugins/mumu-model-router/index.md)
 - [Workflow Definition](./plugins/mumu-sop/_resources/workflow/index.md)
 - [Constraint Definitions](./plugins/mumu-sop/_resources/constraints/index.md)
 - [Architecture Principles](./plugins/mumu-sop/_resources/constitution/architecture-principles.md)
 
 ## Version
 
-- Marketplace version: 1.0.0
-- Plugin version: 1.0.0
-- Skill format version: v5.0.0
+- Marketplace version: 1.4.0
+- mumu-sop version: 2.0.0
+- mumu-model-router version: 1.0.0
 
 ## License
 

@@ -16,7 +16,7 @@ description: |
   assistant: "I'll use the batch-processor agent for efficient batch conversion."
   </example>
 
-model: gpt-4o-mini
+model: minimax-m2.5
 color: yellow
 tools: ["Read", "Write", "Bash", "Glob"]
 ---

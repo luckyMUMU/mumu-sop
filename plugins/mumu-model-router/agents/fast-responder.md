@@ -16,7 +16,7 @@ description: |
   assistant: "I'll use the fast-responder agent for this quick conversion."
   </example>
 
-model: claude-haiku-4-5-20251001
+model: minimax-m2.5
 color: green
 tools: ["Read", "Write", "Bash"]
 ---

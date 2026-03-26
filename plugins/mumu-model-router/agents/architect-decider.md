@@ -16,7 +16,7 @@ description: |
   assistant: "I'll use the architect-decider agent to analyze and recommend the best option."
   </example>
 
-model: claude-opus-4-6
+model: glm-5
 color: magenta
 tools: ["Read", "Write", "Bash", "Grep", "Glob", "WebSearch", "WebFetch"]
 ---
