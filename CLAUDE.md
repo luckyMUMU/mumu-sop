@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Claude Code plugin marketplace containing the **mumu-sop** plugin. The plugin provides 14 SOP (Standard Operating Procedure) skills for software development workflow, covering orchestration, specification, implementation, verification, and documentation phases.
+This is a Claude Code plugin marketplace containing the **mumu-sop** and **mumu-model-router** plugins. The mumu-sop plugin provides 18 SOP (Standard Operating Procedure) skills for software development workflow, covering orchestration, specification, implementation, verification, maintenance, and documentation phases.
 
 ## Key Architecture
 
@@ -32,13 +32,14 @@ P0 (Engineering Constitution) - Immutable, violation causes immediate failure
 
 | Category | Skills |
 |----------|--------|
-| Orchestration | `sop-workflow-orchestrator`, `sop-document-sync`, `sop-progress-supervisor` |
-| Specification | `sop-dual-cycle-decision`, `sop-requirement-analyst`, `sop-architecture-design`, `sop-implementation-designer` |
-| Implementation | `sop-code-explorer`, `sop-code-implementation`, `sop-test-implementation` |
-| Verification | `sop-architecture-reviewer`, `sop-code-review`, `spring-code-reviewer` (Java/Spring only) |
-| Documentation | `sop-document-creator` |
+| Orchestration | `sop-orchestrator`, `sop-sync`, `sop-progress-supervisor` |
+| Specification | `sop-decision-analyst`, `sop-requirement-analyst`, `sop-architecture-designer`, `sop-implementation-designer` |
+| Implementation | `sop-code-explorer`, `sop-code-implementer`, `sop-test-implementer` |
+| Verification | `sop-architecture-reviewer`, `sop-code-reviewer`, `sop-spring-reviewer` (Java/Spring only) |
+| Maintenance | `sop-bug-analyst`, `sop-code-refactorer`, `sop-tech-debt-manager`, `sop-dependency-manager` |
+| Documentation | `sop-document-writer` |
 
-All skills are language-agnostic except `spring-code-reviewer` which is Java/Spring specific.
+All skills are language-agnostic except `sop-spring-reviewer` which is Java/Spring specific.
 
 ## Project Structure
 
@@ -46,7 +47,7 @@ All skills are language-agnostic except `spring-code-reviewer` which is Java/Spr
 plugins/mumu-sop/
 ├── .claude-plugin/
 │   └── plugin.json          # Plugin manifest
-├── skills/                   # 14 skills, each with SKILL.md
+├── skills/                   # 18 skills, each with SKILL.md
 ├── _resources/
 │   ├── constitution/         # P0 architecture principles
 │   ├── constraints/          # P0-P3 constraint definitions
