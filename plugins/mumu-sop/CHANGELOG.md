@@ -5,6 +5,96 @@ All notable changes to the mumu-sop plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-04-07
+
+### Added
+
+#### 6-Stage Workflow Commands
+- **New Commands**: Added 6 slash commands for direct stage entry
+  - `spec` - Stage 0: Define (specification creation)
+  - `plan` - Stage 1: Plan (vertical slicing task breakdown)
+  - `build` - Stage 2: Build (incremental implementation)
+  - `test` - Stage 3: Verify (testing and validation)
+  - `review` - Stage 4: Review (five-axis code review)
+  - `ship` - Stage 5: Ship (release and archive)
+- Commands located in `.claude/commands/` with frontmatter configuration
+
+#### New Skills
+- **sop-performance-reviewer**: Performance review skill (five-axis review)
+  - N+1 query detection
+  - Core Web Vitals measurement (LCP, FID, CLS)
+  - Memory leak detection
+  - Unbounded loop detection
+  
+- **sop-browser-testing**: Browser testing skill with DevTools MCP
+  - DOM inspection
+  - Console log analysis
+  - Network request tracking
+  - Performance profiling
+  - CI/CD integration examples
+
+#### Documentation
+- **Five-Axis Review Reference**: Comprehensive review guide at `_resources/references/five-axis-review.md`
+  - Correctness, Readability, Architecture, Security, Performance
+  - Checklists for each axis
+  - Common pitfalls with code examples
+  - OWASP Top 10 mapping
+  - Core Web Vitals targets
+
+- **Cross-IDE Support Guides**:
+  - `docs/cursor-setup.md` - Cursor IDE configuration
+  - `docs/windsurf-setup.md` - Windsurf IDE configuration
+  - `docs/github-copilot-setup.md` - GitHub Copilot configuration
+  - `docs/gemini-cli-setup.md` - Gemini CLI configuration
+  - `docs/getting-started.md` - Quick start guide
+
+- **MCP Configuration**: `.mcp.json` for Chrome DevTools MCP server
+
+### Enhanced
+
+#### Vertical Slicing Guide
+- Added comprehensive vertical slicing documentation to `sop-implementation-designer/SKILL.md`
+  - Horizontal vs vertical slicing comparison
+  - 4 slicing principles (user value, end-to-end, testable, small steps)
+  - Size evaluation criteria (~100 lines per slice)
+  - Time estimates (1-3 days per slice)
+
+#### MCP Usage Examples
+- Added 6 complete usage examples to `sop-browser-testing/SKILL.md`
+  - Complete test script example
+  - Jest integration
+  - Playwright + MCP hybrid usage
+  - CI/CD integration (GitHub Actions)
+  - Performance monitoring
+  - Debugging techniques
+
+### Changed
+
+- **Workflow**: Extended from 5 stages to 6 stages
+  - Added Stage 3: Verify (dedicated testing phase)
+  - Renamed Stage 4 to Stage 5: Ship
+  - Agent (`sop-agent`) updated to reflect 6-stage workflow
+  - All hooks updated with new stage numbers
+
+- **Skill Count**: Increased from 18 to 20 skills
+  - Added sop-performance-reviewer
+  - Added sop-browser-testing
+  - Updated all documentation references
+
+- **Plugin Metadata**:
+  - Added `entryPoints` configuration (agent/command/skill)
+  - Added `fiveAxisReview` feature flag
+  - Added `verticalSlicing` feature flag
+
+### Fixed
+
+- Updated outdated stage references in hooks (Stage 4 → Stage 5)
+- Fixed skill count in plugin descriptions (18 → 20)
+- Updated `sop-agent` description from 5-stage to 6-stage workflow
+- Added missing skills to test index
+
+---
+
 ## [2.0.0] - 2026-03-24
 
 ### Breaking Changes

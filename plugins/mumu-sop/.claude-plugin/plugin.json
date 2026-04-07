@@ -1,7 +1,7 @@
 {
   "name": "mumu-sop",
-  "version": "2.0.0",
-  "description": "SOP (Standard Operating Procedure) Skills for software development workflow. Includes 18 skills covering orchestration, specification, implementation, verification, maintenance, and documentation. Use when managing development workflows, conducting code reviews, implementing features with design-by-contract principles, bug analysis, refactoring, or creating documentation.",
+  "version": "2.1.0",
+  "description": "SOP (Standard Operating Procedure) Skills for software development workflow. Includes 20 skills covering orchestration, specification, implementation, verification, maintenance, and documentation. Features 6-stage workflow (Define→Plan→Build→Verify→Review→Ship), five-axis code review, and P0-P3 constraint hierarchy. Use when managing development workflows, conducting code reviews, implementing features with design-by-contract principles, bug analysis, refactoring, or creating documentation.",
   "author": {
     "name": "luckyMUMU"
   },
@@ -21,6 +21,25 @@
     "progressive-disclosure"
   ],
   "metadata": {
+    "claude_code_compatibility": ">=2.0.0",
+    "plugin_api_version": "1.0",
+    "categories": [
+      {
+        "id": "workflow",
+        "name": "工作流管理"
+      },
+      {
+        "id": "development",
+        "name": "开发辅助"
+      }
+    ],
+    "integrations": [
+      {
+        "plugin": "mumu-model-router",
+        "description": "支持动态模型路由，可为不同SOP阶段配置不同模型",
+        "optional": true
+      }
+    ],
     "language_agnostic": true,
     "skillCategories": {
       "language_agnostic": [
@@ -36,6 +55,7 @@
         "sop-test-implementer",
         "sop-architecture-reviewer",
         "sop-code-reviewer",
+        "sop-performance-reviewer",
         "sop-bug-analyst",
         "sop-code-refactorer",
         "sop-tech-debt-manager",
@@ -46,7 +66,12 @@
         "sop-spring-reviewer": {
           "languages": ["Java", "Spring Boot"],
           "frameworks": ["Spring Framework", "Spring Boot", "Spring Cloud"],
-          "description": "Specialized code reviewer for Java/Spring ecosystems with deep knowledge of Spring patterns, JPA, and enterprise Java best practices."
+          "description": "Specialized code reviewer for Java/Spring ecosystems"
+        },
+        "sop-browser-testing": {
+          "languages": ["JavaScript", "TypeScript"],
+          "frameworks": ["React", "Vue", "Angular"],
+          "description": "Browser testing with Chrome DevTools MCP for frontend projects"
         }
       }
     },
@@ -55,6 +80,36 @@
         "path": "commands/init-spec-tree.md",
         "description": "初始化或更新项目的约束树（Spec Tree）结构，创建 P0-P3 级别的约束目录和文件",
         "triggers": ["init-spec", "init-tree", "初始化约束树", "创建spec树"]
+      },
+      "spec": {
+        "path": ".claude/commands/spec.md",
+        "description": "启动 SOP 规范阶段 (Stage 0: Define)，创建结构化需求文档",
+        "triggers": ["spec", "define", "规范", "需求分析"]
+      },
+      "plan": {
+        "path": ".claude/commands/plan.md",
+        "description": "启动 SOP 计划阶段 (Stage 1: Plan)，垂直切片任务分解",
+        "triggers": ["plan", "计划", "规划", "任务分解"]
+      },
+      "build": {
+        "path": ".claude/commands/build.md",
+        "description": "启动 SOP 构建阶段 (Stage 2: Build)，增量实现功能",
+        "triggers": ["build", "构建", "实现", "开发"]
+      },
+      "test": {
+        "path": ".claude/commands/test.md",
+        "description": "启动 SOP 测试阶段 (Stage 3: Verify)，测试验证",
+        "triggers": ["test", "测试", "验证", "运行测试"]
+      },
+      "review": {
+        "path": ".claude/commands/review.md",
+        "description": "启动 SOP 审查阶段 (Stage 4: Review)，五轴代码审查",
+        "triggers": ["review", "审查", "评审", "code review"]
+      },
+      "ship": {
+        "path": ".claude/commands/ship.md",
+        "description": "启动 SOP 交付阶段 (Stage 5: Ship)，准备发布",
+        "triggers": ["ship", "交付", "发布", "deploy"]
       }
     },
     "agents": {
@@ -90,8 +145,8 @@
       },
       "post-archive": {
         "path": "hooks/post-archive-hook.sh",
-        "description": "Stage 4 归档后自动更新约束树",
-        "triggers": ["stage-4-complete", "post-archive"],
+        "description": "Stage 5 (Ship) 归档后自动更新约束树",
+        "triggers": ["stage-5-complete", "post-archive", "post-ship"],
         "actions": [
           {
             "name": "spec-tree-update",
@@ -115,6 +170,32 @@
     "specStorage": {
       "primary": ".sop/specs/",
       "compatible": [".trae/specs/"]
+    },
+    "entryPoints": {
+      "agent": {
+        "sop-agent": "完整的6阶段工作流引导，自动分析复杂度"
+      },
+      "command": {
+        "spec": "Stage 0: 定义规范",
+        "plan": "Stage 1: 计划任务",
+        "build": "Stage 2: 构建实现",
+        "test": "Stage 3: 测试验证",
+        "review": "Stage 4: 五轴审查",
+        "ship": "Stage 5: 发布交付",
+        "init-spec-tree": "初始化约束树结构"
+      },
+      "skill": {
+        "count": 20,
+        "description": "可直接触发的skills，覆盖完整开发周期"
+      }
+    },
+    "fiveAxisReview": {
+      "enabled": true,
+      "dimensions": ["correctness", "readability", "architecture", "security", "performance"]
+    },
+    "verticalSlicing": {
+      "enabled": true,
+      "description": "任务分解采用垂直切片而非水平分层"
     }
   }
 }

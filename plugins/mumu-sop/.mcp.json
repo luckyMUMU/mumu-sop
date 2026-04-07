@@ -1,0 +1,11 @@
+{
+  "servers": {
+    "chrome-devtools": {
+      "command": "npx @anthropic-ai/mcp-devtools-server",
+      "description": "Chrome DevTools MCP server for browser testing",
+      "env": {
+        "PORT": "9222"
+      }
+    }
+  }
+}

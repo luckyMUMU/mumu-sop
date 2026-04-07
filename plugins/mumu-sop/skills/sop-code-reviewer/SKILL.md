@@ -13,7 +13,7 @@ metadata:
   language_agnostic: true
 ---
 
-# sop-code-review
+# sop-code-reviewer
 
 > **语言无关**: 此 Skill 适用于任何编程语言和框架。对于 Java/Spring 项目，也可以使用 `spring-code-reviewer` 获得更专业的审查。
 
@@ -208,5 +208,5 @@ invariants:
 
 - [Skill 索引](../../index.md)
 - [实现设计 Skill](../sop-implementation-designer/SKILL.md)
-- [代码实现 Skill](../sop-code-implementation/SKILL.md)
-- [测试实现 Skill](../sop-test-implementation/SKILL.md)
+- [代码实现 Skill](../sop-code-implementer/SKILL.md)
+- [测试实现 Skill](../sop-test-implementer/SKILL.md)

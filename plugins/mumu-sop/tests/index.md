@@ -59,6 +59,8 @@
 |-------|----------|----------|
 | sop-architecture-reviewer | [triggers.md](./sop-architecture-reviewer/triggers.md) | [functional.md](./sop-architecture-reviewer/functional.md) |
 | sop-code-reviewer | [triggers.md](./sop-code-reviewer/triggers.md) | [functional.md](./sop-code-reviewer/functional.md) |
+| sop-performance-reviewer | [triggers.md](./sop-performance-reviewer/triggers.md) | [functional.md](./sop-performance-reviewer/functional.md) |
+| sop-browser-testing | [triggers.md](./sop-browser-testing/triggers.md) | [functional.md](./sop-browser-testing/functional.md) |
 | sop-spring-reviewer | [triggers.md](./sop-spring-reviewer/triggers.md) | [functional.md](./sop-spring-reviewer/functional.md) |
 
 ### 维护类
@@ -88,5 +90,5 @@
 
 ---
 
-**文档版本**: v2.0.0
-**最后更新**: 2026-03-24
+**文档版本**: v2.1.0
+**最后更新**: 2026-04-07

@@ -4,20 +4,21 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Claude Code plugin marketplace containing the **mumu-sop** and **mumu-model-router** plugins. The mumu-sop plugin provides 18 SOP (Standard Operating Procedure) skills for software development workflow, covering orchestration, specification, implementation, verification, maintenance, and documentation phases.
+This is a Claude Code plugin marketplace containing the **mumu-sop** and **mumu-model-router** plugins. The mumu-sop plugin provides 20 SOP (Standard Operating Procedure) skills for software development workflow, covering orchestration, specification, implementation, verification, maintenance, and documentation phases.
 
 ## Key Architecture
 
-### 5-Stage Workflow
+### 6-Stage Workflow
 
-The plugin implements a 5-stage development workflow:
-1. **Stage 0**: Intent Analysis & Constraint Identification
-2. **Stage 1**: Hierarchical Design (P0→P1→P2→P3)
-3. **Stage 2**: Execution Plan & Implementation (P3→P2→P1→P0)
-4. **Stage 3**: Change Review & Confirmation
-5. **Stage 4**: Archive & Constraint Tree Update
+The plugin implements a 6-stage development workflow:
+1. **Stage 0**: Define (spec) - Specification creation
+2. **Stage 1**: Plan (plan) - Task breakdown with vertical slicing
+3. **Stage 2**: Build (build) - Incremental implementation
+4. **Stage 3**: Verify (test) - Testing and validation
+5. **Stage 4**: Review (review) - Five-axis code review
+6. **Stage 5**: Ship (ship) - Release and archive
 
-**Core principle**: Design flows from root to leaves (P0→P3), implementation flows from leaves to root (P3→P0).
+**Alternative entry**: Use `/sop` for agent-guided workflow or direct commands (`spec`, `plan`, `build`, `test`, `review`, `ship`).
 
 ### Constraint Hierarchy (P0-P3)
 

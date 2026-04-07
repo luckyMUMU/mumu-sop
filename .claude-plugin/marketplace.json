@@ -5,18 +5,40 @@
     "name": "luckyMUMU"
   },
   "metadata": {
-    "description": "SOP (Standard Operating Procedure) Skills marketplace for software development workflow. Contains plugins for workflow management, model routing, and development productivity."
+    "description": "SOP (Standard Operating Procedure) Skills marketplace for software development workflow. Contains plugins for workflow management, model routing, and development productivity.",
+    "claude_code_compatibility": ">=2.0.0",
+    "plugin_api_version": "1.0"
   },
   "plugins": [
     {
       "name": "mumu-sop",
       "source": "./plugins/mumu-sop",
-      "description": "SOP Skills for software development workflow with 18 skills covering orchestration, specification, implementation, verification, maintenance, and documentation."
+      "description": "SOP Skills v2.1.0 with 20 skills, 6-stage workflow (Define→Plan→Build→Verify→Review→Ship), five-axis code review, and cross-IDE support.",
+      "category": "workflow",
+      "standalone": true,
+      "version": "2.1.0"
     },
     {
       "name": "mumu-model-router",
       "source": "./plugins/mumu-model-router",
-      "description": "Model routing plugin that allows different agents and subagents to use different models and API endpoints. Includes 4 pre-configured agents for fast response, code implementation, architecture decisions, and batch processing."
+      "description": "Model routing plugin that allows different agents and subagents to use different models and API endpoints. Includes 4 pre-configured agents for fast response, code implementation, architecture decisions, and batch processing.",
+      "category": "model-routing",
+      "standalone": true,
+      "recommended_combinations": [
+        {
+          "plugins": ["mumu-sop", "mumu-model-router"],
+          "description": "SOP 6-stage workflow with model routing, optimize cost by routing different stages to different models"
+        }
+      ]
     }
-  ]
+  ],
+  "plugin_compatibility": {
+    "independent_plugins": ["mumu-sop", "mumu-model-router"],
+    "synergistic_pairs": [
+      {
+        "plugins": ["mumu-sop", "mumu-model-router"],
+        "synergy_description": "mumu-sop 6-stage workflow can use mumu-model-router to route different stages to optimized models"
+      }
+    ]
+  }
 }

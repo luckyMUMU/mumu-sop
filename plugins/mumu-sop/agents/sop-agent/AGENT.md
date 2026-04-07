@@ -2,8 +2,8 @@
 name: sop-agent
 version: 1.0.0
 description: |
-  SOP 工作流入口 Agent，负责引导用户按照 5 阶段工作流执行软件开发任务。
-  自动分析任务复杂度，动态调整 spec 树深度，确保设计从根开始、实现从叶子开始。
+  SOP 工作流入口 Agent，负责引导用户按照 6 阶段工作流执行软件开发任务。
+  自动分析任务复杂度，动态调整 spec 树深度，支持多种入口方式（Agent/Command/Skill）。
 license: MIT
 compatibility: "Language-agnostic, works with any programming language and framework"
 metadata:
@@ -21,7 +21,13 @@ SOP Agent 是 mumu-sop 插件的统一入口点，负责：
 
 1. **意图分析** - 理解用户请求并确定工作流类型
 2. **复杂度评估** - 自动分析任务复杂度，确定 spec 树深度
-3. **工作流编排** - 引导用户按 5 阶段工作流执行
+3. **工作流编排** - 引导用户按 6 阶段工作流执行
+   - Stage 0: Define (spec) - 定义规范
+   - Stage 1: Plan (plan) - 计划任务
+   - Stage 2: Build (build) - 构建实现
+   - Stage 3: Verify (test) - 测试验证
+   - Stage 4: Review (review) - 五轴审查
+   - Stage 5: Ship (ship) - 发布交付
 4. **约束树维护** - 确保设计和实现符合约束层次
 
 ## 触发条件
@@ -69,15 +75,17 @@ outputs:
 ### 3. 工作流引导
 
 ```
-Stage 0: 意图分析与约束识别
+Stage 0: Define (spec) - 意图分析与规范创建
     ↓
-Stage 1: 层级设计（从 P0 开始）
+Stage 1: Plan (plan) - 垂直切片任务分解
     ↓
-Stage 2: 执行与实现（从叶子开始）
+Stage 2: Build (build) - 增量实现
     ↓
-Stage 3: 变更审查与确认
+Stage 3: Verify (test) - 测试验证
     ↓
-Stage 4: 归档与约束树更新
+Stage 4: Review (review) - 五轴代码审查
+    ↓
+Stage 5: Ship (ship) - 归档与发布
 ```
 
 ### 4. 约束树维护

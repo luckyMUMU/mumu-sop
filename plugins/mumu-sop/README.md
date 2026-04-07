@@ -2,16 +2,17 @@
 
 **SOP (Standard Operating Procedure) Skills for Claude Code**
 
-A comprehensive Claude Code plugin providing 18 skills for software development workflow, covering orchestration, specification, implementation, verification, maintenance, and documentation phases.
+A comprehensive Claude Code plugin providing 20 skills for software development workflow, covering orchestration, specification, implementation, verification, maintenance, and documentation phases.
 
 ## Features
 
-- **18 Language-Agnostic Skills**: Works with any programming language or framework
-- **5-Stage Workflow**: Intent analysis → Design → Implementation → Review → Archive
+- **20 Skills**: 18 language-agnostic + 2 specialized (Spring & Browser testing)
+- **6-Stage Workflow**: Define → Plan → Build → Verify → Review → Ship
+- **Five-Axis Review**: Correctness, Readability, Architecture, Security, Performance
 - **Constraint Hierarchy**: P0-P3 constraint tree with automatic validation
-- **Entry Agent**: Unified workflow entry point with complexity analysis
+- **Multiple Entry Points**: Agent (`/sop`), Commands (`spec`, `plan`, etc.), or Direct Skills
 - **Automation Hooks**: Automatic validation and updates at workflow stages
-- **Dynamic Depth**: Adaptive spec tree depth based on task complexity
+- **Cross-IDE Support**: Claude Code, Cursor, Windsurf, GitHub Copilot, Gemini CLI
 
 ## Installation
 
