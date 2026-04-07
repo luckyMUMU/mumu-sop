@@ -1,6 +1,6 @@
 {
   "name": "mumu-model-router",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Model routing plugin that allows different agents and subagents to use different models and API endpoints. Provides configuration for model selection, custom API base URLs, and agent-specific model overrides.",
   "author": {
     "name": "luckyMUMU"
@@ -15,6 +15,25 @@
     "model-selection"
   ],
   "metadata": {
+    "claude_code_compatibility": ">=2.0.0",
+    "plugin_api_version": "1.0",
+    "categories": [
+      {
+        "id": "model-routing",
+        "name": "模型路由"
+      },
+      {
+        "id": "optimization",
+        "name": "性能优化"
+      }
+    ],
+    "integrations": [
+      {
+        "plugin": "mumu-sop",
+        "description": "可为SOP工作流的不同阶段路由到不同模型",
+        "optional": true
+      }
+    ],
     "commands": {
       "sync-models": {
         "path": "commands/sync-models.md",
@@ -30,6 +49,31 @@
       "dynamic_config": "Sync agent models from .mumu-model-router.yaml"
     },
     "supported_models": {
+      "moonshot": [
+        "kimi-k2.5",
+        "kimi-k2",
+        "kimi-k1.5"
+      ],
+      "siliconflow": [
+        "glm-5",
+        "qwen3-coder-next",
+        "qwen2.5-72b",
+        "deepseek-v3",
+        "deepseek-coder"
+      ],
+      "zhipu": [
+        "glm-5",
+        "glm-4-plus",
+        "glm-4-flash",
+        "glm-4-air"
+      ],
+      "alibaba": [
+        "qwen3-coder-next",
+        "qwen2.5-72b",
+        "qwen-max",
+        "qwen-plus",
+        "qwen-turbo"
+      ],
       "anthropic": [
         "claude-opus-4-6",
         "claude-sonnet-4-6",
@@ -46,10 +90,10 @@
       ]
     },
     "model_aliases": {
-      "fast": "claude-haiku-4-5-20251001",
-      "balanced": "claude-sonnet-4-6",
-      "powerful": "claude-opus-4-6",
-      "cheap": "gpt-4o-mini"
+      "fast": "qwen3-coder-next",
+      "balanced": "kimi-k2.5",
+      "powerful": "glm-5",
+      "cheap": "qwen3-coder-next"
     }
   }
 }

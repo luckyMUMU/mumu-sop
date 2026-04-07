@@ -21,7 +21,7 @@
     {
       "name": "mumu-model-router",
       "source": "./plugins/mumu-model-router",
-      "description": "Model routing plugin that allows different agents and subagents to use different models and API endpoints. Includes 4 pre-configured agents for fast response, code implementation, architecture decisions, and batch processing.",
+      "description": "Model routing plugin v1.2.0 supporting multi-provider models (Moonshot, SiliconFlow, Zhipu, Alibaba, Anthropic, OpenAI). Route tasks by complexity (low/medium/high) to optimize cost and performance.",
       "category": "model-routing",
       "standalone": true,
       "recommended_combinations": [

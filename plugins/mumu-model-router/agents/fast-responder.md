@@ -16,7 +16,7 @@ description: |
   assistant: "I'll use the fast-responder agent for this quick conversion."
   </example>
 
-model: minimax-m2.5
+model: qwen3-coder-next
 color: green
 tools: ["Read", "Write", "Bash"]
 ---

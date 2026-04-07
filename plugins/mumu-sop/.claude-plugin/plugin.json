@@ -115,7 +115,7 @@
     "agents": {
       "sop-agent": {
         "path": "agents/sop-agent/AGENT.md",
-        "description": "SOP 工作流入口 Agent，负责引导用户按照 5 阶段工作流执行软件开发任务。自动分析任务复杂度，动态调整 spec 树深度。",
+        "description": "SOP 工作流入口 Agent，负责引导用户按照 6 阶段工作流执行软件开发任务。自动分析任务复杂度，动态调整 spec 树深度。",
         "triggers": ["sop", "workflow", "开始工作流", "propose", "提案"]
       }
     },
@@ -196,6 +196,77 @@
     "verticalSlicing": {
       "enabled": true,
       "description": "任务分解采用垂直切片而非水平分层"
+    },
+    "modelRequirements": {
+      "description": "6阶段工作流推荐的模型能力级别，与mumu-model-router的complexity_routing配合使用",
+      "stages": {
+        "spec": {
+          "stage": 0,
+          "name": "Define",
+          "description": "需求分析与规范定义",
+          "capability": "high",
+          "reason": "需要深度理解需求、架构决策、生成结构化规范文档"
+        },
+        "plan": {
+          "stage": 1,
+          "name": "Plan",
+          "description": "垂直切片任务分解",
+          "capability": "high",
+          "reason": "需要复杂任务分解、依赖分析、工作量估算"
+        },
+        "build": {
+          "stage": 2,
+          "name": "Build",
+          "description": "增量代码实现",
+          "capability": "medium",
+          "reason": "标准代码实现，遵循TDD周期，需要平衡质量与效率"
+        },
+        "test": {
+          "stage": 3,
+          "name": "Verify",
+          "description": "测试验证与调试",
+          "capability": "medium",
+          "reason": "测试执行、问题定位、修复验证"
+        },
+        "review": {
+          "stage": 4,
+          "name": "Review",
+          "description": "五轴代码审查",
+          "capability": "high",
+          "reason": "需要全面审查：正确性、可读性、架构、安全、性能"
+        },
+        "ship": {
+          "stage": 5,
+          "name": "Ship",
+          "description": "发布交付与归档",
+          "capability": "low",
+          "reason": "标准化流程：检查清单、文档更新、约束树归档"
+        }
+      },
+      "skillMapping": {
+        "high": [
+          "sop-decision-analyst",
+          "sop-requirement-analyst",
+          "sop-architecture-designer",
+          "sop-implementation-designer",
+          "sop-architecture-reviewer",
+          "sop-performance-reviewer",
+          "sop-code-reviewer"
+        ],
+        "medium": [
+          "sop-code-implementer",
+          "sop-test-implementer",
+          "sop-code-explorer",
+          "sop-bug-analyst",
+          "sop-code-refactorer"
+        ],
+        "low": [
+          "sop-orchestrator",
+          "sop-sync",
+          "sop-progress-supervisor",
+          "sop-document-writer"
+        ]
+      }
     }
   }
 }

@@ -16,7 +16,7 @@ description: |
   assistant: "I'll use the batch-processor agent for efficient batch conversion."
   </example>
 
-model: minimax-m2.5
+model: qwen3-coder-next
 color: yellow
 tools: ["Read", "Write", "Bash", "Glob"]
 ---
