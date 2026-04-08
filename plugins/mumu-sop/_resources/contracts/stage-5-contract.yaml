@@ -1,0 +1,320 @@
+---
+version: v5.0.0
+stage: 5
+description: 发布交付与部署契约
+---
+
+# Stage 5 契约
+
+## 契约标识
+
+```yaml
+contract_id: stage-5-contract
+version: v5.0.0
+stage: 发布交付与部署
+```
+
+## 输入契约
+
+```yaml
+required_inputs:
+  - name: "archive_record"
+    type: object
+    path: "contracts/stage-4-archive.json"
+    description: "Stage 4 归档记录"
+
+  - name: "changelog_update"
+    type: file
+    path: "CHANGELOG.md"
+    description: "更新的 CHANGELOG"
+
+  - name: "constraint_tree_update"
+    type: object
+    path: "contracts/stage-4-constraint-update.json"
+    description: "约束树更新记录"
+
+  - name: "release_version"
+    type: string
+    description: "发布版本号"
+
+  - name: "deployment_target"
+    type: object
+    description: "部署目标环境"
+    properties:
+      - environment: "staging|production"
+      - region: "部署区域"
+      - strategy: "canary|staged|full"
+
+optional_inputs:
+  - name: "feature_flags"
+    type: object
+    description: "功能开关配置"
+
+  - name: "monitoring_config"
+    type: object
+    description: "监控配置"
+
+  - name: "rollback_plan"
+    type: object
+    description: "回滚方案"
+```
+
+## 输出契约
+
+```yaml
+required_outputs:
+  - name: "release_record"
+    type: object
+    path: "contracts/stage-5-release.json"
+    format:
+      release_id: "发布ID"
+      version: "版本号"
+      released_at: "发布时间"
+      deployed_by: "执行人"
+      environment: "目标环境"
+      strategy: "发布策略"
+      status: "success|failed|rolled_back"
+    guarantees:
+      - "发布记录完整"
+      - "可追溯"
+
+  - name: "deployment_confirmation"
+    type: object
+    path: "contracts/stage-5-deployment.json"
+    format:
+      deployment_time: "部署耗时"
+      verification_status: "验证状态"
+      health_check_result: "健康检查结果"
+      metrics_baseline: "性能指标基线"
+    guarantees:
+      - "部署成功确认"
+      - "健康检查通过"
+
+  - name: "ship_checklist"
+    type: object
+    path: "contracts/stage-5-checklist.json"
+    format:
+      pre_launch_checks: "预发布检查项"
+      launch_checks: "发布检查项"
+      post_launch_checks: "发布后检查项"
+      all_passed: boolean
+    guarantees:
+      - "检查清单完整"
+      - "所有检查项已执行"
+
+  - name: "final_archive_confirmation"
+    type: object
+    path: "contracts/stage-5-final-archive.json"
+    format:
+      temp_node_removed: "临时节点已移除"
+      constraint_tree_synced: "约束树已同步"
+      references_cleaned: "引用已清理"
+    guarantees:
+      - "临时节点已完全归档"
+      - "约束树最终状态一致"
+```
+
+## 行为契约
+
+```yaml
+preconditions:
+  - "Stage 4 已完成"
+  - "归档记录已确认"
+  - "CHANGELOG 已更新"
+  - "发布版本号已确定"
+  - "部署目标已配置"
+
+postconditions:
+  - "代码已部署到目标环境"
+  - "发布记录已保存"
+  - "健康检查已通过"
+  - "临时节点已完全清理"
+  - "约束树状态已最终同步"
+
+invariants:
+  - "发布必须是可回滚的"
+  - "部署必须是可验证的"
+  - "临时节点必须完全清理"
+```
+
+## 质量门控
+
+```yaml
+gate_conditions:
+  - id: "G5-001"
+    name: "预发布检查通过"
+    check: "ship_checklist.pre_launch_checks 全部通过"
+    severity: "blocker"
+
+  - id: "G5-002"
+    name: "部署成功"
+    check: "deployment_confirmation.status == success"
+    severity: "blocker"
+
+  - id: "G5-003"
+    name: "健康检查通过"
+    check: "deployment_confirmation.health_check_result == passed"
+    severity: "blocker"
+
+  - id: "G5-004"
+    name: "临时节点清理"
+    check: "final_archive_confirmation.temp_node_removed == true"
+    severity: "blocker"
+
+  - id: "G5-005"
+    name: "发布后监控"
+    check: "release_record.post_launch_monitoring == completed"
+    severity: "warning"
+```
+
+## 发布流程
+
+```yaml
+ship_process:
+  - step: 1
+    name: "预发布检查"
+    action: "执行 Ship Checklist 的预发布检查项"
+    output: "ship_checklist.pre_launch_checks"
+
+  - step: 2
+    name: "部署到目标环境"
+    action: "按照部署策略执行发布"
+    output: "deployment_confirmation"
+
+  - step: 3
+    name: "健康检查"
+    action: "验证部署状态和功能正常性"
+    output: "deployment_confirmation.health_check_result"
+
+  - step: 4
+    name: "发布后监控"
+    action: "观察错误率和性能指标"
+    duration: "建议 24 小时"
+    output: "release_record.post_launch_monitoring"
+
+  - step: 5
+    name: "最终归档确认"
+    action: "确认临时节点已完全清理，约束树已同步"
+    output: "final_archive_confirmation"
+
+  - step: 6
+    name: "生成发布记录"
+    action: "记录发布详情和结果"
+    output: "release_record"
+```
+
+## Ship Checklist 规范
+
+```yaml
+checklist_template:
+  pre_launch:
+    - id: "SC-001"
+      item: "功能开关已配置"
+      required: true
+    - id: "SC-002"
+      item: "监控仪表板就绪"
+      required: true
+    - id: "SC-003"
+      item: "告警阈值已设置"
+      required: true
+    - id: "SC-004"
+      item: "操作手册已文档化"
+      required: true
+    - id: "SC-005"
+      item: "回滚程序已测试"
+      required: true
+
+  launch:
+    - id: "SC-006"
+      item: "部署到预发布环境"
+      required: true
+    - id: "SC-007"
+      item: "在预发布环境验证"
+      required: true
+    - id: "SC-008"
+      item: "启用 1% 流量（金丝雀）"
+      required: false
+    - id: "SC-009"
+      item: "监控 30 分钟"
+      required: true
+    - id: "SC-010"
+      item: "逐步扩大到 100%"
+      required: true
+
+  post_launch:
+    - id: "SC-011"
+      item: "监控 24 小时"
+      required: false
+    - id: "SC-012"
+      item: "检查错误率"
+      required: true
+    - id: "SC-013"
+      item: "验证性能指标"
+      required: true
+    - id: "SC-014"
+      item: "更新文档"
+      required: true
+    - id: "SC-015"
+      item: "团队通知"
+      required: true
+```
+
+## 部署策略
+
+```yaml
+deployment_strategies:
+  canary:
+    description: "金丝雀发布"
+    steps:
+      - "部署到新实例"
+      - "路由 1% 流量"
+      - "监控关键指标"
+      - "逐步增加流量"
+    rollback_trigger: "错误率 > 0.1% 或 P99 延迟 > 基准 120%"
+
+  staged:
+    description: "分阶段发布"
+    steps:
+      - "按区域/用户组分批部署"
+      - "每批验证后进入下一批"
+    rollback_trigger: "任一批次验证失败"
+
+  full:
+    description: "全量发布"
+    steps:
+      - "一次性全量部署"
+    rollback_trigger: "部署后健康检查失败"
+    note: "仅适用于低风险变更"
+```
+
+## 回滚契约
+
+```yaml
+rollback_contract:
+  trigger_conditions:
+    - "错误率超过阈值"
+    - "关键功能异常"
+    - "性能严重下降"
+    - "用户投诉激增"
+
+  max_rollback_time: "5 minutes"
+
+  data_compatibility: "forward_compatible"
+
+  rollback_outputs:
+    - name: "rollback_record"
+      type: object
+      path: "contracts/stage-5-rollback.json"
+      format:
+        rollback_id: "回滚ID"
+        triggered_at: "触发时间"
+        reason: "回滚原因"
+        completed_at: "完成时间"
+```
+
+## 相关文档
+
+- [工作流索引](../workflow/index.md)
+- [约束索引](../constraints/index.md)
+- [Stage 5 详解](../workflow/stage-5-ship.md)
+- [CHANGELOG 模板](../templates/changelog-template.md)

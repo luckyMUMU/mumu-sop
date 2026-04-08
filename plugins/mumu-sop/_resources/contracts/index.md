@@ -24,6 +24,7 @@ updated: 2026-03-20
 | Stage 2 | [stage-2-contract.yaml](stage-2-contract.yaml) | 执行计划与实现输出契约 |
 | Stage 3 | [stage-3-contract.yaml](stage-3-contract.yaml) | 变更审查与确认输出契约 |
 | Stage 4 | [stage-4-contract.yaml](stage-4-contract.yaml) | 归档与约束树更新输出契约 |
+| Stage 5 | [stage-5-contract.yaml](stage-5-contract.yaml) | 发布交付与部署契约 |
 
 ---
 
@@ -88,10 +89,15 @@ flowchart LR
         C4[stage-4-contract.yaml]
     end
 
+    subgraph S5["Stage 5"]
+        C5[stage-5-contract.yaml]
+    end
+
     C0 -->|"意图分析结果"| C1
     C1 -->|"设计文档"| C2
     C2 -->|"代码变更"| C3
     C3 -->|"审查报告"| C4
+    C4 -->|"归档确认"| C5
 ```
 
 ---
@@ -108,13 +114,14 @@ flowchart LR
 
 | 版本 | 日期 | 变更说明 |
 |------|------|----------|
+| v5.0.0 | 2026-04-08 | 新增 Stage 5 发布交付契约，完善 6 阶段工作流 |
 | v5.0.0 | 2026-03-20 | 初始版本，定义 5 个阶段契约 |
 
 ---
 
 ## 相关文档
 
-- [工作流定义](../workflow/) - 5 阶段流程
+- [工作流定义](../workflow/) - 6 阶段流程
 - [约束规范](../constraints/) - P0-P3 约束
 - [模板参考](../templates/) - 规范模板
 
