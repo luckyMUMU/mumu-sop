@@ -13,10 +13,10 @@
     {
       "name": "mumu-sop",
       "source": "./plugins/mumu-sop",
-      "description": "SOP Skills v2.1.0 with 20 skills, 6-stage workflow (Define→Plan→Build→Verify→Review→Ship), five-axis code review, and cross-IDE support.",
+      "description": "SOP Skills v2.2.0 with 20 skills, 6-stage workflow (Define→Plan→Build→Verify→Review→Ship), /sop unified entry, enhanced /init-spec-tree with code analysis, five-axis code review, and cross-IDE support.",
       "category": "workflow",
       "standalone": true,
-      "version": "2.1.0"
+      "version": "2.2.0"
     },
     {
       "name": "mumu-model-router",

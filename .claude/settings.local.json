@@ -38,7 +38,12 @@
       "Bash(git commit:*)",
       "Bash(ls -d D:/code/AGENT/mumu-sop/plugins/mumu-sop/skills/*/)",
       "Bash(ls plugins/mumu-sop/skills/*/SKILL.md)",
-      "Bash(/reload-plugins:*)"
+      "Bash(/reload-plugins:*)",
+      "Bash([ -f \"plugins/mumu-sop/.claude/commands/$cmd.md\" ])",
+      "Bash([ -f \"plugins/mumu-sop/commands/init-spec-tree.md\" ])",
+      "Bash([ ! -d \"plugins/mumu-sop/tests/$skill\" ])",
+      "Bash([ -x \"plugins/mumu-sop/hooks/$hook\" ])",
+      "Bash(ls plugins/mumu-sop/hooks/*.yaml)"
     ]
   },
   "enabledPlugins": {

@@ -1,6 +1,6 @@
 {
   "name": "mumu-sop",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "SOP (Standard Operating Procedure) Skills for software development workflow. Includes 20 skills covering orchestration, specification, implementation, verification, maintenance, and documentation. Features 6-stage workflow (Define→Plan→Build→Verify→Review→Ship), five-axis code review, and P0-P3 constraint hierarchy. Use when managing development workflows, conducting code reviews, implementing features with design-by-contract principles, bug analysis, refactoring, or creating documentation.",
   "author": {
     "name": "luckyMUMU"
@@ -76,10 +76,15 @@
       }
     },
     "commands": {
+      "sop": {
+        "path": ".claude/commands/sop.md",
+        "description": "启动 SOP 工作流统一入口，自动分析任务复杂度并引导 6 阶段流程",
+        "triggers": ["sop", "workflow", "开始工作流", "propose", "提案"]
+      },
       "init-spec-tree": {
         "path": "commands/init-spec-tree.md",
-        "description": "初始化或更新项目的约束树（Spec Tree）结构，创建 P0-P3 级别的约束目录和文件",
-        "triggers": ["init-spec", "init-tree", "初始化约束树", "创建spec树"]
+        "description": "初始化或更新项目约束树。若已有约束，自动对齐更新：检测代码变更、智能合并、保留手动约束",
+        "triggers": ["init-spec", "init-tree", "初始化约束树", "创建spec树", "sync-spec", "同步规范", "align", "对齐约束"]
       },
       "spec": {
         "path": ".claude/commands/spec.md",
@@ -176,13 +181,14 @@
         "sop-agent": "完整的6阶段工作流引导，自动分析复杂度"
       },
       "command": {
+        "sop": "统一入口：启动 SOP Agent 引导工作流",
+        "init-spec-tree": "初始化约束树，有约束时自动对齐更新",
         "spec": "Stage 0: 定义规范",
         "plan": "Stage 1: 计划任务",
         "build": "Stage 2: 构建实现",
         "test": "Stage 3: 测试验证",
         "review": "Stage 4: 五轴审查",
-        "ship": "Stage 5: 发布交付",
-        "init-spec-tree": "初始化约束树结构"
+        "ship": "Stage 5: 发布交付"
       },
       "skill": {
         "count": 20,

@@ -5,6 +5,57 @@ All notable changes to the mumu-sop plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-04-08
+
+### Added
+
+#### Unified Entry Command
+- **New Command**: `/sop` - SOP 工作流统一入口
+  - 自动分析任务复杂度
+  - 推荐最优执行路径
+  - 集成 model-router 动态模型选择
+  - 交互式工作流引导
+  - 支持快速路径：直接跳转到特定阶段
+
+#### Enhanced Init Command
+- **`/init-spec-tree` 增强**:
+  - **对齐更新模式**: 检测到已有约束时，自动进入对齐模式
+    - 对比现有约束与新检测到的约束
+    - 智能分类：新增、变更、过时、冲突、手动约束
+    - 非侵入式更新：保留所有手动约束（标记为 manual）
+    - 配置漂移检测：高亮显示代码与约束的不一致
+    - 生成详细对齐报告，包含变更统计和建议
+    - 支持交互模式（--interactive）逐项确认
+    - 支持仅检测模式（--dry-run）预览变更
+    - 支持清理过时约束（--prune-stale）
+  - 代码分析功能：自动扫描项目类型和配置文件
+  - 约束同步：从代码中提取约束并同步到 P0-P3 层级
+  - 支持项目类型：Node.js, Python, Rust, Go, Java, PHP
+  - 新增触发词：`align`, `对齐约束`
+  - 配置文件解析：
+    - 安全约束（package.json, requirements.txt 漏洞扫描）
+    - 性能约束（next.config.js, API 契约）
+    - 代码风格约束（eslint, prettier, black, clippy）
+    - 测试约束（jest.config, pytest.ini 覆盖率阈值）
+    - Git 规范（commitlint, .gitignore）
+  - 生成 `detected-constraints.yaml` 记录分析结果
+  - `--sync-only` 模式：仅同步，不创建新结构
+  - `--analyze` 选项：控制是否启用代码分析
+
+#### Model Requirements Configuration
+- **新增 `modelRequirements` 配置**:
+  - 6 阶段工作流推荐的模型能力级别
+  - 阶段映射：spec/plan/build/test/review/ship → high/medium/low
+  - Skill 能力映射：将 20 个 skills 分类到 high/medium/low
+  - 与 mumu-model-router 集成，支持复杂度路由
+
+### Changed
+
+- **版本号**: 2.1.0 → 2.2.0
+- **Plugin 描述**: 更新为 v2.2.0，强调 /sop 入口和代码分析功能
+- **Commands 索引**: 添加 sop 命令和增强的 init-spec-tree 说明
+- **Entry Points**: 更新命令入口描述
+
 ## [2.1.0] - 2026-04-07
 
 ### Added

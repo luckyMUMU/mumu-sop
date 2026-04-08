@@ -1,5 +1,12 @@
 # SOP 命令索引
 
+## 入口命令
+
+| 命令 | 触发词 | 描述 |
+|------|--------|------|
+| `sop` | sop, workflow, 开始工作流, propose | **统一入口**：启动 SOP Agent，自动分析任务复杂度并引导完整工作流 |
+| `init-spec-tree` | init-spec, init-tree, 初始化约束树 | **初始化**：创建 P0-P3 约束结构，分析代码并同步约束 |
+
 ## 6 阶段工作流命令
 
 | 命令 | 阶段 | 对应 Skill | 用途 |
@@ -49,6 +56,7 @@ sop-bug-analyst         # 直接触发 Bug 分析
 
 ```
 .claude/commands/
+├── sop.md           # 统一入口 [新增]
 ├── spec.md
 ├── plan.md
 ├── build.md
@@ -56,6 +64,10 @@ sop-bug-analyst         # 直接触发 Bug 分析
 ├── review.md
 ├── ship.md
 └── index.md (本文件)
+```
+
+commands/
+└── init-spec-tree.md  # 初始化命令 [更新]
 ```
 
 ## 触发词
